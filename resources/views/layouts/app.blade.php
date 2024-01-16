@@ -5,14 +5,24 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ $title ?? config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
+        {{-- IMPORTANTE - quando colocar em produçao atualizar o endereço --}}
+        <link rel="stylesheet" href="{{ asset('build/assets/app-467227ec.css') }}">
+        <script type="text/javascript" src="{{ asset('build/assets/app-f4463062.js') }}"></script>
+
+        {{-- importas as bibliotecas para os campos com máscara --}}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        @include('layouts.scripts-header')
 
         <!-- Styles -->
         @livewireStyles
@@ -25,7 +35,7 @@
             @livewire('navigation-menu')
 
             <!-- Page Content -->
-            <main class="pt-12">
+            <main class="pt-36 max-w-7xl mx-auto py-24">
                 {{ $slot }}
             </main>
         </div>
@@ -33,8 +43,10 @@
         @stack('modals')
 
         @include('footer')
-        
-        <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
+
+        @include('layouts.script-dark')
+
+        {{-- <script src="../path/to/flowbite/dist/flowbite.min.js"></script> --}}
         @livewireScripts
     </body>
 </html>

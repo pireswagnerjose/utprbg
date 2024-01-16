@@ -1,5 +1,6 @@
 <x-guest-layout>
     <x-authentication-card>
+        @include('dark-buttons')
         <x-slot name="logo">
             <x-authentication-card-logo />
         </x-slot>
@@ -15,14 +16,14 @@
         <form method="POST" action="{{ route('login') }}">
             @csrf
 
-            <div>
+            <div class="relative z-0 mt-4">
+                <x-input-email-pass id="email" type="email" name="email" required />
                 <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
             </div>
 
-            <div class="mt-4">
+            <div class="mt-8 relative z-0">
+                <x-input-email-pass id="password" type="password" name="password" required />
                 <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
             </div>
 
             <div class="block mt-4">
