@@ -12,7 +12,7 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
         {{-- IMPORTANTE - quando colocar em produçao atualizar o endereço --}}
-        <link rel="stylesheet" href="{{ asset('build/assets/app-467227ec.css') }}">
+        <link rel="stylesheet" href="{{ asset('build/assets/app-bcea521e.css') }}">
         <script type="text/javascript" src="{{ asset('build/assets/app-f4463062.js') }}"></script>
 
         <!-- Scripts -->
