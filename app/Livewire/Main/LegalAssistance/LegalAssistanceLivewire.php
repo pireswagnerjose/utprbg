@@ -105,6 +105,8 @@ class LegalAssistanceLivewire extends Component
                 'criminal_court_id'=>'nullable|max:10',
                 ]
         );
+        // Transforma os caracteres em maiusculos
+        $dataValidated = $this->convertUppercase($dataValidated);
         if ($this->document) {
             /* responsável por excluir o documento */
             if (!empty($dataValidated->document)) {
@@ -115,8 +117,6 @@ class LegalAssistanceLivewire extends Component
             /* faz o upload e retorna o endereco do arquivo */
             $dataValidated['document'] = $this->document->storeAs('prisoner/'. $this->prisoner_id .'/documents/legal_assistance', $document);
         }
-        // Transforma os caracteres em maiusculos
-        $dataValidated = $this->convertUppercase($dataValidated);
         // grava os dados no banco
         LegalAssistance::create($dataValidated);
         $this->closeModal();
@@ -178,6 +178,8 @@ class LegalAssistanceLivewire extends Component
                 ]
             );
         }
+        // Transforma os caracteres em maiusculos
+        $dataValidated = $this->convertUppercase($dataValidated);
         if ($this->document) {
             /* responsável por excluir o documento */
             if (!empty($dataValidated->document)) {
@@ -195,8 +197,6 @@ class LegalAssistanceLivewire extends Component
         $dataValidated['district_id'] = $district;
         $criminal_court = $dataValidated['criminal_court_id'] ?: null;
         $dataValidated['criminal_court_id'] = $criminal_court;
-        // Transforma os caracteres em maiusculos
-        $dataValidated = $this->convertUppercase($dataValidated);
         // grava os dados no banco
         $legal_assistance->update($dataValidated);
         $this->closeModal();

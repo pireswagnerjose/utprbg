@@ -86,6 +86,8 @@ class PhotoLivewire extends Component
                 'prisoner_id'   => 'required|max:10',
             ]
         );
+        // Converte caracteres em maiúsculo
+        $dataValidated = $this->convertUppercase($dataValidated);
         if ($this->photo) {
             /* responsável por excluir o diretório e a foto */
             if (!empty($photo)) {
@@ -100,8 +102,6 @@ class PhotoLivewire extends Component
             /* faz o upload e retorna o endereco do arquivo */
             $dataValidated['photo'] = $dataValidated['photo']->storeAs('prisoner/'. $this->prisoner['id']. '/gallery', $photo_name);
         }
-        // Converte caracteres em maiúsculo
-        $dataValidated = $this->convertUppercase($dataValidated);
         Photo::create($dataValidated);
         $this->closeModal();
         $this->clearFields();

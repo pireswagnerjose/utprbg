@@ -225,6 +225,8 @@ class PadLivewire extends Component
                 'pad_id'        =>'required|max:10',
             ]
         );
+        // Transforma os caracteres em maiusculos
+        $dataValidated = $this->convertUppercase($dataValidated);
         if ($this->document) {
             /* responsável por excluir o documento */
             if (!empty($dataValidated->document)) {
@@ -235,8 +237,6 @@ class PadLivewire extends Component
             /* faz o upload e retorna o endereco do arquivo */
             $dataValidated['document'] = $this->document->storeAs('prisoner/'. $this->prisoner_id .'/documents/pad', $document);
         }
-        // Transforma os caracteres em maiusculos
-        $dataValidated = $this->convertUppercase($dataValidated);
         // grava os dados no banco
         PadDocument::create($dataValidated);
         $this->closeModal();
@@ -274,6 +274,8 @@ class PadLivewire extends Component
                 ]
             );
         }
+        // Transforma os caracteres em maiusculos
+        $dataValidated = $this->convertUppercase($dataValidated);
         if ($this->document) {
             /* responsável por excluir o documento */
             if (!empty($pad_document->document)) {
@@ -284,8 +286,6 @@ class PadLivewire extends Component
             /* faz o upload e retorna o endereco do arquivo */
             $dataValidated['document'] = $this->document->storeAs('prisoner/'. $this->prisoner_id .'/documents/pad', $document);
         }   
-        // Transforma os caracteres em maiusculos
-        $dataValidated = $this->convertUppercase($dataValidated);
         // grava os dados no banco
         $pad_document->update($dataValidated);
         $this->closeModal();

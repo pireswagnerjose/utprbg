@@ -71,6 +71,8 @@ class DocumentLivewire extends Component
                 'prison_unit_id'=>'required|max:10',
             ]
         );
+        // Transforma os caracteres em maiusculos
+        $dataValidated = $this->convertUppercase($dataValidated);
         if ($this->document) {
             /* responsável por excluir o documento */
             if (!empty($dataValidated->document)) {
@@ -81,8 +83,6 @@ class DocumentLivewire extends Component
             /* faz o upload e retorna o endereco do arquivo */
             $dataValidated['document'] = $this->document->storeAs('prisoner/'. $this->prisoner_id .'/documents/document', $document);
         }
-        // Transforma os caracteres em maiusculos
-        $dataValidated = $this->convertUppercase($dataValidated);
         // grava os dados no banco
         Document::create($dataValidated);
         $this->closeModal();
@@ -119,6 +119,8 @@ class DocumentLivewire extends Component
                 ]
             );
         }
+        // Transforma os caracteres em maiusculos
+        $dataValidated = $this->convertUppercase($dataValidated);
         if ($this->document) {
             /* responsável por excluir o documento */
             if (!empty($dataValidated->document)) {
@@ -129,8 +131,6 @@ class DocumentLivewire extends Component
             /* faz o upload e retorna o endereco do arquivo */
             $dataValidated['document'] = $this->document->storeAs('prisoner/'. $this->prisoner_id .'/documents/document', $document);
         }   
-        // Transforma os caracteres em maiusculos
-        $dataValidated = $this->convertUppercase($dataValidated);
         // grava os dados no banco
         $document_update->update($dataValidated);
         $this->closeModal();

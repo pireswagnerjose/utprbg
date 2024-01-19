@@ -107,6 +107,8 @@ class ExternalExitLivewire extends Component
                 'exit_reason_id'    =>'required|max:10',
             ]
         );
+        // Transforma os caracteres em maiusculos
+        $dataValidated = $this->convertUppercase($dataValidated);
         if ($this->document) {
             /* responsável por excluir o documento */
             if (!empty($dataValidated->document)) {
@@ -117,8 +119,6 @@ class ExternalExitLivewire extends Component
             /* faz o upload e retorna o endereco do arquivo */
             $dataValidated['document'] = $this->document->storeAs('prisoner/'. $this->prisoner_id .'/documents/external_exit', $document);
         }
-        // Transforma os caracteres em maiusculos
-        $dataValidated = $this->convertUppercase($dataValidated);
         // grava os dados no banco
         ExternalExit::create($dataValidated);
         $this->closeModal();
@@ -182,6 +182,8 @@ class ExternalExitLivewire extends Component
                 ]
             );
         }
+        // Transforma os caracteres em maiusculos
+        $dataValidated = $this->convertUppercase($dataValidated);
         if ($this->document) {
             /* responsável por excluir o documento */
             if (!empty($dataValidated->document)) {
@@ -192,8 +194,6 @@ class ExternalExitLivewire extends Component
             /* faz o upload e retorna o endereco do arquivo */
             $dataValidated['document'] = $this->document->storeAs('prisoner/'. $this->prisoner_id .'/documents/external_exit', $document);
         }   
-        // Transforma os caracteres em maiusculos
-        $dataValidated = $this->convertUppercase($dataValidated);
         // grava os dados no banco
         $external_exit->update($dataValidated);
         $this->closeModal();
