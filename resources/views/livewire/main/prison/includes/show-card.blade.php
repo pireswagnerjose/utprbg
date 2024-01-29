@@ -75,7 +75,8 @@
                 <div class="font-light text-sm text-gray-500">
                     Documentos Relacionados
                     <div class="px-4">
-                        <livewire:main.prison.prison-document-livewire :prison_id="$prison->id" :prisoner_id="$prisoner_id" />
+                        {{-- <livewire:main.prison.prison-document-livewire :prison_id="$prison->id" :prisoner_id="$prisoner_id" /> --}}
+                        @include('livewire.main.prison.prison-document-livewire')
                     </div>
                 </div>
             </div>

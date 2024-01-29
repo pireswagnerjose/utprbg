@@ -217,7 +217,7 @@ class PadLivewire extends Component
     {
         $dataValidated = $this->validate(
             [
-                'document'      =>'required|mimes:pdf',
+                'document'      =>'required|mimetypes:application/pdf|max:10000',
                 'title'         =>'required|max:100',
                 'description'   =>'nullable|max:255',
                 'user_create'   =>'required|max:10',
@@ -259,7 +259,7 @@ class PadLivewire extends Component
         if ($this->document) {
             $dataValidated = $this->validate(
                 [
-                    'document'      =>'required|mimes:pdf',
+                    'document'      =>'required|mimetypes:application/pdf|max:10000',
                     'title'         =>'required|max:100',
                     'description'   =>'nullable|max:255',
                     'user_update'   =>'required|max:10',

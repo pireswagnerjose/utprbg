@@ -9,12 +9,12 @@
     </x-slot>
 
     <x-slot name="footer">
-        <x-secondary-button wire:click="closeModal" wire:loading.attr="disabled">
+        <x-danger-button wire:click="closeModal" wire:loading.attr="disabled">
             {{ __('Cancel') }}
-        </x-secondary-button>
-
-        <x-danger-button class="ms-3" wire:click="photoCreate" wire:loading.attr="disabled">
-            {{ __('Save') }}
         </x-danger-button>
+
+        <x-blue-button class="ms-3" wire:click="photoCreate" wire:loading.attr="disabled">
+            {{ __('Save') }}
+        </x-blue-button>
     </x-slot>
 </x-dialog-modal>

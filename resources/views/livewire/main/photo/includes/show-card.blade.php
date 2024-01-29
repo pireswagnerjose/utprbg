@@ -24,3 +24,7 @@
         @endforelse
     @endif
 </div>
+{{-- paginação --}}
+<div class="pl-2 py-4 mt-4 text-zinc-50 dark:text-zinc-400 border-t border-blue-300 dark:border-blue-500 pb-3">
+    {{ $photos->onEachSide(1)->links() }}
+</div>

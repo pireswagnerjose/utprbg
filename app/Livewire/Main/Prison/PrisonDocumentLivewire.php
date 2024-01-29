@@ -6,9 +6,8 @@ use App\Models\Main\Prison;
 use App\Models\Main\PrisonDocument;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Livewire\Component;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
-use Illuminate\Validation\Rules\File;
+use Livewire\Component;
 
 class PrisonDocumentLivewire extends Component
 {
@@ -41,43 +40,36 @@ class PrisonDocumentLivewire extends Component
 
     // MODAL CREATE
     public $openModalPrisonDocument = false;
-    public function modalPrisonDocument(Prison $prison)
+    public function modalPrisonDocument($prison_id)
     {
-        $this->openModalPrisonDocument = $prison->id;
+        $this->openModalPrisonDocument = $prison_id;
     }
 
     public function prisonDocumentCreate()
     {
         $dataValidated = $this->validate(
             [
-                'document' => [
-                    'required',
-                    File::types(['pdf']),
-                ],
-                'title'             => 'required|max:255',
-                'description'       => 'max:255',
-                'user_create'       => 'max:10',
-                'prison_unit_id'    => 'max:10',
-                'prison_id'         => 'max:10',
+                'document'      => 'required|mimetypes:application/pdf|max:10000',
+                'title'         => 'required|max:100',
+                'description'   => 'max:100',
+                'user_create'   => 'max:10',
+                'prison_unit_id'=> 'max:10',
+                'prison_id'     => 'max:10',
             ]
         );
+        $dataValidated['title'] = mb_strtoupper ($dataValidated['title'],'utf-8');
+        $dataValidated['description'] = mb_strtoupper ($dataValidated['description'],'utf-8');
 
         if ($this->document) {
-            $document_name = str_replace("/", "-", $dataValidated['title']);
-
             /* responsável por excluir o documento */
             if (!empty($dataValidated->document)) {
                 Storage::disk('public')->delete($dataValidated->document);
             }
             /* cria o nome com a extensão */
-            $document = $document_name . ' - ' . date('d-m-Y') . '.' . $this->document->getClientOriginalExtension();
+            $document = 'id-'.$this->prisoner_id . '_date-' . date('d-m-Y_H_m_s') . '.' . $this->document->getClientOriginalExtension();
             /* faz o upload e retorna o endereco do arquivo */
-            $dataValidated['document'] = $this->document->storeAs('prisoner/'. $this->prisoner_id .'/documents/prison', $document);
+            $dataValidated['document'] = $this->document->storeAs('prisoner/'. $this->prisoner_id .'/prison_documents', $document);
         }
-        $dataValidated['document'] = mb_strtoupper ($dataValidated['document'],'utf-8');
-        $dataValidated['title'] = mb_strtoupper ($dataValidated['title'],'utf-8');
-        $dataValidated['description'] = mb_strtoupper ($dataValidated['description'],'utf-8');
-
         PrisonDocument::create($dataValidated);
         $this->openModalPrisonDocument = false;
         $this->reset('document', 'title', 'description');
@@ -87,6 +79,7 @@ class PrisonDocumentLivewire extends Component
     public $openmodalPrisonDocumentEdit = false;
     public function modalPrisonDocumentEdit(PrisonDocument $prison_document)
     {
+        $this->reset('document', 'title', 'description');
         $this->title = $prison_document->title;
         $this->description = $prison_document->description;
         $this->openmodalPrisonDocumentEdit = $prison_document->id;
@@ -98,42 +91,38 @@ class PrisonDocumentLivewire extends Component
         if ($this->document) {
             $dataValidated = $this->validate(
                 [
-                    'document'      => [ File::types(['pdf']) ],
-                    'title'         => 'required|max:255',
-                    'description'   => 'max:255',
-                    'user_update'   => 'max:10',
-                    'prison_id'     => 'max:10',
+                    'document'      => 'nullable|mimetypes:application/pdf|max:10000',
+                    'title'         => 'nullable|max:100',
+                    'description'   => 'nullable|max:100',
+                    'user_update'   => 'nullable|max:10',
                 ]
             );
         } else {
             $dataValidated = $this->validate(
                 [
-                    'title'         => 'required|max:255',
-                    'description'   => 'max:255',
-                    'user_update'   => 'max:10',
-                    'prison_id'     => 'max:10',
+                    'title'         => 'nullable|max:100',
+                    'description'   => 'nullable|max:255',
+                    'user_update'   => 'nullable|max:10',
                 ]
             );
         }
+        $dataValidated['title'] = mb_strtoupper ($dataValidated['title'],'utf-8');
+        $dataValidated['description'] = mb_strtoupper ($dataValidated['description'],'utf-8');
 
         if (!empty($dataValidated['document'])) {
-            $document_name = str_replace("/", "-", $dataValidated['title']);
-
             /* responsável por excluir o documento */
             if (!empty($this->document)) {
                 Storage::disk('public')->delete($prison_document->document);
             }
             /* cria o nome com a extensão */
-            $document = $document_name . ' - ' . date('d-m-Y') . '.' . $this->document->getClientOriginalExtension();
+            $document = 'id-'.$this->prisoner_id . '_date-' . date('d-m-Y_H_m_s') . '.' . $this->document->getClientOriginalExtension();
             /* faz o upload e retorna o endereco do arquivo */
-            $dataValidated['document'] = $this->document->storeAs('prisoner/'. $this->prisoner_id .'/documents/prison', $document);
+            $dataValidated['document'] = $this->document->storeAs('prisoner/'. $this->prisoner_id .'/prison_documents', $document);
         }
-
         $prison_document->update($dataValidated);
         $this->openmodalPrisonDocumentEdit = false;
         $this->reset('document', 'title', 'description');
     }
-
 
     // MODAL DELETE
     public $openModalPrisonDocumentDelete = false;
@@ -151,8 +140,8 @@ class PrisonDocumentLivewire extends Component
         $this->openModalPrisonDocumentDelete = false;
     }
     
-    public function render()
-    {
-        return view('livewire.main.prison.prison-document-livewire');
-    }
+    // public function render()
+    // {
+    //     return view('livewire.main.prison.prison-document-livewire');
+    // }
 }

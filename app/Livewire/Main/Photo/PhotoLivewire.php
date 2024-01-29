@@ -9,10 +9,13 @@ use Illuminate\Support\Facades\Storage;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 use Illuminate\Validation\Rules\File;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class PhotoLivewire extends Component
 {
     use WithFileUploads;
+    use WithPagination;
+    
     public $prisoner_id;
     public $prisoner = [];
 
@@ -56,6 +59,7 @@ class PhotoLivewire extends Component
         $this->openModalPhotoCreate = false;
         $this->openModalPhotoDelete = false;
         $this->openModalPhotoUpdate = false;
+        $this->clearFields();
     }
 
     // Transforma os caracteres em maiusculos
@@ -78,9 +82,9 @@ class PhotoLivewire extends Component
     {
         $dataValidated = $this->validate(
             [
-                'photo'         => File::image()->types(['jpeg', 'jpg', 'png']),
-                'position'      => 'required|max:255',
-                'description'   => 'required|max:255',
+                'photo'         => 'required|mimes:jpeg,jpg,png',
+                'position'      => 'required|max:100',
+                'description'   => 'required|max:100',
                 'prison_unit_id'=> 'required|max:10',
                 'user_create'   => 'required|max:10',
                 'prisoner_id'   => 'required|max:10',
@@ -93,12 +97,8 @@ class PhotoLivewire extends Component
             if (!empty($photo)) {
                 Storage::disk('public')->delete($photo);
             }
-            $photo_name = str_replace("/", "-", $this->prisoner['id']. '_' .$dataValidated['description']);
-            $photo_name = str_replace("\"", "", $photo_name);
-            $photo_name = str_replace("\'", "", $photo_name);
-
             /* cria o nome da photo com a extensão */
-            $photo_name = $photo_name .'_'. date('d-m-Y_H_m_s') . '.' . $dataValidated['photo']->getClientOriginalExtension();
+            $photo_name = 'id-'.$this->prisoner['id'].'_'.'date-'.date('d-m-Y_H_m_s') .'.'.$dataValidated['photo']->getClientOriginalExtension();
             /* faz o upload e retorna o endereco do arquivo */
             $dataValidated['photo'] = $dataValidated['photo']->storeAs('prisoner/'. $this->prisoner['id']. '/gallery', $photo_name);
         }
@@ -111,6 +111,7 @@ class PhotoLivewire extends Component
     public $openModalPhotoUpdate = false;
     public function modalPhotoUpdate(Photo $photo)
     {
+        $this->clearFields();
         $this->position             = $photo->position;
         $this->description          = $photo->description;
         $this->openModalPhotoUpdate = $photo->id;
@@ -119,17 +120,36 @@ class PhotoLivewire extends Component
     // UPDATE
     public function photoUpdate(Photo $photo)
     {
-        $dataValidated = $this->validate(
-            [
-                'position'      => 'required|max:255',
-                'description'   => 'required|max:255',
-                'prison_unit_id'=> 'required|max:10',
-                'user_update'   => 'required|max:10',
-                'prisoner_id'   => 'required|max:10',
-            ]
-        );
+        if ($this->photo) {
+            $dataValidated = $this->validate(
+                [
+                    'photo'         => 'nullable|mimes:jpeg,jpg,png',
+                    'position'      => 'nullable|max:100',
+                    'description'   => 'nullable|max:100',
+                    'user_update'   => 'nullable|max:10',
+                ]
+            );
+        } else {
+            $dataValidated = $this->validate(
+                [
+                    'position'      => 'nullable|max:100',
+                    'description'   => 'nullable|max:100',
+                    'user_update'   => 'nullable|max:10',
+                ]
+            );
+        }
         // Converte caracteres em maiúsculo
         $dataValidated = $this->convertUppercase($dataValidated);
+        if ($this->photo) {
+            /* responsável por excluir o diretório e a foto */
+            if (!empty($photo->photo)) {
+                Storage::disk('public')->delete($photo->photo);
+            }
+            /* cria o nome da photo com a extensão */
+            $photo_name = 'id-'.$this->prisoner['id'].'_'.'date-'.date('d-m-Y_H_m_s') .'.'.$dataValidated['photo']->getClientOriginalExtension();
+            /* faz o upload e retorna o endereco do arquivo */
+            $dataValidated['photo'] = $dataValidated['photo']->storeAs('prisoner/'. $this->prisoner['id']. '/gallery', $photo_name);
+        }
         // Atualiza os dados no banco
         $photo->update($dataValidated);
         $this->closeModal();
@@ -156,7 +176,7 @@ class PhotoLivewire extends Component
     public function render()
     {
         return view('livewire.main.photo.photo-livewire', [
-            'photos' => Photo::where('prisoner_id', $this->prisoner_id)->orderBy('created_at', 'desc')->paginate(10)
+            'photos' => Photo::where('prisoner_id', $this->prisoner_id)->orderBy('created_at', 'desc')->paginate(20)
         ]);
     }
 }

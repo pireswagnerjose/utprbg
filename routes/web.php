@@ -33,7 +33,7 @@ use App\Livewire\Admin\State\StateLivewire;
 use App\Livewire\Main\Prisoner\PrisonerCreateLivewire;
 use App\Livewire\Main\Prisoner\PrisonerLivewire;
 use App\Livewire\Main\Prisoner\PrisonerShowLivewire;
-use App\Livewire\User\User;
+use App\Livewire\User\UserLivewire;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -63,7 +63,7 @@ Route::middleware([
     // Level Access - Nível de Acesso
     Route::get('/level-accesses', LevelAccessLivewire::class)->name('level-accesses.index');
     // Users - Usuários
-    Route::get('/users-show', User::class)->name('users-show.index');
+    Route::get('/users-show', UserLivewire::class)->name('users-show.index');
     // Prison Unit - Unidades Prisionais
     Route::get('/prison-units', PrisonUnitLivewire::class)->name('prison-units.index');
     // Country - País

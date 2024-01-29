@@ -79,9 +79,9 @@ class DocumentLivewire extends Component
                 Storage::disk('public')->delete($dataValidated->document);
             }
             /* cria o nome com a extensão */
-            $document = $dataValidated['name'].'_'.date('d-m-Y_H-m-s').'.'.$this->document->getClientOriginalExtension();
+            $document = 'id-'.$this->prisoner_id.'_'.'date-'.date('d-m-Y_H_m_s').'.'.$this->document->getClientOriginalExtension();
             /* faz o upload e retorna o endereco do arquivo */
-            $dataValidated['document'] = $this->document->storeAs('prisoner/'. $this->prisoner_id .'/documents/document', $document);
+            $dataValidated['document'] = $this->document->storeAs('prisoner/'. $this->prisoner_id .'/documents', $document);
         }
         // grava os dados no banco
         Document::create($dataValidated);
@@ -127,9 +127,9 @@ class DocumentLivewire extends Component
                 Storage::disk('public')->delete($dataValidated->document);
             }
             /* cria o nome com a extensão */
-            $document = date('d-m-Y_H-m-s') . '.' . $this->document->getClientOriginalExtension();
+            $document = 'id-'.$this->prisoner_id.'_'.'date-'.date('d-m-Y_H_m_s').'.'.$this->document->getClientOriginalExtension();
             /* faz o upload e retorna o endereco do arquivo */
-            $dataValidated['document'] = $this->document->storeAs('prisoner/'. $this->prisoner_id .'/documents/document', $document);
+            $dataValidated['document'] = $this->document->storeAs('prisoner/'. $this->prisoner_id .'/documents', $document);
         }   
         // grava os dados no banco
         $document_update->update($dataValidated);

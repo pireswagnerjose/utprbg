@@ -16,11 +16,14 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 #[Layout("layouts.app")]
 #[Title("Cadastrar Preso")]
 class PrisonerCreateLivewire extends Component
 {   
+    use WithPagination;
+    
     public $name = '';
     public $nickname = '';
     public $date_birth;

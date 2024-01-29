@@ -11,9 +11,9 @@
     </x-slot>
 
     <x-slot name="footer">
-        <x-secondary-button wire:click="closeModal" wire:loading.attr="disabled">
+        <x-blue-button wire:click="closeModal" wire:loading.attr="disabled">
             {{ __('Cancel') }}
-        </x-secondary-button>
+        </x-blue-button>
 
         <x-danger-button class="ms-3" wire:click="internalServiceDelete({{ $openModalInternalServiceDelete }})" wire:loading.attr="disabled">
             {{ 'Excluir' }}

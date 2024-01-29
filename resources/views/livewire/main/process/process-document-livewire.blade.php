@@ -1,11 +1,11 @@
 <div>
-    <button wire:click="modalProcessDocument({{ $process_id }})"><span class="text-blue-600 mr-4">[ Adicionar ]</span></button>
-    <div class="">
-        <div class="grid grid-cols-2 p-2 rounded-lg gap-20">
+    <button wire:click="modalProcessDocument({{ $process_id }})"><span class="text-blue-600">[ Adicionar ]</span></button>
+    <div class="pt-4">
+        <div class="grid grid-cols-2 p-2 rounded-lg gap-6">
             @foreach ($process_documents as $process_document)
-                <div class="border-b dark:border-zinc-700 flex justify-between">
+                <div class="border-b dark:border-zinc-700 flex justify-between mx-6">
                     <div class="text-sm uppercase font-medium">
-                        <a title='{{ $process_document->document }}' href='{{ asset("storage/$process_document->document") }}' rel='shadowbox[galeria]'>
+                        <a title='{{ $process_document->title }}' href='{{ asset("storage/$process_document->document") }}' rel='shadowbox[galeria]'>
                             <dd class="font-semibold text-blue-700 dark:text-blue-500 hover:underline">{{ $process_document->title }}</dd>
                         </a>
                     </div>

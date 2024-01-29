@@ -10,8 +10,14 @@
             <span class="text-sm ml-2">Adicionar Novo</span>
         </div>
     </div>
+    {{-- MODAL PRISON --}}
     @include('livewire.main.prison.includes.modal-create')
     @include('livewire.main.prison.includes.modal-update')
     @include('livewire.main.prison.includes.modal-delete')
     @include('livewire.main.prison.includes.show-card')
+
+    {{-- MODAL PRISON DOCUMENT --}}
+    @include("livewire.main.prison.includes.document-modal-create")
+    @include("livewire.main.prison.includes.document-modal-update")
+    @include("livewire.main.prison.includes.document-modal-delete")
 </div>

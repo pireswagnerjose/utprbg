@@ -10,9 +10,9 @@
     </x-slot>
 
     <x-slot name="footer">
-        <x-secondary-button wire:click="clearFields" wire:loading.attr="disabled">
+        <x-blue-button wire:click="clearFields" wire:loading.attr="disabled">
             {{ __('Cancel') }}
-        </x-secondary-button>
+        </x-blue-button>
 
         <x-danger-button class="ms-3" wire:click="padDocumentDelete({{ $openModalPadDocumentDelete }})" wire:loading.attr="disabled">
             {{ 'Excluir' }}

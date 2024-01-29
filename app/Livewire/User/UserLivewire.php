@@ -2,7 +2,9 @@
 
 namespace App\Livewire\User;
 
-use App\Models\Admin\LevelAccess as AdminLevelAccess;
+use App\Models\Admin\LevelAccess;
+use App\Models\Admin\PrisonUnit;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -13,7 +15,7 @@ use Livewire\WithPagination;
 
 #[Layout("layouts.app")]
 #[Title("Usuário do Sistema")]
-class User extends Component
+class UserLivewire extends Component
 {
     use WithPagination;
 
@@ -24,8 +26,8 @@ class User extends Component
     public $userUpdate;
     public function mount()
     {
-        $this->prison_units = \App\Models\Admin\PrisonUnit::all();
-        $this->level_accesses = AdminLevelAccess::all();
+        $this->prison_units = PrisonUnit::all();
+        $this->level_accesses =LevelAccess::all();
         $this->userCreate = Auth::user()->id;
         $this->userUpdate = Auth::user()->id;
     }
@@ -73,7 +75,7 @@ class User extends Component
                 'email'             => $this->userEmail,
                 'prison_unit_id'    => $this->userPrisonUnitId,
                 'level_access_id'   => $this->userLevelAccessId,
-                'user_cpdate'       => $this->userCreate,
+                'user_create'       => $this->userCreate,
                 'password'          => $this->userPassword
             ],
             // Validation rules to apply...
@@ -81,11 +83,11 @@ class User extends Component
                 'first_name'        => 'max:60|string',
                 'last_name'         => 'max:60|string',
                 'registry'          => 'max:60|string',
-                'phone'             => "required|string|min:15|max:15|unique:users,phone",//unico (usa o id da table pra validadar)
+                'phone'             => "required|string|max:15|unique:users,phone",//unico (usa o id da table pra validadar)
                 'email'             => "required|string|email|max:60|unique:users,email",//unico (usa o id da table pra validadar)
                 'prison_unit_id'    => 'max:10',
                 'level_access_id'   => 'max:10',
-                'user_cpdate'       => 'max:10',
+                'user_create'       => 'max:10',
                 'password'          => 'min:8'
             ],
             [
@@ -93,22 +95,20 @@ class User extends Component
                 'email.unique'=> 'Já exite um item com esse nome',
             ]
         )->validate();
-
         // Transforma os caracteres em maiusculos
         $dataValidated['first_name'] = mb_strtoupper ($dataValidated['first_name'],'utf-8');
         $dataValidated['last_name'] = mb_strtoupper ($dataValidated['last_name'],'utf-8');
-
         $dataValidated ['password'] = Hash::make($dataValidated['password']);
-        \App\Models\User::create($dataValidated);
+        User::create($dataValidated);
         $this->reset('userFirstName', 'userLastName', 'userRegistry', 'userPhone', 'userEmail',
-            'userPrisonUnitId', 'userLevelAccessId', 'user_update', 'userPassword');
+            'userPrisonUnitId', 'userLevelAccessId', 'userPassword');
         session()->flash('success', 'Created.');
         $this->resetPage();
     }
 
     // MODAL UPDATE
     public $confirmingUserUpdate = false;
-    public function confirmgUserUpdate(\App\Models\User $user)
+    public function confirmgUserUpdate(User $user)
     {         
         $this->userFirstName        = $user->first_name;
         $this->userLastName         = $user->last_name;
@@ -122,7 +122,7 @@ class User extends Component
     }
 
     // USER UPDATE
-    public function updateUser(\App\Models\User $user)
+    public function updateUser(User $user)
     {
         $dataValidated = Validator::make(
             // Data to validate...
@@ -141,7 +141,7 @@ class User extends Component
                 'first_name'        => 'max:60|string',
                 'last_name'         => 'max:60|string',
                 'registry'          => 'max:60|string',
-                'phone'             => "required|string|min:15|max:15|unique:users,phone,{$user->id},id",//unico (usa o id da table pra validadar)
+                'phone'             => "required|string|max:15|unique:users,phone,{$user->id},id",//unico (usa o id da table pra validadar)
                 'email'             => "required|string|email|max:60|unique:users,email,{$user->id},id",//unico (usa o id da table pra validadar)
                 'prison_unit_id'    => 'max:10',
                 'level_access_id'   => 'max:10',
@@ -152,14 +152,13 @@ class User extends Component
                 'email.unique'=> 'Já exite um item com esse nome',
             ]
          )->validate();
-
+         
         // Transforma os caracteres em maiusculos
         $dataValidated['first_name'] = mb_strtoupper ($dataValidated['first_name'],'utf-8');
         $dataValidated['last_name'] = mb_strtoupper ($dataValidated['last_name'],'utf-8');
-        
         $user->update($dataValidated);//atualiza os dados no banco
         $this->reset('userFirstName', 'userLastName', 'userRegistry', 'userPhone', 'userEmail',
-            'userPrisonUnitId', 'userLevelAccessId', 'user_update', 'userPassword');
+            'userPrisonUnitId', 'userLevelAccessId', 'userPassword');
         $this->confirmingUserUpdate = false;
     }
     
@@ -170,7 +169,7 @@ class User extends Component
         $this->confirmingUserDeletion = $userID;
     }
     // USER DELETE
-    public function deleteUser(\App\Models\User $user)
+    public function deleteUser(User $user)
     {
         $user->delete();
         $this->confirmingUserDeletion = false;
@@ -181,7 +180,7 @@ class User extends Component
     public function render()
     {
         return view('livewire.user.user', [
-            'users' => \App\Models\User::latest()
+            'users' => User::latest()
                 ->where('first_name', 'like', "%{$this->search}%")
                 ->orWhere('last_name', 'like', "%{$this->search}%")
                 ->orWhere('email', 'like', "%{$this->search}%")->paginate(10)

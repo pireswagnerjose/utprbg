@@ -10,8 +10,8 @@
             
             {{-- botões cadastrar e cancelar --}}
             <div class="flex justify-end">
-                <x-button class="mr-4">{{ __('Cadastrar') }} </x-button>
                 <x-danger-button wire:click='cancel'>Cancelar</x-danger-button>
+                <x-blue-button class="ml-4">{{ __('Cadastrar') }} </x-blue-button>
             </div>
         </form>
     </div>

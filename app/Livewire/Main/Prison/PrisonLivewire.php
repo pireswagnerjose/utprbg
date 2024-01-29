@@ -7,9 +7,12 @@ use App\Models\Admin\Prison\PrisonOrigin;
 use App\Models\Admin\Prison\TypePrison;
 use App\Models\Admin\PrisonUnit;
 use App\Models\Main\Prison;
+use App\Models\Main\PrisonDocument;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Livewire\Features\SupportFileUploads\WithFileUploads;
 use Livewire\WithPagination;
 
 class PrisonLivewire extends Component
@@ -59,7 +62,10 @@ class PrisonLivewire extends Component
         $this->openModalPrisonCreate = false;
         $this->openModalPrisonUpdate = false;
         $this->openModalPrisonDelete = false;
-        $this->redirectRoute('prisoners.show', ['prisoner_id' => $this->prisoner_id]);
+
+        $this->openModalPrisonDocument = false;
+        $this->openModalPrisonDocumentEdit = false;
+        $this->openModalPrisonDocumentDelete = false;
     }
 
     // Transforma os caracteres em maiusculos
@@ -175,12 +181,122 @@ class PrisonLivewire extends Component
         $this->closeModal();
     }
 
-    // ATUALIZA A PÁGINA
-    #[On('prison::prisonLivewire::refresh')]
     public function render()
     {
         return view('livewire.main.prison.prison-livewire', [
             'prisons' => Prison::where('prisoner_id', $this->prisoner_id)->orderBy('entry_date', 'desc')->paginate(10)
         ]);
+    }
+
+    // PRISON DOCUMENT
+    use WithFileUploads;
+    public $document;
+    public $title = '';
+    public $description = '';
+    public $prison_id;
+    public $prison;
+
+    // MODAL CREATE
+    public $openModalPrisonDocument = false;
+    public function modalPrisonDocument($prison_id)
+    {
+        $this->prison_id = $prison_id;
+        $this->openModalPrisonDocument = $prison_id;
+    }
+
+    public function prisonDocumentCreate()
+    {
+        $this->prison_unit_id = Auth::user()->prison_unit_id;
+        $dataValidated = $this->validate(
+            [
+                'document'      => 'required|mimetypes:application/pdf|max:10000',
+                'title'         => 'required|max:100',
+                'description'   => 'max:100',
+                'user_create'   => 'max:10',
+                'prison_unit_id'=> 'max:10',
+                'prison_id'     => 'max:10',
+            ]
+        );
+        $dataValidated['title'] = mb_strtoupper ($dataValidated['title'],'utf-8');
+        $dataValidated['description'] = mb_strtoupper ($dataValidated['description'],'utf-8');
+
+        if ($this->document) {
+            /* responsável por excluir o documento */
+            if (!empty($dataValidated->document)) {
+                Storage::disk('public')->delete($dataValidated->document);
+            }
+            /* cria o nome com a extensão */
+            $document = 'id-'.$this->prisoner_id . '_date-' . date('d-m-Y_H_m_s') . '.' . $this->document->getClientOriginalExtension();
+            /* faz o upload e retorna o endereco do arquivo */
+            $dataValidated['document'] = $this->document->storeAs('prisoner/'. $this->prisoner_id .'/prison_documents', $document);
+        }
+        PrisonDocument::create($dataValidated);
+        $this->openModalPrisonDocument = false;
+        $this->reset('document', 'title', 'description');
+    }
+
+    // MODAL UPDATE
+    public $openModalPrisonDocumentEdit = false;
+    public function modalPrisonDocumentEdit(PrisonDocument $prison_document)
+    {
+        $this->reset('document', 'title', 'description');
+        $this->title = $prison_document->title;
+        $this->description = $prison_document->description;
+        $this->openModalPrisonDocumentEdit = $prison_document->id;
+    }
+
+    // UPDATE
+    public function documentUpdate(PrisonDocument $prison_document)
+    {
+        if ($this->document) {
+            $dataValidated = $this->validate(
+                [
+                    'document'      => 'nullable|mimetypes:application/pdf|max:10000',
+                    'title'         => 'nullable|max:100',
+                    'description'   => 'nullable|max:100',
+                    'user_update'   => 'nullable|max:10',
+                ]
+            );
+        } else {
+            $dataValidated = $this->validate(
+                [
+                    'title'         => 'nullable|max:100',
+                    'description'   => 'nullable|max:255',
+                    'user_update'   => 'nullable|max:10',
+                ]
+            );
+        }
+        $dataValidated['title'] = mb_strtoupper ($dataValidated['title'],'utf-8');
+        $dataValidated['description'] = mb_strtoupper ($dataValidated['description'],'utf-8');
+
+        if (!empty($dataValidated['document'])) {
+            /* responsável por excluir o documento */
+            if (!empty($this->document)) {
+                Storage::disk('public')->delete($prison_document->document);
+            }
+            /* cria o nome com a extensão */
+            $document = 'id-'.$this->prisoner_id . '_date-' . date('d-m-Y_H_m_s') . '.' . $this->document->getClientOriginalExtension();
+            /* faz o upload e retorna o endereco do arquivo */
+            $dataValidated['document'] = $this->document->storeAs('prisoner/'. $this->prisoner_id .'/prison_documents', $document);
+        }
+        $prison_document->update($dataValidated);
+        $this->openModalPrisonDocumentEdit = false;
+        $this->reset('document', 'title', 'description');
+    }
+
+    // MODAL DELETE
+    public $openModalPrisonDocumentDelete = false;
+    public function modalPrisonDocumentDelete($prison_document_id)
+    {
+        $this->openModalPrisonDocumentDelete = $prison_document_id;
+    }
+    public function prisonDocumentDelete(PrisonDocument $prison_document)
+    {
+        /* responsável por excluir o documento */
+        if (!empty($prison_document->document)) {
+            Storage::disk('public')->delete($prison_document->document);
+        }
+        $prison_document->delete();
+        $this->openModalPrisonDocumentDelete = false;
     }
 }

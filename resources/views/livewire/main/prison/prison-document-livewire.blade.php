@@ -1,12 +1,12 @@
 <div>
-    <button wire:click="modalPrisonDocument({{ $prison_id }})"><span class="text-blue-600 mr-4">[ Adicionar ]</span></button>
-    <div class="">
+    <button wire:click="modalPrisonDocument({{ $prison->id }})"><span class="text-blue-600 mr-4">[ Adicionar ]</span></button>
+    <div class="pt-4">
         @if($prison->prison_documents)
-            <div class="grid grid-cols-2 p-2 rounded-lg gap-20">
+            <div class="grid grid-cols-2 px-2 rounded-lg gap-6">
                 @foreach ($prison->prison_documents as $prison_document)
-                    <div class="border-b dark:border-zinc-700 flex justify-between">
+                    <div class="border-b dark:border-zinc-700 flex justify-between mx-6">
                         <div class="text-sm uppercase font-medium">
-                            <a title='{{ $prison_document->document }}' href='{{ asset("storage/$prison_document->document") }}' rel='shadowbox[galeria]'>
+                            <a title='{{ $prison_document->title }}' href='{{ asset("storage/$prison_document->document") }}' rel='shadowbox[galeria]'>
                                 <dd class="font-semibold text-blue-700 dark:text-blue-500 hover:underline">{{ $prison_document->title }}</dd>
                             </a>
                         </div>
@@ -19,7 +19,4 @@
             </div>
         @endif
     </div>
-    @include("livewire.main.prison.includes.document-modal-add")
-    @include("livewire.main.prison.includes.document-modal-update")
-    @include("livewire.main.prison.includes.document-modal-delete")
 </div>

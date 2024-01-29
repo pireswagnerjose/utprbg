@@ -12,9 +12,9 @@ use App\Models\Admin\Sex;
 use App\Models\Admin\SexualOrientation;
 use App\Models\Admin\State;
 use App\Models\Main\Prisoner;
-use App\Models\Main\Process;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 use Illuminate\Validation\Rules\File;
@@ -22,7 +22,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\WithPagination;
 
-#[Layout("layouts.app")]
+
 #[Title("Exibir Preso")]
 class PrisonerShowLivewire extends Component
 {
@@ -152,13 +152,13 @@ class PrisonerShowLivewire extends Component
                 'name'                  =>'required|max:100',
                 'nickname'              =>'nullable|max:100',
                 'date_birth'            =>'required|min:10|max:10',
-                'cpf'                   =>"nullable|min:14|max:14|unique:prisoners,cpf,{$this->prisoner_id},id",
-                'rg'                    =>"nullable|max:50|unique:prisoners,rg,{$this->prisoner_id},id",
+                'cpf'                   => ['nullable', 'min:14', 'max:14'],
+                'rg'                    =>"nullable|max:50",
                 'title'                 =>"nullable|min:14|max:14|unique:prisoners,title,{$this->prisoner_id},id",
                 'birth_certificate'     =>"nullable|max:60|unique:prisoners,birth_certificate,{$this->prisoner_id},id",
                 'reservist'             =>"nullable|max:60|unique:prisoners,reservist,{$this->prisoner_id},id",
                 'sus_card'              =>"nullable|min:19|max:19|unique:prisoners,sus_card,{$this->prisoner_id},id",
-                'rji'                   =>"nullable|min:12|max:12|unique:prisoners,rji,{$this->prisoner_id},id",
+                'rji'                   =>"nullable|min:12|max:12",
                 'profession'            =>'nullable|max:100',
                 'status_prison_id'      =>'required|max:100',
                 'mother'                =>'nullable|max:100',
