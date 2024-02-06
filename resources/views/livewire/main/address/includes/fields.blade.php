@@ -26,7 +26,7 @@
     </div>
     <div class="col-span-1 relative z-0 w-full group">
         <select id="state_id" wire:model="state_id" wire:change='selectMunicipality' class="uppercase block py-1 mt-1 px-0 w-full text-sm text-zinc-500 dark:text-zinc-400 bg-transparent border-0 border-b border-zinc-400 dark:border-zinc-600 dark:focus:border-blue-500 focus:border-blue-600 appearance-none focus:outline-none focus:ring-0 peer">
-            <option class="text-zinc-900 dark:text-zinc-600" selected value="{{ $state->id ?? '' }}">{{ $state->id ?? 'UF' }}</option>
+            <option class="text-zinc-900 dark:text-zinc-600" selected value="{{ $state->id ?? '' }}">{{ $state->id ?? 'Estado' }}</option>
             @foreach ($states->all(['id']) as $state)
                 <option class="text-zinc-900 dark:text-zinc-600" value="{{ $state->id ?? '' }}" @selected(old('state_id') ==  $state->id)>{{$state->state }}</option>
             @endforeach
@@ -35,7 +35,7 @@
     </div>
     <div class="col-span-1 relative z-0 w-full group">
         <select id="municipality_id" wire:model="municipality_id" class="uppercase block py-1 mt-1 px-0 w-full text-sm text-zinc-500 dark:text-zinc-400 bg-transparent border-0 border-b border-zinc-400 dark:border-zinc-600 dark:focus:border-blue-500 focus:border-blue-600 appearance-none focus:outline-none focus:ring-0 peer">
-            <option class="text-zinc-900 dark:text-zinc-600" selected value="{{ $municipalityEdit->id ?? '' }}">{{ $municipalityEdit->municipality ?? 'Naturalidade' }}</option>
+            <option class="text-zinc-900 dark:text-zinc-600" selected value="{{ $municipalityEdit->id ?? '' }}">{{ $municipalityEdit->municipality ?? 'Cidade' }}</option>
             @foreach ($municipalities as $municipality)
                 <option class="text-zinc-900 dark:text-zinc-600" value="{{ $municipality->id ?? '' }}" @selected(old('municipality_id') ==  $municipality->id)>{{$municipality->municipality }} - {{$municipality->state->uf }}</option>
             @endforeach

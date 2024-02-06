@@ -21,9 +21,8 @@
 
 {{-- linha 2 --}}
 <div class="grid md:grid-cols-4 mb-8 md:gap-6">
-    <div class="col-span-1 relative z-0 w-full group">
-        <script type="text/javascript"> $("#cpf").mask("000.000.000-00"); </script>
-        <x-input type="text" wire:model="cpf" id="cpf" />
+    <div class="col-span-1 relative z-0 w-full group" x-data="{ data : ' ' }" >
+        <x-input type="text" wire:model="cpf" id="cpf" x-mask="999.999.999-99" />
         <x-label for="cpf" wire:model="cpf" value="{{ 'CPF' }}" />
         <x-input-error for="cpf" class="mt-2">{{ $message ?? '' }}</x-input-error>
     </div>
@@ -32,9 +31,8 @@
         <x-label for="rg" wire:model="rg" value="{{ 'RG' }}" />
         <x-input-error for="rg" class="mt-2">{{ $message ?? '' }}</x-input-error>
     </div>
-    <div class="col-span-1 relative z-0 w-full group">
-        <script type="text/javascript"> $("#title").mask("0000.0000.0000"); </script>
-        <x-input type="text" wire:model="title" id="title" />
+    <div class="col-span-1 relative z-0 w-full group" x-data="{ data : ' ' }" >
+        <x-input type="text" wire:model="title" id="title" x-mask="9999.9999.9999" />
         <x-label for="title" wire:model="title" value="{{ 'Título de Eleitor' }}" />
         <x-input-error for="title" class="mt-2">{{ $message ?? '' }}</x-input-error>
     </div>
@@ -52,15 +50,13 @@
         <x-label for="reservist" wire:model="reservist" value="{{ 'Reservista' }}" />
         <x-input-error for="reservist" class="mt-2">{{ $message ?? '' }}</x-input-error>
     </div>
-    <div class="col-span-1 relative z-0 w-full group">
-        <script type="text/javascript"> $("#sus_card").mask("0000.0000.0000.0000"); </script>
-        <x-input type="text" wire:model="sus_card" id="sus_card" />
+    <div class="col-span-1 relative z-0 w-full group" x-data="{ data : ' ' }" >
+        <x-input type="text" wire:model="sus_card" id="sus_card" x-mask="9999.9999.9999.9999" />
         <x-label for="sus_card" wire:model="sus_card" value="{{ 'Cartão SUS' }}" />
         <x-input-error for="sus_card" class="mt-2">{{ $message ?? '' }}</x-input-error>
     </div>
-    <div class="col-span-1 relative z-0 w-full group">
-        <script type="text/javascript"> $("#rji").mask("000000000-00"); </script>
-        <x-input type="text" wire:model="rji" id="rji" />
+    <div class="col-span-1 relative z-0 w-full group" x-data="{ data : ' ' }" >
+        <x-input type="text" wire:model="rji" id="rji" x-mask="999999999-99" />
         <x-label for="rji" wire:model="rji" value="{{ 'RJI' }}" />
         <x-input-error for="rji" class="mt-2">{{ $message ?? '' }}</x-input-error>
     </div>

@@ -28,7 +28,7 @@ class PrisonerLivewire extends Component
                 ->where('rg', 'like', "%{$this->rg}%")
                 ->where('title', 'like', "%{$this->title}%")
                 ->where('birth_certificate', 'like', "%{$this->birth_certificate}%")
-                ->where('rji', 'like', "%{$this->rji}%")
+                // ->where('rji', 'like', "%{$this->rji}%")
                 ->paginate(12)
         ]);
     }

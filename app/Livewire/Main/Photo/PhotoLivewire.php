@@ -7,7 +7,6 @@ use App\Models\Main\Prisoner;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
-use Illuminate\Validation\Rules\File;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -20,7 +19,7 @@ class PhotoLivewire extends Component
     public $prisoner = [];
 
     // DATA
-    public $photo;
+    public $photo = '';
     public $position;
     public $description = '';
     public $user_create = '';
@@ -80,6 +79,7 @@ class PhotoLivewire extends Component
     // CREATE
     public function photoCreate()
     {
+        $dataValidated = '';
         $dataValidated = $this->validate(
             [
                 'photo'         => 'required|mimes:jpeg,jpg,png',
@@ -101,6 +101,7 @@ class PhotoLivewire extends Component
             $photo_name = 'id-'.$this->prisoner['id'].'_'.'date-'.date('d-m-Y_H_m_s') .'.'.$dataValidated['photo']->getClientOriginalExtension();
             /* faz o upload e retorna o endereco do arquivo */
             $dataValidated['photo'] = $dataValidated['photo']->storeAs('prisoner/'. $this->prisoner['id']. '/gallery', $photo_name);
+            $photo_name = '';
         }
         Photo::create($dataValidated);
         $this->closeModal();

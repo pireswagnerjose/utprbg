@@ -236,6 +236,6 @@
             </div>
         </div>
     </div>
-
-    @include('menu')
+    <livewire:site.navigation />
+    {{-- @include('menu') --}}
 </nav>

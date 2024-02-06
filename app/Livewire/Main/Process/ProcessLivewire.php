@@ -16,6 +16,9 @@ class ProcessLivewire extends Component
 {
     use WithPagination;
 
+    #[Reactive]
+    public $prisoner_id;
+
     // DATA
     public $date_arrest;
     public $date_exit;
@@ -28,7 +31,6 @@ class ProcessLivewire extends Component
     public $user_create = '';
     public $user_update = '';
     public $prison_unit_id = '';
-    public $prisoner_id;
     public $origin_process_id;
     public $process_regime_id;
     public $origin_processes;

@@ -7,12 +7,15 @@ use App\Models\Main\PenalTypeProcess;
 use App\Models\Main\Process;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Livewire\Attributes\Reactive;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class ProcessPenalTypeLivewire extends Component
 {
     use WithPagination;
+
+    #[Reactive]
     public $process_id;
     public $prisoner_id;
     public $user_create = '';

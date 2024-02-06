@@ -11,14 +11,13 @@ use App\Models\Admin\Prison\StatusPrison;
 use App\Models\Admin\Sex;
 use App\Models\Admin\SexualOrientation;
 use App\Models\Admin\State;
+use App\Models\Main\Photo;
 use App\Models\Main\Prisoner;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 use Illuminate\Validation\Rules\File;
-use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\WithPagination;
 
@@ -179,6 +178,8 @@ class PrisonerShowLivewire extends Component
         $dataValidated = $prisonerAccessory->convertDate($dataValidated);
         // Transforma os caracteres em maiusculos
         $dataValidated = $prisonerAccessory->convertUppercase($dataValidated);
+        //Remove espaço em branco no começo do nome
+        $dataValidated['name'] = trim($dataValidated['name']);
         // Atualiza os dados no banco
         $prisoner->update($dataValidated);
         $this->clearFields();
@@ -213,10 +214,11 @@ class PrisonerShowLivewire extends Component
     {
         $dataValidated = $this->validate(
             [
-                'photo' => File::image()->types(['jpeg', 'jpg', 'png']),
+                'photo' => 'mimes:jpeg,jpg,png',
             ]
         );
         if ($this->photo) {
+            $prisoner_name = trim($prisoner['name']);
             $prisoner_name = str_replace("/", "-", $prisoner['name']);
             /* responsável por excluir o diretório e a foto */
             if (!empty($prisoner->photo)) {

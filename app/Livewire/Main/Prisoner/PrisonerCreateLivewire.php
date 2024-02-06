@@ -127,6 +127,8 @@ class PrisonerCreateLivewire extends Component
         $dataValidated = $prisonerAccessory->convertDate($dataValidated);
         // Transforma os caracteres em maiusculos
         $dataValidated = $prisonerAccessory->convertUppercase($dataValidated);
+        //Remove espaço em branco no começo do nome
+        $dataValidated['name'] = trim($dataValidated['name']);
         // Cadastra os dados no banco
         Prisoner::create($dataValidated);
         // Limpa os campos

@@ -10,11 +10,11 @@
     </x-slot>
 
     <x-slot name="footer">
-        <x-blue-button wire:click="closeModal" wire:loading.attr="disabled">
+        <x-secondary-button wire:click="closeModal" wire:loading.attr="disabled">
             {{ __('Cancel') }}
-        </x-blue-button>
+        </x-secondary-button>
 
-        <x-danger-button class="ms-3" wire:click="photoDelete({{ $openModalPhotoDelete }})" wire:loading.attr="disabled">
+        <x-danger-button class="ms-3" wire:loading.attr="disabled">
             {{ 'Excluir' }}
         </x-danger-button>
     </x-slot>

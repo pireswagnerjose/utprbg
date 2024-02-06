@@ -37,11 +37,8 @@
         </select>
         <x-input-error for="process_regime_id" class="mt-2">{{ $message ?? '' }}</x-input-error>
     </div>
-    <div class="col-span-1 relative z-0 w-full group">
-        <script type="text/javascript">
-            $("#eproc").mask("0000000-00.0000.000.0000");
-        </script>
-        <x-input type="text" wire:model="eproc" id="eproc" maxlength="24" />
+    <div class="col-span-1 relative z-0 w-full group" x-data>
+        <x-input type="text" wire:model="eproc" id="eproc" maxlength="24" x-mask="9999999-99.9999.999.9999" />
         <x-label for="eproc" wire:model="eproc" value="{{ 'EPROC' }}" />
         <x-input-error for="eproc" class="mt-2">{{ $message ?? '' }}</x-input-error>
     </div>
@@ -49,11 +46,8 @@
 
 {{-- linha 3 --}}
 <div class="grid md:grid-cols-3 mb-8 md:gap-6">
-    <div class="col-span-1 relative z-0 w-full group">
-        <script type="text/javascript">
-            $("#seeu").mask("0000000-00.0000.0.00.0000");
-        </script>
-        <x-input type="text" wire:model="seeu" id="seeu" maxlength="25" />
+    <div class="col-span-1 relative z-0 w-full group" x-data>
+        <x-input type="text" wire:model="seeu" id="seeu" maxlength="25" x-mask="9999999-99.9999.9.99.9999" />
         <x-label for="seeu" wire:model="seeu" value="{{ 'SEEU' }}" />
         <x-input-error for="seeu" class="mt-2">{{ $message ?? '' }}</x-input-error>
     </div>

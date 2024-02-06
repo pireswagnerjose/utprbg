@@ -13,7 +13,7 @@
             {{ __('Cancel') }}
         </x-danger-button>
 
-        <x-blue-button class="ms-3" wire:click="photoUpdate({{ $openModalPhotoUpdate }})" wire:loading.attr="disabled">
+        <x-blue-button class="ms-3" wire:loading.attr="disabled">
             {{ __('Save') }}
         </x-blue-button>
     </x-slot>

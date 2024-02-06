@@ -8,11 +8,14 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Illuminate\Validation\Rules\File;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Attributes\Reactive;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 
 class ProcessDocumentLivewire extends Component
 {
     use WithFileUploads;
+
+    #[Reactive]
     public $process_id;
     public $prisoner_id;
     public $document;
@@ -62,8 +65,8 @@ class ProcessDocumentLivewire extends Component
 
         if ($this->document) {
             /* responsável por excluir o documento */
-            if (!empty($dataValidated->document)) {
-                Storage::disk('public')->delete($dataValidated->document);
+            if (!empty($dataValidated['document'])) {
+                Storage::disk('public')->delete($dataValidated['document']);
             }
             /* cria o nome com a extensão */
             $document = 'id-'.$this->prisoner_id . '_date-' . date('d-m-Y_H_m_s') . '.' . $this->document->getClientOriginalExtension();
