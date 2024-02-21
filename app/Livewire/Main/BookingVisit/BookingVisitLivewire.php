@@ -30,7 +30,9 @@ class BookingVisitLivewire extends Component
         $this->user_create    = Auth::user()->id;
         $this->user_update    = Auth::user()->id;
         $this->prison_unit_id = Auth::user()->prison_unit_id;
-        $this->families       = Family::where('prisoner_id', $this->prisoner_id)->get();
+        $this->families       = Family::where('prisoner_id', $this->prisoner_id)
+            ->where('status', 'ATIVO')
+            ->get();
     }
 
     // CLEAR FIELDS - LIMPAR CAMPOS
@@ -38,7 +40,7 @@ class BookingVisitLivewire extends Component
     {
         $this->reset('date', 'type', 'status', 'remark', 'family_id');
     }
-    
+
     // CLOSE MODAL
     public function closeModal()
     {
@@ -50,7 +52,7 @@ class BookingVisitLivewire extends Component
     // Transforma os caracteres em maiusculos
     public function convertUppercase($dataValidated)
     {
-        $dataValidated['remark'] = mb_strtoupper ($dataValidated['remark'],'utf-8');
+        $dataValidated['remark'] = mb_strtoupper($dataValidated['remark'], 'utf-8');
         return $dataValidated;
     }
 
@@ -65,14 +67,14 @@ class BookingVisitLivewire extends Component
     {
         $dataValidated = $this->validate(
             [
-                'date'          =>'required|min:10|max:10',
-                'type'          =>'required|max:10',
-                'status'        =>'nullable|max:60',
-                'remark'        =>'nullable',
-                'user_create'   =>'required|max:10',
-                'prison_unit_id'=>'required|max:10',
-                'prisoner_id'   =>'required|max:10',
-                'family_id'     =>'required|max:10',
+                'date'          => 'required|min:10|max:10',
+                'type'          => 'required|max:10',
+                'status'        => 'nullable|max:60',
+                'remark'        => 'nullable',
+                'user_create'   => 'required|max:10',
+                'prison_unit_id' => 'required|max:10',
+                'prisoner_id'   => 'required|max:10',
+                'family_id'     => 'required|max:10',
             ]
         );
         // Transforma os caracteres em maiusculos
@@ -103,12 +105,12 @@ class BookingVisitLivewire extends Component
     {
         $dataValidated = $this->validate(
             [
-                'date'          =>'required|min:10|max:10',
-                'type'          =>'required|max:10',
-                'status'        =>'nullable|max:60',
-                'remark'        =>'nullable',
-                'user_update'   =>'required|max:10',
-                'family_id'     =>'required|max:10',
+                'date'          => 'required|min:10|max:10',
+                'type'          => 'required|max:10',
+                'status'        => 'nullable|max:60',
+                'remark'        => 'nullable',
+                'user_update'   => 'required|max:10',
+                'family_id'     => 'required|max:10',
             ]
         );
         // Transforma os caracteres em maiusculos
@@ -120,7 +122,7 @@ class BookingVisitLivewire extends Component
         $this->resetPage();
     }
 
-    // MODAL DELETE 
+    // MODAL DELETE
     public $openModalBookingVisitDelete = false;
     public function modalBookingVisitDelete($booking_visit_id)
     {
@@ -137,7 +139,7 @@ class BookingVisitLivewire extends Component
     public function render()
     {
         return view('livewire.main.booking-visit.booking-visit-livewire', [
-            'booking_visits' => BookingVisit::where('prisoner_id', $this->prisoner_id)->orderBy('date','desc')->paginate(10)
+            'booking_visits' => BookingVisit::where('prisoner_id', $this->prisoner_id)->orderBy('date', 'desc')->paginate(10)
         ]);
     }
 }
