@@ -82,19 +82,22 @@ class ProcessPenalTypeLivewire extends Component
 
     // MODAL DELETE
     public $openModalProcessPenealTypeDelete = false;
-    public function modalProcessPenealTypeDelete($penal_type_id)
+    public function modalProcessPenealTypeDelete($penal_type_process_id)
     {
-        $this->openModalProcessPenealTypeDelete = $penal_type_id;
+        $this->openModalProcessPenealTypeDelete = $penal_type_process_id;
     }
-    public function processPenalTypeDelete($penal_type_id)
+    public function processPenalTypeDelete($penal_type_process_id)
     {
-        $penal_type_process = PenalTypeProcess::where('penal_type_id', $penal_type_id)->first();// seleciona o processo para exclusão
+        $penal_type_process = PenalTypeProcess::findOrFail($penal_type_process_id);
         $penal_type_process->delete();
+    
         $this->closeModal();
     }
-
+    
+    public $penal_type_processes;
     public function render()
     {
+        $this->penal_type_processes = PenalTypeProcess::where('process_id', $this->process_id)->get();
         return view('livewire.main.process.process-penal-type-livewire', [
             'penal_types' => PenalType::orderBy('created_at', 'asc')
                 ->where('law', 'like', "%{$this->search}%")

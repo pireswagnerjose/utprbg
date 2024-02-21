@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PrisonerPdfController;
 use App\Livewire\Admin\Country\CountryLivewire;
 use App\Livewire\Admin\EducationLevel\EducationLevelLivewire;
 use App\Livewire\Admin\Ethnicity\EthnicityLivewire;
@@ -145,4 +146,7 @@ Route::middleware([
     Route::get('/prisoners/{prisoner_id}', PrisonerShowLivewire::class)->name('prisoners.show');
     Route::get('/prisoners-create', PrisonerCreateLivewire::class)->name('prisoners.create');
 
+    // REPORT
+    // Prisoner Report
+    Route::any('/prisoner-report/{prisoner_id}', [PrisonerPdfController::class, 'pdf'])->name('prisoner-report');
 });

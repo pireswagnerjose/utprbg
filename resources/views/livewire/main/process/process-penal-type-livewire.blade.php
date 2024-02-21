@@ -16,13 +16,17 @@
     @endif
     <div class="">
         <div class="grid grid-cols-1 p-2 rounded-lg">
-            @foreach ($process->penal_type as $penal_type)
+            @foreach ($penal_type_processes as $penal_type_process)
                 <div class="border-b dark:border-zinc-700 py-2 flex justify-between">
                     <div class="text-sm uppercase items-center font-medium w-11/12">
-                        - {{ $penal_type->law }} {{ $penal_type->article }} {{ $penal_type->paragraph }} {{ $penal_type->item }} <span class="font-light text-xs"> - {{ $penal_type->description }}</span>
+                        - {{ $penal_type_process->penal_type->law }} 
+                        {{ $penal_type_process->penal_type->article }} 
+                        {{ $penal_type_process->penal_type->paragraph }} 
+                        {{ $penal_type_process->penal_type->item }} <span class="font-light text-xs"> 
+                        - {{ $penal_type_process->penal_type->description }}</span>
                     </div>
                     <div class="w-1/12 text-end">
-                        <button wire:click="modalProcessPenealTypeDelete({{ $penal_type->id }})"><span class="text-red-600 text-xs">[ excluir ]</span></button>
+                        <button wire:click="modalProcessPenealTypeDelete({{ $penal_type_process->id }})"><span class="text-red-600 text-xs">[ excluir ]</span></button>
                     </div>
                 </div>
             @endforeach
@@ -30,5 +34,4 @@
     </div>
     {{-- @include("livewire.main.process.includes.penal-type-modal-create") --}}
     @include("livewire.main.process.includes.penal-type-modal-delete")
-
 </div>

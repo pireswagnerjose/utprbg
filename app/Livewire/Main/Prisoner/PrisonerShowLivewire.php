@@ -242,4 +242,16 @@ class PrisonerShowLivewire extends Component
             'prisoner' => Prisoner::where('id', $this->prisoner_id)->first()
         ]);
     }
+
+    // MODAL REPORT
+    public $openModalReport = false;
+    public function modalReport($prisoner_id)
+    {
+        $this->openModalReport = true;
+    }
+    public function closeModalReport()
+    {
+        $this->openModalReport = false;
+        $this->redirectRoute('prisoners.show', ['prisoner_id' => $this->prisoner_id]);
+    }
 }

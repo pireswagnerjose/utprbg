@@ -10,13 +10,10 @@
             <span class="text-sm ml-2">Adicionar Novo</span>
         </div>
     </div>
-    <form wire:submit="photoCreate">
-        @include('livewire.main.photo.includes.modal-create')
-    </form>
-    <form wire:submit="photoUpdate({{ $openModalPhotoUpdate }})">
-        @include('livewire.main.photo.includes.modal-update')
-    </form>
-    <form wire:submit="photoDelete({{ $openModalPhotoDelete }})">
+    @include('livewire.main.photo.includes.modal-create')
+    @include('livewire.main.photo.includes.modal-update')
+
+    <form wire:submit="photoDelete({{ $openModalDelete }})">
         @include('livewire.main.photo.includes.modal-delete')
     </form>
     @include('livewire.main.photo.includes.show-card')

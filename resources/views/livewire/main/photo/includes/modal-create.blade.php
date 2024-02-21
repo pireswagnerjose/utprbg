@@ -1,5 +1,4 @@
-<!-- update-->
-<x-dialog-modal wire:model="openModalPhotoCreate" maxWidth="xl">
+<x-dialog-modal wire:model="openModalCreate" maxWidth="xl">
     <x-slot name="title">
         {{ 'Cadastrar Foto' }}
     </x-slot>
@@ -9,11 +8,11 @@
     </x-slot>
 
     <x-slot name="footer">
-        <x-danger-button wire:click="closeModal" wire:loading.attr="disabled">
+        <x-danger-button wire:click="$set('openModalCreate', false)" >
             {{ __('Cancel') }}
         </x-danger-button>
 
-        <x-blue-button class="ms-3" wire:loading.attr="disabled">
+        <x-blue-button class="ms-3" wire:click="photoCreate">
             {{ __('Save') }}
         </x-blue-button>
     </x-slot>
