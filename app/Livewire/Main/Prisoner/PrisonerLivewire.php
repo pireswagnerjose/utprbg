@@ -44,23 +44,24 @@ class PrisonerLivewire extends Component
         $this->sexual_orientations  = SexualOrientation::all();
         $this->countries            = Country::all();
     }
+
     public function render()
     {
-        return view('livewire.main.prisoner.prisoner-livewire', [
-            'prisoners' => Prisoner::orderBy('name', 'asc')
-                ->where('name', 'like', "%{$this->name}%")
-                ->where('nickname', 'like', "%{$this->nickname}%")
-                ->where('cpf', 'like', "%{$this->cpf}%")
-                ->where('rg', 'like', "%{$this->rg}%")
-                ->where('title', 'like', "%{$this->title}%")
-                ->where('birth_certificate', 'like', "%{$this->birth_certificate}%")
-                ->where('sus_card', 'like', "%{$this->sus_card}%")
-                ->where('status_prison_id', 'like', "%{$this->status_prison_id}%")
-                ->where('civil_status_id', 'like', "%{$this->civil_status_id}%")
-                ->where('ethnicity_id', 'like', "%{$this->ethnicity_id}%")
-                ->where('sexual_orientation_id', 'like', "%{$this->sexual_orientation_id}%")
-                ->where('country_id', 'like', "%{$this->country_id}%")
-                ->paginate(9)
-        ]);
+        $prisoners = Prisoner::orderBy('name', 'asc')
+            ->where('name', 'like', "%{$this->name}%")
+            ->where('nickname', 'like', "%{$this->nickname}%")
+            ->where('cpf', 'like', "%{$this->cpf}%")
+            ->where('rg', 'like', "%{$this->rg}%")
+            ->where('title', 'like', "%{$this->title}%")
+            ->where('birth_certificate', 'like', "%{$this->birth_certificate}%")
+            ->where('sus_card', 'like', "%{$this->sus_card}%")
+            ->where('status_prison_id', 'like', "%{$this->status_prison_id}%")
+            ->where('civil_status_id', 'like', "%{$this->civil_status_id}%")
+            ->where('ethnicity_id', 'like', "%{$this->ethnicity_id}%")
+            ->where('sexual_orientation_id', 'like', "%{$this->sexual_orientation_id}%")
+            ->where('country_id', 'like', "%{$this->country_id}%")
+            ->paginate(9);
+
+        return view('livewire.main.prisoner.prisoner-livewire', compact('prisoners'));
     }
 }
