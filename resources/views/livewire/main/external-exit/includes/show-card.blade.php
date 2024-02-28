@@ -18,56 +18,56 @@
         {{-- linha 1 --}}
         <div class="grid grid-cols-3 gap-4 mb-5">
             <div class="">
-                <div class="font-light text-sm text-gray-500">Unidade Prisional</div>
+                <x-item-topic>Unidade Prisional</x-item-topic>
                 <div class="text-base font-medium uppercase">{{ $external_exit->prison_unit->prison_unit }}</div>
             </div>
             <div class="">
-                <div class="font-light text-sm text-gray-500">Requisitante</div>
+                <x-item-topic>Requisitante</x-item-topic>
                 <div class="text-base font-medium uppercase">{{ $external_exit->requesting->requesting }}</div>
             </div>
             <div class="">
-                <div class="font-light text-sm text-gray-500">Motivo da Saída</div>
+                <x-item-topic>Motivo da Saída</x-item-topic>
                 <div class="text-base font-medium uppercase">{{ $external_exit->exit_reason->exit_reason }}</div>
             </div>
         </div>
          {{-- linha 2 --}}
          <div class="grid grid-cols-6 gap-4 mb-5">
-            <div class="">
-                <div class="font-light text-sm text-gray-500">Status</div>
+            <div>
+                <x-item-topic>Status</x-item-topic>
                 @if ($external_exit->status == 'CANCELADO')
                     <div class="text-base font-semibold text-red-700 uppercase">{{ $external_exit->status }}</div>
                 @else
                     <div class="text-base font-semibold text-green-700 uppercase">{{ $external_exit->status }}</div>
                 @endif
             </div>
-            <div class="">
-                <div class="font-light text-sm text-gray-500">Data da Saída</div>
+            <div>
+                <x-item-topic>Data da Saída</x-item-topic>
                 @empty(!$external_exit->exit_date)
-                    <div class="text-base font-medium uppercase">{{ \Carbon\Carbon::parse($external_exit->exit_date)->format('d/m/Y') }}</div>
+                    <x-item-data>{{ \Carbon\Carbon::parse($external_exit->exit_date)->format('d/m/Y') }}</x-item-data>
                 @endempty
             </div>
-            <div class="">
-                <div class="font-light text-sm text-gray-500">Hora da Saída</div>
-                <div class="text-base font-medium uppercase">{{ $external_exit->departure_time }}</div>
+            <div>
+                <x-item-topic>Hora da Saída</x-item-topic>
+                <x-item-data>{{ $external_exit->departure_time }}</x-item-data>
             </div>
-            <div class="">
-                <div class="font-light text-sm text-gray-500">Hora do Retorno</div>
-                <div class="text-base font-medium uppercase">{{ $external_exit->arrival_time }}</div>
+            <div>
+                <x-item-topic>Hora do Retorno</x-item-topic>
+                <x-item-data>{{ $external_exit->arrival_time }}</x-item-data>
             </div>
-            <div class="">
-                <div class="font-light text-sm text-gray-500">Estado</div>
-                <div class="text-base font-medium uppercase">{{ $external_exit->state->state }}</div>
+            <div>
+                <x-item-topic>Estado</x-item-topic>
+                <x-item-data>{{ $external_exit->state->state }}</x-item-data>
             </div>
-            <div class="">
-                <div class="font-light text-sm text-gray-500">Município</div>
-                <div class="text-base font-medium uppercase">{{ $external_exit->municipality->municipality }}</div>
+            <div>
+                <x-item-topic>Município</x-item-topic>
+                <x-item-data>{{ $external_exit->municipality->municipality }}</x-item-data>
             </div>
          </div>
         {{-- linha 3 --}}
         <div class="grid grid-cols-6 gap-4 mb-5 items-center">
             <div class="col-span-5">
-                <div class="font-light text-sm text-gray-500">Observações</div>
-                <div class="text-base text-justify font-medium uppercase">{{ $external_exit->remark }}</div>
+                <x-item-topic>Observações</x-item-topic>
+                <x-item-data class="text-justify">{{ $external_exit->remark }}</x-item-data>
             </div>
             @if ($external_exit->document != null)
                 <div class="col-span-1 bg-zinc-200 dark:bg-zinc-600 hover:bg-zinc-300 dark:hover:bg-zinc-700 p-4 rounded-lg mx-auto">

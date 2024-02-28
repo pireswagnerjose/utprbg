@@ -18,28 +18,28 @@
         {{-- linha 1 --}}
         <div class="grid grid-cols-6 gap-4 mb-5">
             <div class="col-span-2">
-                <div class="font-light text-sm text-gray-500">Tipo de Atendimento</div>
-                <div class="text-base font-medium uppercase">{{ $legal_assistance->type_care->type_care }}</div>
+                <x-item-topic>Tipo de Atendimento</x-item-topic>
+                <x-item-data>{{ $legal_assistance->type_care->type_care }}</x-item-data>
             </div>
             <div class="col-span-2">
-                <div class="font-light text-sm text-gray-500">Modalidade do Atendimento</div>
-                <div class="text-base font-medium uppercase">{{ $legal_assistance->modality_care->modality_care }}</div>
+                <x-item-topic>Modalidade do Atendimento</x-item-topic>
+                <x-item-data>{{ $legal_assistance->modality_care->modality_care }}</x-item-data>
             </div>
             <div class="col-span-1">
-                <div class="font-light text-sm text-gray-500">Data</div>
+                <x-item-topic>Data</x-item-topic>
                 @empty(!$legal_assistance->date)
-                    <div class="text-base font-medium uppercase">{{ \Carbon\Carbon::parse($legal_assistance->date)->format('d/m/Y') }}</div>
+                    <x-item-data>{{ \Carbon\Carbon::parse($legal_assistance->date)->format('d/m/Y') }}</x-item-data>
                 @endempty
             </div>
             <div class="col-span-1">
-                <div class="font-light text-sm text-gray-500">Hora</div>
-                <div class="text-base font-medium uppercase">{{ $legal_assistance->time }}</div>
+                <x-item-topic>Hora</x-item-topic>
+                <x-item-data>{{ $legal_assistance->time }}</x-item-data>
             </div>
         </div>
          {{-- linha 2 --}}
          <div class="grid grid-cols-8 gap-4 mb-5">
             <div class="col-span-1">
-                <div class="font-light text-sm text-gray-500">Status</div>
+                <x-item-topic>Status</x-item-topic>
                 @if ($legal_assistance->status == 'CANCELADO')
                     <div class="text-base font-semibold text-red-700 uppercase">{{ $legal_assistance->status }}</div>
                 @else
@@ -47,29 +47,29 @@
                 @endif
             </div>
             <div class="col-span-3">
-                <div class="font-light text-sm text-gray-500">Advogado</div>
+                <x-item-topic>Advogado</x-item-topic>
                 @empty(!$legal_assistance->lawyer_id)
-                    <div class="text-base font-medium uppercase">{{ $legal_assistance->lawyer->lawyer }}</div>
+                    <x-item-data>{{ $legal_assistance->lawyer->lawyer }}</x-item-data>
                 @endempty
             </div>
             <div class="col-span-2">
-                <div class="font-light text-sm text-gray-500">Comarca da Audiência</div>
+                <x-item-topic>Comarca da Audiência</x-item-topic>
                 @empty(!$legal_assistance->district_id)
-                    <div class="text-base font-medium uppercase">{{ $legal_assistance->district->district }}</div>
+                    <x-item-data>{{ $legal_assistance->district->district }}</x-item-data>
                 @endempty
             </div>
             <div class="col-span-2">
-                <div class="font-light text-sm text-gray-500">Vara Criminal</div>
+                <x-item-topic>Vara Criminal</x-item-topic>
                 @empty(!$legal_assistance->criminal_court_id)
-                    <div class="text-base font-medium uppercase">{{ $legal_assistance->criminal_court->criminal_court }}</div>
+                    <x-item-data>{{ $legal_assistance->criminal_court->criminal_court }}</x-item-data>
                 @endempty
             </div>
          </div>
         {{-- linha 3 --}}
         <div class="grid grid-cols-6 gap-4 mb-5 items-center">
             <div class="col-span-5">
-                <div class="font-light text-sm text-gray-500">Observações</div>
-                <div class="text-base text-justify font-medium uppercase">{{ $legal_assistance->remark }}</div>
+                <x-item-topic>Observações</x-item-topic>
+                <x-item-data class="text-justify">{{ $legal_assistance->remark }}</x-item-data>
             </div>
             @if ($legal_assistance->document != null)
                 <div class="col-span-1 bg-zinc-200 dark:bg-zinc-600 hover:bg-zinc-300 dark:hover:bg-zinc-700 p-4 rounded-lg mx-auto">

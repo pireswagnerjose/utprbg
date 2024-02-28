@@ -19,8 +19,8 @@
                 </div>
 
                 {{-- descrição --}}
-                <div class="font-light pt-2 text-xs text-zinc-500">{{ $photo->position }}</div>
-                <div class="font-medium text-sm uppercase">{{ $photo->description }}</div>
+                <div class="font-light pt-2 text-[9pt] text-zinc-500">{{ $photo->position }}</div>
+                <div class="font-medium text-[10pt] uppercase">{{ $photo->description }}</div>
             </div>
 
             {{-- mensagem exibina de não houver dados --}}

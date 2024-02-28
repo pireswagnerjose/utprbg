@@ -18,21 +18,21 @@
         {{-- linha 1 --}}
         <div class="grid grid-cols-5 gap-4 mb-5">
             <div class="col-span-2">
-                <div class="font-light text-sm text-gray-500">Tipo do Atendimento</div>
-                <div class="text-base font-medium uppercase">{{ $internal_service->type_service->type_service }}</div>
+                <x-item-topic>Tipo do Atendimento</x-item-topic>
+                <x-item-data>{{ $internal_service->type_service->type_service }}</x-item-data>
             </div>
             <div class="">
-                <div class="font-light text-sm text-gray-500">Data</div>
+                <x-item-topic>Data</x-item-topic>
                 @empty(!$internal_service->date)
-                    <div class="text-base font-medium uppercase">{{ \Carbon\Carbon::parse($internal_service->date)->format('d/m/Y') }}</div>
+                    <x-item-data>{{ \Carbon\Carbon::parse($internal_service->date)->format('d/m/Y') }}</x-item-data>
                 @endempty
             </div>
             <div class="">
-                <div class="font-light text-sm text-gray-500">Hora</div>
-                <div class="text-base font-medium uppercase">{{ $internal_service->time }}</div>
+                <x-item-topic>Hora</x-item-topic>
+                <x-item-data>{{ $internal_service->time }}</x-item-data>
             </div>
             <div class="">
-                <div class="font-light text-sm text-gray-500">Status</div>
+                <x-item-topic>Status</x-item-topic>
                 @if ($internal_service->status == 'CANCELADO')
                     <div class="text-base font-semibold text-red-700 uppercase">{{ $internal_service->status }}</div>
                 @else
@@ -43,8 +43,8 @@
         {{-- linha 4 --}}
         <div class="mb-5">
             <div class="">
-                <div class="font-light text-sm text-gray-500">Observações</div>
-                <div class="text-base font-medium uppercase">{{ $internal_service->remark }}</div>
+                <x-item-topic>Observações</x-item-topic>
+                <x-item-data class="text-justify">{{ $internal_service->remark }}</x-item-data>
             </div>
         </div>
     </div>

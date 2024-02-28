@@ -18,38 +18,38 @@
         {{-- linha 1 --}}
         <div class="grid grid-cols-6 gap-4 mb-5">
             <div class="col-span-3">
-                <div class="font-light text-sm text-gray-500">Logradouro</div>
-                <div class="text-base font-medium uppercase">{{ $address->street }}</div>
+                <x-item-topic>Logradouro</x-item-topic>
+                <x-item-data>{{ $address->street }}</x-item-data>
             </div>
-            <div class="">
-                <div class="font-light text-sm text-gray-500">Número</div>
-                <div class="text-base font-medium uppercase">{{ $address->number }}</div>
+            <div>
+                <x-item-topic>Número</x-item-topic>
+                <x-item-data>{{ $address->number }}</x-item-data>
             </div>
-            <div class="2">
-                <div class="font-light text-sm text-gray-500">Complemento</div>
-                <div class="text-base font-medium uppercase">{{ $address->complement }}</div>
+            <div class="col-span-2">
+                <x-item-topic>Complemento</x-item-topic>
+                <x-item-data>{{ $address->complement }}</x-item-data>
             </div>
         </div>
         {{-- linha 2 --}}
         <div class="grid grid-cols-3 gap-4 mb-5">
-            <div class="">
-                <div class="font-light text-sm text-gray-500">Bairro</div>
-                <div class="text-base font-medium uppercase">{{ $address->barrio }}</div>
+            <div>
+                <x-item-topic>Bairro</x-item-topic>
+                <x-item-data>{{ $address->barrio }}</x-item-data>
             </div>
-            <div class="">
-                <div class="font-light text-sm text-gray-500">Cidade</div>
-                <div class="text-base font-medium uppercase">{{ $address->municipality->municipality }}</div>
+            <div>
+                <x-item-topic>Cidade</x-item-topic>
+                <x-item-data>{{ $address->municipality->municipality }}</x-item-data>
             </div>
-            <div class="">
-                <div class="font-light text-sm text-gray-500">Estado</div>
-                <div class="text-base font-medium uppercase">{{ $address->state->state }}</div>
+            <div>
+                <x-item-topic>Estado</x-item-topic>
+                <x-item-data>{{ $address->state->state }}</x-item-data>
             </div>
         </div>
         {{-- linha 3 --}}
         <div class="mb-5">
-            <div class="">
-                <div class="font-light text-sm text-gray-500">Observações</div>
-                <div class="text-base font-medium uppercase">{{ $address->remark }}</div>
+            <div>
+                <x-item-topic>Observações</x-item-topic>
+                <x-item-data class="text-justify">{{ $address->remark }}</x-item-data>
             </div>
         </div>
     </div>

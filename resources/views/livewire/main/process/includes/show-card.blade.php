@@ -16,76 +16,72 @@
         </div>
         {{-- linha 1 --}}
         <div class="grid grid-cols-3 gap-4 mb-5">
-            <div class="">
-                <div class="font-light text-sm text-gray-500">Data da Prisão no Processo</div>
+            <div>
+                <x-item-topic>Data da Prisão no Processo</x-item-topic>
                 @empty(!$process->date_arrest)
-                    <div class="text-base font-medium uppercase">{{ \Carbon\Carbon::parse($process->date_arrest)->format('d/m/Y') }}</div>
+                    <x-item-data>{{ \Carbon\Carbon::parse($process->date_arrest)->format('d/m/Y') }}</x-item-data>
                 @endempty
             </div>
-            <div class="">
-                <div class="font-light text-sm text-gray-500">Data de Alvará no Processo</div>
+            <div>
+                <x-item-topic>Data de Alvará no Processo</x-item-topic>
                 @empty(!$process->date_exit)
-                    <div class="text-base font-medium uppercase">{{ \Carbon\Carbon::parse($process->date_exit)->format('d/m/Y') }}</div>
+                    <x-item-data>{{ \Carbon\Carbon::parse($process->date_exit)->format('d/m/Y') }}</x-item-data>
                 @endempty
             </div>
-            <div class="">
-                <div class="font-light text-sm text-gray-500">Origem do Processo</div>
-                <div class="text-base font-medium uppercase">{{ $process->origin_process->origin_process }}</div>
+            <div>
+                <x-item-topic>Origem do Processo</x-item-topic>
+                <x-item-data>{{ $process->origin_process->origin_process }}</x-item-data>
             </div>
         </div>
         {{-- linha 2 --}}
         <div class="grid grid-cols-3 gap-4 mb-5">
-            <div class="">
-                <div class="font-light text-sm text-gray-500">Comarca de Origem</div>
-                <div class="text-base font-medium uppercase">{{ $process->judicial_district_origin }}</div>
+            <div>
+                <x-item-topic>Comarca de Origem</x-item-topic>
+                <x-item-data>{{ $process->judicial_district_origin }}</x-item-data>
             </div>
-            <div class="">
-                <div class="font-light text-sm text-gray-500">Regime da Prisão</div>
-                <div class="text-base font-medium uppercase">{{ $process->process_regime->process_regime }}</div>
+            <div>
+                <x-item-topic>Regime da Prisão</x-item-topic>
+                <x-item-data>{{ $process->process_regime->process_regime }}</x-item-data>
             </div>
-            <div class="">
-                <div class="font-light text-sm text-gray-500">Número do EPROC</div>
-                <div class="text-base font-medium uppercase">{{ $process->eproc }}</div>
+            <div>
+                <x-item-topic>Número do EPROC</x-item-topic>
+                <x-item-data>{{ $process->eproc }}</x-item-data>
             </div>
         </div>
         {{-- linha 3 --}}
         <div class="grid grid-cols-3 gap-4 mb-5">
-            <div class="">
-                <div class="font-light text-sm text-gray-500">Número do SEEU</div>
-                <div class="text-base font-medium uppercase">{{ $process->seeu }}</div>
+            <div>
+                <x-item-topic>Número do SEEU</x-item-topic>
+                <x-item-data>{{ $process->seeu }}</x-item-data>
             </div>
-            <div class="">
-                <div class="font-light text-sm text-gray-500">Número do PJE</div>
-                <div class="text-base font-medium uppercase">{{ $process->pje }}</div>
+            <div>
+                <x-item-topic>Número do PJE</x-item-topic>
+                <x-item-data>{{ $process->pje }}</x-item-data>
             </div>
-            <div class="">
-                <div class="font-light text-sm text-gray-500">Número do APF</div>
-                <div class="text-base font-medium uppercase">{{ $process->apf }}</div>
+            <div>
+                <x-item-topic>Número do APF</x-item-topic>
+                <x-item-data>{{ $process->apf }}</x-item-data>
             </div>
         </div>
         {{-- linha 4 --}}
         <div class="grid mb-5">
-            <div class="font-light text-sm text-gray-500">
-                Tipificação
-                <div class="px-4">
-                    <livewire:main.process.process-penal-type-livewire :process_id="$process->id" :$prisoner_id />
-                </div>
+            <x-item-topic> Tipificação </x-item-topic>
+            <div class="px-4">
+                <livewire:main.process.process-penal-type-livewire :process_id="$process->id" :$prisoner_id />
             </div>
         </div>
         {{-- linha 5 --}}
         <div class="grid mb-5">
-            <div class="font-light text-sm text-gray-500">
-                Documentos Relacionados
-                <div class="px-4">
-                    <livewire:main.process.process-document-livewire :process_id="$process->id" :$prisoner_id />
-                </div>
+            <x-item-topic> Documentos Relacionados </x-item-topic>
+            <div class="px-4">
+                <livewire:main.process.process-document-livewire :process_id="$process->id" :$prisoner_id />
             </div>
         </div>
         {{-- linha 6 --}}
         <div class="mb-5">
-            <div class="">
-                <div class="font-light text-sm text-gray-500">Observações</div>
-                <div class="text-base font-medium uppercase text-justify">{{ $process->remark }}</div>
+            <div>
+                <x-item-topic>Observações</x-item-topic>
+                <x-item-data class="text-justify">{{ $process->remark }}</x-item-data>
             </div>
         </div>
     </div>

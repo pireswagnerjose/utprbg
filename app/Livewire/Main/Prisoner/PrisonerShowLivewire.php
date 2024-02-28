@@ -11,13 +11,11 @@ use App\Models\Admin\Prison\StatusPrison;
 use App\Models\Admin\Sex;
 use App\Models\Admin\SexualOrientation;
 use App\Models\Admin\State;
-use App\Models\Main\Photo;
 use App\Models\Main\Prisoner;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
-use Illuminate\Validation\Rules\File;
 use Livewire\Attributes\Title;
 use Livewire\WithPagination;
 
@@ -44,7 +42,7 @@ class PrisonerShowLivewire extends Component
     public $father = '';
     public $profession = '';
     public $user_create = '';
-    public $user_update= '';
+    public $user_update = '';
     public $prison_unit_id = '';
     public $educationLevelID;
     public $sexual_orientation_id = '';
@@ -56,6 +54,7 @@ class PrisonerShowLivewire extends Component
     public $state_id = '';
     public $country_id = '';
     public $status_prison_id = '';
+    public $remarks = '';
     public $status_prisons = [];
     public $education_levels = [];
     public $civil_statuses = [];
@@ -65,10 +64,10 @@ class PrisonerShowLivewire extends Component
     public $municipalities = [];
     public $states = [];
     public $countries = [];
-    
-    public $prisonerMul;//id do preso a ser exibido na view
 
-    public $municipalityEdit = [];//quando for editar o município
+    public $prisonerMul; //id do preso a ser exibido na view
+
+    public $municipalityEdit = []; //quando for editar o município
 
     public function mount()
     {
@@ -90,9 +89,26 @@ class PrisonerShowLivewire extends Component
     public function clearFields()
     {
         $this->reset(
-            'name','nickname','date_birth','cpf','rg','title','birth_certificate','reservist','sus_card','rji',
-            'mother','father','profession','sexual_orientation_id','ethnicity_id','education_level_id',
-            'civil_status_id','sex_id','municipality_id'
+            'name',
+            'nickname',
+            'date_birth',
+            'cpf',
+            'rg',
+            'title',
+            'birth_certificate',
+            'reservist',
+            'sus_card',
+            'rji',
+            'mother',
+            'father',
+            'profession',
+            'sexual_orientation_id',
+            'ethnicity_id',
+            'education_level_id',
+            'civil_status_id',
+            'sex_id',
+            'municipality_id',
+            'remarks'
         );
     }
 
@@ -117,30 +133,31 @@ class PrisonerShowLivewire extends Component
     public function modalPrisonerUpdate(Prisoner $prisoner)
     {
         $this->municipalityEdit     = Municipality::find($prisoner->municipality_id);
-        $this->name                  =$prisoner->name;
-        $this->nickname              =$prisoner->nickname;
-        $this->date_birth            =\Carbon\Carbon::parse($prisoner->date_birth)->format('d/m/Y');//converte data para o padrão pt-br
-        $this->cpf                   =$prisoner->cpf;
-        $this->rg                    =$prisoner->rg;
-        $this->title                 =$prisoner->title;
-        $this->birth_certificate     =$prisoner->birth_certificate;
-        $this->reservist             =$prisoner->reservist;
-        $this->sus_card              =$prisoner->sus_card;
-        $this->rji                   =$prisoner->rji;
-        $this->profession            =$prisoner->profession;
-        $this->status_prison_id      =$prisoner->status_prison_id;
-        $this->mother                =$prisoner->mother;
-        $this->father                =$prisoner->father;
-        $this->education_level_id    =$prisoner->education_level_id;
-        $this->civil_status_id       =$prisoner->civil_status_id;
-        $this->sex_id                =$prisoner->sex_id;
-        $this->sexual_orientation_id =$prisoner->sexual_orientation_id;
-        $this->ethnicity_id          =$prisoner->ethnicity_id;
-        $this->municipality_id       =$prisoner->municipality_id;
-        $this->country_id            =$prisoner->country_id;
-        $this->state_id              =$prisoner->state_id;
-        $this->prison_unit_id        =$prisoner->prison_unit_id;
-        $this->user_update           =$prisoner->user_update;
+        $this->name                  = $prisoner->name;
+        $this->nickname              = $prisoner->nickname;
+        $this->date_birth            = \Carbon\Carbon::parse($prisoner->date_birth)->format('d/m/Y'); //converte data para o padrão pt-br
+        $this->cpf                   = $prisoner->cpf;
+        $this->rg                    = $prisoner->rg;
+        $this->title                 = $prisoner->title;
+        $this->birth_certificate     = $prisoner->birth_certificate;
+        $this->reservist             = $prisoner->reservist;
+        $this->sus_card              = $prisoner->sus_card;
+        $this->rji                   = $prisoner->rji;
+        $this->profession            = $prisoner->profession;
+        $this->status_prison_id      = $prisoner->status_prison_id;
+        $this->mother                = $prisoner->mother;
+        $this->father                = $prisoner->father;
+        $this->education_level_id    = $prisoner->education_level_id;
+        $this->civil_status_id       = $prisoner->civil_status_id;
+        $this->sex_id                = $prisoner->sex_id;
+        $this->sexual_orientation_id = $prisoner->sexual_orientation_id;
+        $this->ethnicity_id          = $prisoner->ethnicity_id;
+        $this->municipality_id       = $prisoner->municipality_id;
+        $this->country_id            = $prisoner->country_id;
+        $this->state_id              = $prisoner->state_id;
+        $this->prison_unit_id        = $prisoner->prison_unit_id;
+        $this->user_update           = $prisoner->user_update;
+        $this->remarks               = $prisoner->remarks;
 
         $this->openModalPrisonerUpdate  = $prisoner->id;
     }
@@ -148,30 +165,31 @@ class PrisonerShowLivewire extends Component
     {
         $dataValidated = $this->validate(
             [
-                'name'                  =>'required|max:100',
-                'nickname'              =>'nullable|max:100',
-                'date_birth'            =>'required|min:10|max:10',
+                'name'                  => 'required|max:100',
+                'nickname'              => 'nullable|max:100',
+                'date_birth'            => 'required|min:10|max:10',
                 'cpf'                   => ['nullable', 'min:14', 'max:14'],
-                'rg'                    =>"nullable|max:50",
-                'title'                 =>"nullable|min:14|max:14|unique:prisoners,title,{$this->prisoner_id},id",
-                'birth_certificate'     =>"nullable|max:60|unique:prisoners,birth_certificate,{$this->prisoner_id},id",
-                'reservist'             =>"nullable|max:60|unique:prisoners,reservist,{$this->prisoner_id},id",
-                'sus_card'              =>"nullable|min:19|max:19|unique:prisoners,sus_card,{$this->prisoner_id},id",
-                'rji'                   =>"nullable|min:12|max:12",
-                'profession'            =>'nullable|max:100',
-                'status_prison_id'      =>'required|max:100',
-                'mother'                =>'nullable|max:100',
-                'father'                =>'nullable|max:100',
-                'education_level_id'    =>'required|max:20',
-                'civil_status_id'       =>'required|max:20',
-                'sex_id'                =>'required|max:20',
-                'sexual_orientation_id' =>'required|max:20',
-                'ethnicity_id'          =>'required|max:20',
-                'municipality_id'       =>'required|max:20',
-                'country_id'            =>'required|max:20',
-                'state_id'              =>'required|max:20',
-                'prison_unit_id'        =>'required|max:10',
-                'user_update'           =>'nullable|max:10',
+                'rg'                    => "nullable|max:50",
+                'title'                 => "nullable|min:14|max:14|unique:prisoners,title,{$this->prisoner_id},id",
+                'birth_certificate'     => "nullable|max:60|unique:prisoners,birth_certificate,{$this->prisoner_id},id",
+                'reservist'             => "nullable|max:60|unique:prisoners,reservist,{$this->prisoner_id},id",
+                'sus_card'              => "nullable|min:19|max:19|unique:prisoners,sus_card,{$this->prisoner_id},id",
+                'rji'                   => "nullable|min:12|max:12",
+                'profession'            => 'nullable|max:100',
+                'status_prison_id'      => 'required|max:100',
+                'mother'                => 'nullable|max:100',
+                'father'                => 'nullable|max:100',
+                'education_level_id'    => 'required|max:20',
+                'civil_status_id'       => 'required|max:20',
+                'sex_id'                => 'required|max:20',
+                'sexual_orientation_id' => 'required|max:20',
+                'ethnicity_id'          => 'required|max:20',
+                'municipality_id'       => 'required|max:20',
+                'country_id'            => 'required|max:20',
+                'state_id'              => 'required|max:20',
+                'prison_unit_id'        => 'required|max:10',
+                'user_update'           => 'nullable|max:10',
+                'remarks'               => 'nullable',
             ]
         );
         // converte data para o padrão americano
@@ -200,7 +218,8 @@ class PrisonerShowLivewire extends Component
     {
         $prisoner->delete();
         $this->openModalPrisonerDelete = false;
-        $this->redirectRoute('prisoners');
+        $this->redirect(PrisonerLivewire::class);
+        //$this->redirectRoute('prisoners.search');
     }
 
     // MODAL PHOTO PROFILE - MODAL DA FOTO DO PERFIL
@@ -227,7 +246,7 @@ class PrisonerShowLivewire extends Component
             /* cria o nome da photo com a extensão */
             $photo = $prisoner_name . '.' . $dataValidated['photo']->getClientOriginalExtension();
             /* faz o upload e retorna o endereco do arquivo */
-            $dataValidated['photo'] = $dataValidated['photo']->storeAs('prisoner/'. $prisoner['id'], $photo);
+            $dataValidated['photo'] = $dataValidated['photo']->storeAs('prisoner/' . $prisoner['id'], $photo);
         }
         $prisoner->update($dataValidated);
         $this->openModalProfilePhoto = false;

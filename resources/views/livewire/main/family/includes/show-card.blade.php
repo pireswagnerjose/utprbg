@@ -18,28 +18,28 @@
         {{-- linha 1 --}}
         <div class="grid grid-cols-6 gap-4 mb-5">
             <div class="col-span-2">
-                <div class="font-light text-sm text-gray-500">Nome</div>
-                <div class="text-base font-medium uppercase">{{ $family->name }}</div>
+                <x-item-topic>Nome</x-item-topic>
+                <x-item-data>{{ $family->name }}</x-item-data>
             </div>
             <div class="col-span-2">
-                <div class="font-light text-sm text-gray-500">Grau de Parentesco</div>
-                <div class="text-base font-medium uppercase">{{ $family->degree_of_kinship->degree_of_kinship }}</div>
+                <x-item-topic>Grau de Parentesco</x-item-topic>
+                <x-item-data>{{ $family->degree_of_kinship->degree_of_kinship }}</x-item-data>
             </div>
             <div class="col-span-1">
-                <div class="font-light text-sm text-gray-500">Contato</div>
-                <div class="text-base font-medium uppercase">{{ $family->contact }}</div>
+                <x-item-topic>Contato</x-item-topic>
+                <x-item-data>{{ $family->contact }}</x-item-data>
             </div>
             <div class="col-span-1">
-                <div class="font-light text-sm text-gray-500">Status</div>
-                <div class="text-base font-medium uppercase">{{ $family->status }}</div>
+                <x-item-topic>Status</x-item-topic>
+                <x-item-data>{{ $family->status }}</x-item-data>
             </div>
         </div>
          
         {{-- linha 3 --}}
         <div class="grid grid-cols-6 gap-4 mb-5 items-center">
             <div class="col-span-5">
-                <div class="font-light text-sm text-gray-500">Observações</div>
-                <div class="text-base text-justify font-medium uppercase">{{ $family->remark }}</div>
+                <x-item-topic>Observações</x-item-topic>
+                <x-item-data class="text-justify">{{ $family->remark }}</x-item-data>
             </div>
         </div>
     </div>

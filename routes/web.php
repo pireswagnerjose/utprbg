@@ -31,6 +31,7 @@ use App\Livewire\Admin\Process\ProcessRegime\ProcessRegimeLivewire;
 use App\Livewire\Admin\Sex\SexLivewire;
 use App\Livewire\Admin\SexualOrientation\SexualOrientationLivewire;
 use App\Livewire\Admin\State\StateLivewire;
+use App\Livewire\Main\Photo\PhotoCreateLivewire;
 use App\Livewire\Main\Prisoner\PrisonerCreateLivewire;
 use App\Livewire\Main\Prisoner\PrisonerLivewire;
 use App\Livewire\Main\Prisoner\PrisonerShowLivewire;
@@ -149,4 +150,7 @@ Route::middleware([
     // REPORT
     // Prisoner Report
     Route::any('/prisoner-report/{prisoner_id}', [PrisonerPdfController::class, 'pdf'])->name('prisoner-report');
+
+    //Photo - Foto
+    Route::post('/photo-create', [PhotoCreateLivewire::class, 'photoCreate'])->name('photo.create');
 });

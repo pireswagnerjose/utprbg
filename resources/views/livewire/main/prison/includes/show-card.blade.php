@@ -17,76 +17,71 @@
             {{-- linha 1 --}}
             <div class="grid grid-cols-5 gap-4 mb-5">
                 <div class="col-span-2">
-                    <div class="font-light text-sm text-zinc-500">Unidade Prisional</div>
-                    <div class="text-base font-medium uppercase">{{ $prison->prison_unit->prison_unit }}</div>
+                    <x-item-topic>Unidade Prisional</x-item-topic>
+                    <x-item-data>{{ $prison->prison_unit->prison_unit }}</x-item-data>
                 </div>
-                <div class="">
-                    <div class="font-light text-sm text-zinc-500">Data de Entrada</div>
+                <div>
+                    <x-item-topic>Data de Entrada</x-item-topic>
                     @empty(!$prison->entry_date)
-                        <div class="text-base font-medium uppercase">{{ \Carbon\Carbon::parse($prison->entry_date)->format('d/m/Y') }}</div>
+                        <x-item-data>{{ \Carbon\Carbon::parse($prison->entry_date)->format('d/m/Y') }}</x-item-data>
                     @endempty
                 </div>
-                <div class="">
-                    <div class="font-light text-sm text-zinc-500">Data de Saída</div>
+                <div>
+                    <x-item-topic>Data de Saída</x-item-topic>
                     @empty(!$prison->exit_date)
-                        <div class="text-base font-medium uppercase">{{ \Carbon\Carbon::parse($prison->exit_date)->format('d/m/Y') }}</div>
+                        <x-item-data>{{ \Carbon\Carbon::parse($prison->exit_date)->format('d/m/Y') }}</x-item-data>
                     @endempty
                 </div>
             </div>
             {{-- linha 2 --}}
             <div class="grid grid-cols-3 gap-4 mb-5">
-                <div class="">
-                    <div class="font-light text-sm text-zinc-500">Pena (em anos, meses e dias)</div>
-                    <div class="text-base font-medium uppercase">{{ $prison->sentence }}</div>
+                <div>
+                    <x-item-topic>Pena (em anos, meses e dias)</x-item-topic>
+                    <x-item-data>{{ $prison->sentence }}</x-item-data>
                 </div>
-                <div class="">
-                    <div class="font-light text-sm text-zinc-500">Previsão de Saída</div>
+                <div>
+                    <x-item-topic>Previsão de Saída</x-item-topic>
                     @empty(!$prison->exit_forecast)
-                        <div class="text-base font-medium uppercase">{{ \Carbon\Carbon::parse($prison->exit_forecast)->format('d/m/Y') }}</div>
+                        <x-item-data>{{ \Carbon\Carbon::parse($prison->exit_forecast)->format('d/m/Y') }}</x-item-data>
                     @endempty
                 </div>
-                <div class="">
-                    <div class="font-light text-sm text-zinc-500">Data do Último Atestado de Pena</div>
+                <div>
+                    <x-item-topic>Data do Último Atestado de Pena</x-item-topic>
                     @empty(!$prison->sentence_certificate)
-                        <div class="text-base font-medium uppercase">   {{ \Carbon\Carbon::parse($prison->sentence_certificate)->format('d/m/Y') }}</div>
+                        <x-item-data>   {{ \Carbon\Carbon::parse($prison->sentence_certificate)->format('d/m/Y') }}</x-item-data>
                     @endempty
                 </div>
             </div>
             {{-- linha 3 --}}
             <div class="grid grid-cols-3 gap-4 mb-5">
-                <div class="">
-                    <div class="font-light text-sm text-zinc-500">Origem da Prisão</div>
-                    <div class="text-base font-medium uppercase">{{ $prison->prison_origin->prison_origin }}</div>
+                <div>
+                    <x-item-topic>Origem da Prisão</x-item-topic>
+                    <x-item-data>{{ $prison->prison_origin->prison_origin }}</x-item-data>
                 </div>
-                <div class="">
-                    <div class="font-light text-sm text-zinc-500">Tipo da Prisão</div>
-                    <div class="text-base font-medium uppercase">{{ $prison->type_prison->type_prison }}</div>
+                <div>
+                    <x-item-topic>Tipo da Prisão</x-item-topic>
+                    <x-item-data>{{ $prison->type_prison->type_prison }}</x-item-data>
                 </div>
-                <div class="">
-                    <div class="font-light text-sm text-zinc-500">Tipo da Saída</div>
+                <div>
+                    <x-item-topic>Tipo da Saída</x-item-topic>
                     @empty(!$prison->output_type_id)
-                        <div class="text-base font-medium uppercase">{{ $prison->output_type->output_type }}</div>
+                        <x-item-data>{{ $prison->output_type->output_type }}</x-item-data>
                     @endempty
                 </div>
             </div>
 
             {{-- linha 4 --}}
             <div class="grid mb-5">
-                <div class="font-light text-sm text-gray-500">
-                    Documentos Relacionados
-                    <div class="px-4">
-                        {{-- <livewire:main.prison.prison-document-livewire :prison_id="$prison->id" :prisoner_id="$prisoner_id" /> --}}
-                        @include('livewire.main.prison.prison-document-livewire')
-                    </div>
+                <x-item-topic>Documentos Relacionados</x-item-topic>
+                <div class="px-4">
+                    @include('livewire.main.prison.prison-document-livewire')
                 </div>
             </div>
             
             {{-- linha 5 --}}
-            <div class="">
-                <div class="">
-                    <div class="font-light text-sm text-zinc-500">Observações</div>
-                    <div class="text-base font-medium uppercase">{{ $prison->remarks }}</div>
-                </div>
+            <div>
+                <x-item-topic>Observações</x-item-topic>
+                <x-item-data class="text-justify">{{ $prison->remarks }}</x-item-data>
             </div>
         </div>
     @empty

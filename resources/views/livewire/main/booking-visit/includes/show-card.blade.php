@@ -18,32 +18,32 @@
         {{-- linha 1 --}}
         <div class="grid grid-cols-6 gap-4 mb-5">
             <div class="col-span-2">
-                <div class="font-light text-sm text-gray-500">Visitante</div>
-                <div class="text-base font-medium uppercase">{{ $booking_visit->family->name }}</div>
+                <x-item-topic>Visitante</x-item-topic>
+                <x-item-data>{{ $booking_visit->family->name }}</x-item-data>
             </div>
             <div class="col-span-2">
-                <div class="font-light text-sm text-gray-500">Data da Visita</div>
-                <div class="text-base font-medium uppercase">{{ \Carbon\Carbon::parse($booking_visit->date)->format('d/m/Y') }}</div>
+                <x-item-topic>Data da Visita</x-item-topic>
+                <x-item-data>{{ \Carbon\Carbon::parse($booking_visit->date)->format('d/m/Y') }}</x-item-data>
             </div>
             <div class="col-span-1">
-                <div class="font-light text-sm text-gray-500">Tipo da Visita</div>
-                <div class="text-base font-medium uppercase">{{ $booking_visit->type }}</div>
+                <x-item-topic>Tipo da Visita</x-item-topic>
+                <x-item-data>{{ $booking_visit->type }}</x-item-data>
             </div>
-            <div class="">
-                <div class="font-light text-sm text-gray-500">Status</div>
+            <div>
+                <x-item-topic>Status</x-item-topic>
                 @if ($booking_visit->status == 'CANCELADO')
-                    <div class="text-base font-semibold text-red-700 uppercase">{{ $booking_visit->status }}</div>
+                    <div class="text-[11pt] font-semibold text-red-700 uppercase">{{ $booking_visit->status }}</div>
                 @else
-                    <div class="text-base font-semibold text-green-700 uppercase">{{ $booking_visit->status }}</div>
+                    <div class="text-[11pt] font-semibold text-green-700 uppercase">{{ $booking_visit->status }}</div>
                 @endif
             </div>
         </div>
          
         {{-- linha 3 --}}
         <div class="grid grid-cols-6 gap-4 mb-5 items-center">
-            <div class="col-span-5">
-                <div class="font-light text-sm text-gray-500">Observações</div>
-                <div class="text-base text-justify font-medium uppercase">{{ $booking_visit->remark }}</div>
+            <div>
+                <x-item-topic>Observações</x-item-topic>
+                <x-item-data class="text-justify">{{ $booking_visit->remark }}</x-item-data>
             </div>
         </div>
     </div>

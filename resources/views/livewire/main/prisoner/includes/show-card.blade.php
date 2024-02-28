@@ -52,111 +52,116 @@
             <div class="w-full col-span-10">
                 {{-- linha 1 --}}
                 <div class="grid grid-cols-4 gap-4 mb-5">
-                    <div class="pl-3 col-span-2">
-                        <div class="font-light text-sm text-zinc-500">Nome</div>
-                        <div class="text-base font-medium uppercase">{{ $prisoner->name }}</div>
+                    <div class="col-span-2">
+                        <x-item-topic>Nome</x-item-topic>
+                        <x-item-data>{{ $prisoner->name }}</x-item-data>
                     </div>
-                    <div class="pl-3">
-                        <div class="font-light text-sm text-zinc-500">vulgo</div>
-                        <div class="text-base font-medium uppercase">{{ $prisoner->nickname }}</div>
+                    <div>
+                        <x-item-topic>vulgo</x-item-topic>
+                        <x-item-data>{{ $prisoner->nickname }}</x-item-data>
                     </div>
-                    <div class="pl-3">
-                        <div class="font-light text-sm text-zinc-500">Data Nasc.</div>
+                    <div>
+                        <x-item-topic>Data Nasc.</x-item-topic>
                         @empty(!$prisoner->date_birth)
-                            <div class="text-base font-medium uppercase">{{ \Carbon\Carbon::parse($prisoner->date_birth)->format('d/m/Y') }}</div>
+                            <x-item-data>{{ \Carbon\Carbon::parse($prisoner->date_birth)->format('d/m/Y') }}</x-item-data>
                         @endempty
                     </div>
                 </div>
                 {{-- linha 2 --}}
                 <div class="grid grid-cols-4 gap-4 mb-5">
-                    <div class="pl-3">
-                        <div class="font-light text-sm text-zinc-500">CPF</div>
-                        <div class="text-base font-medium uppercase">{{ $prisoner->cpf }}</div>
+                    <div>
+                        <x-item-topic>CPF</x-item-topic>
+                        <x-item-data>{{ $prisoner->cpf }}</x-item-data>
                     </div>
-                    <div class="pl-3">
-                        <div class="font-light text-sm text-zinc-500">RG</div>
-                        <div class="text-base font-medium uppercase">{{ $prisoner->rg }}</div>
+                    <div>
+                        <x-item-topic>RG</x-item-topic>
+                        <x-item-data>{{ $prisoner->rg }}</x-item-data>
                     </div>
-                    <div class="pl-3">
-                        <div class="font-light text-sm text-zinc-500">Título Eleitor</div>
-                        <div class="text-base font-medium uppercase">{{ $prisoner->title }}</div>
+                    <div>
+                        <x-item-topic>Título Eleitor</x-item-topic>
+                        <x-item-data>{{ $prisoner->title }}</x-item-data>
                     </div>
-                    <div class="pl-3">
-                        <div class="font-light text-sm text-zinc-500">Certidão Nascimento</div>
-                        <div class="text-base font-medium uppercase">{{ $prisoner->birth_certificate }}</div>
+                    <div>
+                        <x-item-topic>Certidão Nascimento</x-item-topic>
+                        <x-item-data>{{ $prisoner->birth_certificate }}</x-item-data>
                     </div>
                 </div>
                 {{-- linha 3 --}}
                 <div class="grid grid-cols-5 gap-4 mb-5">
-                    <div class="pl-3">
-                        <div class="font-light text-sm text-zinc-500">Reservista</div>
-                        <div class="text-base font-medium uppercase">{{ $prisoner->reservist }}</div>
+                    <div>
+                        <x-item-topic>Reservista</x-item-topic>
+                        <x-item-data>{{ $prisoner->reservist }}</x-item-data>
                     </div>
-                    <div class="pl-3">
-                        <div class="font-light text-sm text-zinc-500">Cartão Sus</div>
-                        <div class="text-base font-medium uppercase">{{ $prisoner->sus_card }}</div>
+                    <div>
+                        <x-item-topic>Cartão Sus</x-item-topic>
+                        <x-item-data>{{ $prisoner->sus_card }}</x-item-data>
                     </div>
-                     <div class="pl-3">
-                        <div class="font-light text-sm text-zinc-500">RJI</div>
-                        <div class="text-base font-medium uppercase">{{ $prisoner->rji }}</div>
+                     <div>
+                        <x-item-topic>RJI</x-item-topic>
+                        <x-item-data>{{ $prisoner->rji }}</x-item-data>
                     </div>
-                    <div class="pl-3">
-                        <div class="font-light text-sm text-zinc-500">Etnia</div>
-                        <div class="text-base font-medium uppercase">{{ $prisoner->ethnicity->ethnicity }}</div>
+                    <div>
+                        <x-item-topic>Etnia</x-item-topic>
+                        <x-item-data>{{ $prisoner->ethnicity->ethnicity }}</x-item-data>
                     </div>
-                    <div class="pl-3">
-                        <div class="font-light text-sm text-zinc-500">Orientação Sexual</div>
-                        <div class="text-base font-medium uppercase">{{ $prisoner->sexual_orientation->sexual_orientation }}</div>
+                    <div>
+                        <x-item-topic>Orientação Sexual</x-item-topic>
+                        <x-item-data>{{ $prisoner->sexual_orientation->sexual_orientation }}</x-item-data>
                     </div>
                 </div>
                 {{-- linha 4 --}}
                 <div class="grid grid-cols-2 gap-4 mb-5">
-                    <div class="pl-3">
-                        <div class="font-light text-sm text-zinc-500">Mãe</div>
-                        <div class="text-base font-medium uppercase">{{ $prisoner->mother }}</div>
+                    <div>
+                        <x-item-topic>Mãe</x-item-topic>
+                        <x-item-data>{{ $prisoner->mother }}</x-item-data>
                     </div>
-                    <div class="pl-3">
-                        <div class="font-light text-sm text-zinc-500">Pai</div>
-                        <div class="text-base font-medium uppercase">{{ $prisoner->father }}</div>
+                    <div>
+                        <x-item-topic>Pai</x-item-topic>
+                        <x-item-data>{{ $prisoner->father }}</x-item-data>
                     </div>
                 </div>
                 {{-- linha 5 --}}
                 <div class="grid grid-cols-5 gap-4 mb-5">
-                    <div class="pl-3 col-span-2">
-                        <div class="font-light text-sm text-zinc-500">Escolaridade</div>
-                        <div class="text-base font-medium uppercase">{{ $prisoner->education_level->education_level }}</div>
+                    <div class="col-span-2">
+                        <x-item-topic>Escolaridade</x-item-topic>
+                        <x-item-data>{{ $prisoner->education_level->education_level }}</x-item-data>
                     </div>
-                    <div class="pl-3">
-                        <div class="font-light text-sm text-zinc-500">Estado Civil</div>
-                        <div class="text-base font-medium uppercase">{{ $prisoner->civil_status->civil_status }}</div>
+                    <div>
+                        <x-item-topic>Estado Civil</x-item-topic>
+                        <x-item-data>{{ $prisoner->civil_status->civil_status }}</x-item-data>
                     </div>
-                    <div class="pl-3">
-                        <div class="font-light text-sm text-zinc-500">Sexo</div>
-                        <div class="text-base font-medium uppercase">{{ $prisoner->sex->sex }}</div>
+                    <div>
+                        <x-item-topic>Sexo</x-item-topic>
+                        <x-item-data>{{ $prisoner->sex->sex }}</x-item-data>
                     </div>
-                    <div class="">
-                        <div class="font-light text-sm text-zinc-500">Status da Prisão</div>
-                        <div class="text-base font-medium uppercase">{{ $prisoner->status_prison->status_prison }}</div>
+                    <div>
+                        <x-item-topic>Status da Prisão</x-item-topic>
+                        <x-item-data>{{ $prisoner->status_prison->status_prison }}</x-item-data>
                     </div>
                 </div>
                 {{-- linha 6 --}}
                 <div class="grid grid-cols-4 gap-4 mb-5">
-                    <div class="pl-3">
-                        <div class="font-light text-sm text-zinc-500">Profissão</div>
-                        <div class="text-base font-medium uppercase">{{ $prisoner->profession }}</div>
+                    <div>
+                        <x-item-topic>Profissão</x-item-topic>
+                        <x-item-data>{{ $prisoner->profession }}</x-item-data>
                     </div>
-                    <div class="pl-3">
-                        <div class="font-light text-sm text-zinc-500">Naturalidade</div>
-                        <div class="text-base font-medium uppercase">{{ $prisoner->municipality->municipality }}</div>
+                    <div>
+                        <x-item-topic>Naturalidade</x-item-topic>
+                        <x-item-data>{{ $prisoner->municipality->municipality }}</x-item-data>
                     </div>
-                    <div class="pl-3">
-                        <div class="font-light text-sm text-zinc-500">UF</div>
-                        <div class="text-base font-medium uppercase">{{ $prisoner->state->state }}</div>
+                    <div>
+                        <x-item-topic>UF</x-item-topic>
+                        <x-item-data>{{ $prisoner->state->state }}</x-item-data>
                     </div>
-                    <div class="pl-3">
-                        <div class="font-light text-sm text-zinc-500">Nacionalidade</div>
-                        <div class="text-base font-medium uppercase">{{ $prisoner->country->country }}</div>
+                    <div>
+                        <x-item-topic>Nacionalidade</x-item-topic>
+                        <x-item-data>{{ $prisoner->country->country }}</x-item-data>
                     </div>
+                </div>
+                {{-- linha 7 --}}
+                <div>
+                    <x-item-topic>Informações Complementares</x-item-topic>
+                    <x-item-data>{{ $prisoner->remarks }}</x-item-data>
                 </div>
             </div>
         </div>

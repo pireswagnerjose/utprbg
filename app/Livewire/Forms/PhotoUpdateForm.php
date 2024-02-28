@@ -3,7 +3,6 @@
 namespace App\Livewire\Forms;
 
 use App\Models\Main\Photo;
-use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
@@ -39,8 +38,8 @@ class PhotoUpdateForm extends Form
         $photo = Photo::find($photo_id);
         $dataValidated = $this->validate();
         // Converte caracteres em maiúsculo
-        $dataValidated['position'] = mb_strtoupper ($dataValidated['position'],'utf-8');
-        $dataValidated['description'] = mb_strtoupper ($dataValidated['description'],'utf-8');
+        $dataValidated['position'] = mb_strtoupper($dataValidated['position'], 'utf-8');
+        $dataValidated['description'] = mb_strtoupper($dataValidated['description'], 'utf-8');
 
         $photo->update($dataValidated);
         $this->reset();

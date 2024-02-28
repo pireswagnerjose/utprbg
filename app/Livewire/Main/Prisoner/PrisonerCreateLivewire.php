@@ -50,6 +50,7 @@ class PrisonerCreateLivewire extends Component
     public $state_id = '';
     public $country_id = '';
     public $status_prison_id = '';
+    public $remarks = '';
     public $status_prisons = [];
     public $education_levels = [];
     public $civil_statuses = [];
@@ -88,7 +89,7 @@ class PrisonerCreateLivewire extends Component
     {
         $this->reset(
             'name','nickname','date_birth','cpf','rg','title','birth_certificate','reservist','sus_card','rji',
-            'mother','father','profession','sexual_orientation_id','ethnicity_id','education_level_id',
+            'mother','father','profession','sexual_orientation_id','ethnicity_id','education_level_id', 'remarks',
             'civil_status_id','sex_id','municipality_id'
         );
     }
@@ -121,6 +122,7 @@ class PrisonerCreateLivewire extends Component
                 'state_id'              =>'required|max:20',
                 'prison_unit_id'        =>'required|max:10',
                 'user_create'           =>'nullable|max:10',
+                'remarks'               =>'nullable',
             ]
         );
         // converte data para o padrão americano

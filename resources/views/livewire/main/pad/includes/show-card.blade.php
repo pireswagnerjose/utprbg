@@ -18,25 +18,25 @@
         {{-- linha 1 --}}
         <div class="grid grid-cols-6 gap-4 mb-5 pr-10">
             <div class="col-span-2">
-                <div class="font-light text-sm text-gray-500">Tipo da Ocorrência</div>
-                <div class="text-base font-medium uppercase">{{ $pad->pad_type_of_occurrence->pad_type_of_occurrence }}</div>
+                <x-item-topic>Tipo da Ocorrência</x-item-topic>
+                <x-item-data>{{ $pad->pad_type_of_occurrence->pad_type_of_occurrence }}</x-item-data>
             </div>
             <div class="col-span-1">
-                <div class="font-light text-sm text-gray-500">Número da Ocorrência</div>
-                <div class="text-base font-medium uppercase">{{ $pad->register_number }}</div>
+                <x-item-topic>Número da Ocorrência</x-item-topic>
+                <x-item-data>{{ $pad->register_number }}</x-item-data>
             </div>
             <div class="col-span-1">
-                <div class="font-light text-sm text-gray-500">Data da Abertura</div>
-                <div class="text-base font-medium uppercase">{{ \Carbon\Carbon::parse($pad->opening_date)->format('d/m/Y') }}</div>
+                <x-item-topic>Data da Abertura</x-item-topic>
+                <x-item-data>{{ \Carbon\Carbon::parse($pad->opening_date)->format('d/m/Y') }}</x-item-data>
             </div>
             <div class="col-span-1">
-                <div class="font-light text-sm text-gray-500">Hora da Ocorrência</div>
-                <div class="text-base font-medium uppercase">{{ $pad->opening_time }}</div>
+                <x-item-topic>Hora da Ocorrência</x-item-topic>
+                <x-item-data>{{ $pad->opening_time }}</x-item-data>
             </div>
             <div class="col-span-1">
-                <div class="font-light text-sm text-gray-500">Data da Conclusão</div>
+                <x-item-topic>Data da Conclusão</x-item-topic>
                 @empty(!$pad->completion_date)
-                    <div class="text-base font-medium uppercase">{{ \Carbon\Carbon::parse($pad->completion_date)->format('d/m/Y') }}</div>
+                    <x-item-data>{{ \Carbon\Carbon::parse($pad->completion_date)->format('d/m/Y') }}</x-item-data>
                 @endempty
             </div>
         </div>
@@ -44,61 +44,57 @@
         {{-- linha 2 --}}
         <div class="grid grid-cols-4 gap-4 mb-5">
             <div class="col-span-1">
-                <div class="font-light text-sm text-gray-500">Tipo da Ocorrência</div>
-                <div class="text-base font-medium uppercase">{{ $pad->pad_nature_of_event->pad_nature_of_event }}</div>
+                <x-item-topic>Tipo da Ocorrência</x-item-topic>
+                <x-item-data>{{ $pad->pad_nature_of_event->pad_nature_of_event }}</x-item-data>
             </div>
             <div class="col-span-1">
-                <div class="font-light text-sm text-gray-500">Status</div>
-                <div class="text-base font-medium uppercase">{{ $pad->pad_status->pad_status }}</div>
+                <x-item-topic>Status</x-item-topic>
+                <x-item-data>{{ $pad->pad_status->pad_status }}</x-item-data>
             </div>
             <div class="col-span-1">
-                <div class="font-light text-sm text-gray-500">Local da Ocorrência</div>
-                <div class="text-base font-medium uppercase">{{ $pad->pad_local->pad_local }}</div>
+                <x-item-topic>Local da Ocorrência</x-item-topic>
+                <x-item-data>{{ $pad->pad_local->pad_local }}</x-item-data>
             </div>
             <div class="col-span-1">
-                <div class="font-light text-sm text-gray-500">Tipo de Evento</div>
-                <div class="text-base font-medium uppercase">{{ $pad->pad_event_type->pad_event_type }}</div>
+                <x-item-topic>Tipo de Evento</x-item-topic>
+                <x-item-data>{{ $pad->pad_event_type->pad_event_type }}</x-item-data>
             </div>
         </div>
 
         {{-- linha 3 --}}
         <div class="grid mb-5">
-            <div class="font-light text-sm text-gray-500">
-                Documentos Relacionados
-                <div class="px-4">
-                    <button wire:click="modalPadDocumentCreate({{ $pad->id }})"><span class="text-blue-600 mr-4">[ Adicionar ]</span></button>
-                    <div class="">
-                        @if($pad->pad_documents)
-                            <div class="grid grid-cols-2 p-2 rounded-lg gap-20">
-                                @foreach ($pad->pad_documents as $pad_document)
-                                    <div class="border-b dark:border-zinc-700 flex justify-between">
-                                        <div class="text-sm uppercase font-medium">
-                                            <a title='{{ $pad_document->document }}' href='{{ asset("storage/$pad_document->document") }}' rel='shadowbox[galeria]'>
-                                                <dd class="font-semibold text-blue-700 dark:text-blue-500 hover:underline">{{ $pad_document->title }}</dd>
-                                            </a>
-                                        </div>
-                                        <div class="flex">
-                                            <button wire:click="modalPadDocumentUpdate({{ $pad_document->id }})"><span class="text-green-600 text-xs mr-4">[ Editar ]</span></button>
-                                            <button wire:click="modalPadDocumentDelete({{ $pad_document->id }})"><span class="text-red-600 text-xs">[ excluir ]</span></button>
-                                        </div>
+            <x-item-topic> Documentos Relacionados </x-item-topic>
+            <div class="px-4">
+                <button wire:click="modalPadDocumentCreate({{ $pad->id }})"><span class="text-blue-600 mr-4">[ Adicionar ]</span></button>
+                <div class="">
+                    @if($pad->pad_documents)
+                        <div class="grid grid-cols-2 p-2 rounded-lg gap-20">
+                            @foreach ($pad->pad_documents as $pad_document)
+                                <div class="border-b dark:border-zinc-700 flex justify-between">
+                                    <div class="text-sm uppercase font-medium">
+                                        <a title='{{ $pad_document->document }}' href='{{ asset("storage/$pad_document->document") }}' rel='shadowbox[galeria]'>
+                                            <dd class="font-semibold text-blue-700 dark:text-blue-500 hover:underline">{{ $pad_document->title }}</dd>
+                                        </a>
                                     </div>
-                                @endforeach
-                            </div>
-                        @endif
-                    </div>
-                    @include("livewire.main.pad.includes.document-modal-create")
-                    @include("livewire.main.pad.includes.document-modal-update")
-                    @include("livewire.main.pad.includes.document-modal-delete")
+                                    <div class="flex">
+                                        <button wire:click="modalPadDocumentUpdate({{ $pad_document->id }})"><span class="text-green-600 text-xs mr-4">[ Editar ]</span></button>
+                                        <button wire:click="modalPadDocumentDelete({{ $pad_document->id }})"><span class="text-red-600 text-xs">[ excluir ]</span></button>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
                 </div>
+                @include("livewire.main.pad.includes.document-modal-create")
+                @include("livewire.main.pad.includes.document-modal-update")
+                @include("livewire.main.pad.includes.document-modal-delete")
             </div>
         </div>
          
         {{-- linha 4 --}}
         <div class="w-full">
-            <div class="">
-                <div class="font-light text-sm text-gray-500">Observações</div>
-                <div class="text-base text-justify font-medium uppercase">{{ $pad->remark }}</div>
-            </div>
+            <x-item-topic>Observações</x-item-topic>
+            <x-item-data class="text-justify">{{ $pad->remark }}</x-item-data>
         </div>
     </div>
     @empty
