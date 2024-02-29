@@ -126,6 +126,12 @@
                     <p class="item_p">{{ $prisoner->country->country }}</p>
                 </div>
             </div>
+            <div class="line">
+                <div class="colum" style="width:100%; text-transform: uppercase;">
+                    <span class="item_span">INFORMAÇÕES COMPLEMENTARES: </span>
+                    <p class="item_p">{{ $prisoner->remarks }}</p>
+                </div>
+            </div>
         </article>
     </section>
 </div>
