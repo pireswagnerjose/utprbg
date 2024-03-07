@@ -33,7 +33,11 @@ class PrisonerUnitAddressLivewire extends Component
         $this->user_update      = Auth::user()->id;
         $this->prison_unit_id   = PrisonUnit::find(Auth::user()->prison_unit_id)->id;
         $this->wards            = Ward::all();
-        $this->cells            = Cell::all();
+    }
+
+    public function cell()
+    {
+        $this->cells = Cell::where('ward_id', $this->ward_id)->get();
     }
 
     // CLEAR FIELDS - LIMPAR CAMPOS
@@ -56,7 +60,7 @@ class PrisonerUnitAddressLivewire extends Component
         // Quando mudar de cela
         if($this->unitAddressUpdate = UnitAddress::where('prisoner_id', $this->prisoner_id)->where('status', 'ATIVO')->first()){
             $updateStatus = 'INATIVO';
-            $dataValidated = Validator::make(
+            $updateDataValidated = Validator::make(
                 // Data to validate...
                 [
                     'status'            => $updateStatus,
@@ -68,9 +72,9 @@ class PrisonerUnitAddressLivewire extends Component
                     'user_update'       => 'max:10',
                 ],
             )->validate();
-            $this->unitAddressUpdate->update($dataValidated);
+            $this->unitAddressUpdate->update($updateDataValidated);
         }
-        $dataValidated = $this->validate(
+        $createDataValidated = $this->validate(
             [
                 'date'              => 'required|max:100',
                 'status'            => 'required|max:100',
@@ -81,10 +85,10 @@ class PrisonerUnitAddressLivewire extends Component
                 'user_create'       => 'max:10',
             ],
         );
-        $dataValidated['date'] = \Carbon\Carbon::createFromFormat('d/m/Y', $dataValidated['date'])->format('Y-m-d');
-        UnitAddress::create($dataValidated);
+        
+        UnitAddress::create($createDataValidated);
         $this->openModalUnitAddress = false;
-        $this->reset('date', 'status', 'prison_unit_id', 'ward_id', 'cell_id');
+        $this->reset('date', 'status', 'ward_id', 'cell_id');
     }
 
     public function render()

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PrisonerPdfController;
+use App\Livewire\Admin\Cell\CellLivewire;
 use App\Livewire\Admin\Country\CountryLivewire;
 use App\Livewire\Admin\EducationLevel\EducationLevelLivewire;
 use App\Livewire\Admin\Ethnicity\EthnicityLivewire;
@@ -31,23 +32,13 @@ use App\Livewire\Admin\Process\ProcessRegime\ProcessRegimeLivewire;
 use App\Livewire\Admin\Sex\SexLivewire;
 use App\Livewire\Admin\SexualOrientation\SexualOrientationLivewire;
 use App\Livewire\Admin\State\StateLivewire;
+use App\Livewire\Admin\Ward\WardLivewire;
 use App\Livewire\Main\Photo\PhotoCreateLivewire;
 use App\Livewire\Main\Prisoner\PrisonerCreateLivewire;
 use App\Livewire\Main\Prisoner\PrisonerLivewire;
 use App\Livewire\Main\Prisoner\PrisonerShowLivewire;
 use App\Livewire\User\UserLivewire;
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
 Route::get('/', function () {
     return view('welcome');
@@ -84,6 +75,12 @@ Route::middleware([
     Route::get('/sexual-orientations', SexualOrientationLivewire::class)->name('sexual-orientations.index');
     // Sex - Sexo
     Route::get('/sexes', SexLivewire::class)->name('sexes.index');
+
+    // CADASTROS DA UNIDADE
+    // Ward - Ala/Pavilhão
+    Route::get('/wards', WardLivewire::class)->name('wards.index');
+    // Cell - Cela
+    Route::get('/cells', CellLivewire::class)->name('cells.index');
     
     // PRISON
     // Prison Origins - Origem da Prisão
@@ -152,5 +149,5 @@ Route::middleware([
     Route::any('/prisoner-report/{prisoner_id}', [PrisonerPdfController::class, 'pdf'])->name('prisoner-report');
 
     //Photo - Foto
-    Route::post('/photo-create', [PhotoCreateLivewire::class, 'photoCreate'])->name('photo.create');
+    // Route::post('/photo-create', [PhotoCreateLivewire::class, 'photoCreate'])->name('photo.create');
 });
