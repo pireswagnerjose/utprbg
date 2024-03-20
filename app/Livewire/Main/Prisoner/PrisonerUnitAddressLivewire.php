@@ -96,7 +96,7 @@ class PrisonerUnitAddressLivewire extends Component
     {
         return view('livewire.main.prisoner.prisoner-unit-address-livewire', [
             'unitAddress' => UnitAddress::where('prisoner_id', $this->prisoner_id)
-                            ->orWhere("status","=", "ATIVO")->first()
+                            ->where("status", "ATIVO")->first()
         ]);
     }
 }

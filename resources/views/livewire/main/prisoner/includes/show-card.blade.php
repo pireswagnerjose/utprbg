@@ -48,9 +48,9 @@
 
                 <div class="mt-4 text-center">
                     @if (!empty( $prisoner->unit_address))
-                        <dd class="font-normal text-xs">ALA / CELA</dd>
                         @foreach ( $prisoner->unit_address as $unit_address)
                             @if ($unit_address->status == "ATIVO")
+                                <dd class="font-normal text-xs">ALA / CELA</dd>
                                 <dd class="text-sm font-semibold uppercase">{{ $unit_address->cell->cell }}</dd>
                             @endif
                         @endforeach
