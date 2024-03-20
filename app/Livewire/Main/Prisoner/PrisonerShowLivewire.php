@@ -259,9 +259,7 @@ class PrisonerShowLivewire extends Component
     public function render()
     {
         return view('livewire.main.prisoner.prisoner-show-livewire', [
-            'prisoner' => Prisoner::where('id', $this->prisoner_id)->first(),
-            'unitAddress' => UnitAddress::where('prisoner_id', 'like', "%{$this->prisoner_id}%")
-                            ->orWhere("status","=", "ATIVO")->first()
+            'prisoner' => Prisoner::where('id', $this->prisoner_id)->first()
         ]);
     }
 

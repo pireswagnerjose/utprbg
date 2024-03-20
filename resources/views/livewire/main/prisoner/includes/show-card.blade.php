@@ -47,9 +47,13 @@
                 @include('livewire.main.prisoner.includes.profile-photo')
 
                 <div class="mt-4 text-center">
-                    @if (!empty( $unitAddress->prisoner_id))
+                    @if (!empty( $prisoner->unit_address))
                         <dd class="font-normal text-xs">ALA / CELA</dd>
-                        <dd class="text-sm font-semibold uppercase">{{ $unitAddress->cell->cell }}</dd>
+                        @foreach ( $prisoner->unit_address as $unit_address)
+                            @if ($unit_address->status == "ATIVO")
+                                <dd class="text-sm font-semibold uppercase">{{ $unit_address->cell->cell }}</dd>
+                            @endif
+                        @endforeach
                     @endif
                 </div>
 
