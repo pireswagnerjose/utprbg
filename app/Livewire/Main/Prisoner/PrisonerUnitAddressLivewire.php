@@ -89,6 +89,7 @@ class PrisonerUnitAddressLivewire extends Component
         UnitAddress::create($createDataValidated);
         $this->openModalUnitAddress = false;
         $this->reset('date', 'status', 'ward_id', 'cell_id');
+        $this->redirectRoute('prisoners.show', ['prisoner_id' => $this->prisoner_id]);
     }
 
     public function render()

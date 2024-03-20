@@ -12,6 +12,7 @@ use App\Models\Admin\Sex;
 use App\Models\Admin\SexualOrientation;
 use App\Models\Admin\State;
 use App\Models\Main\Prisoner;
+use App\Models\Main\UnitAddress;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
@@ -258,7 +259,9 @@ class PrisonerShowLivewire extends Component
     public function render()
     {
         return view('livewire.main.prisoner.prisoner-show-livewire', [
-            'prisoner' => Prisoner::where('id', $this->prisoner_id)->first()
+            'prisoner' => Prisoner::where('id', $this->prisoner_id)->first(),
+            'unitAddress' => UnitAddress::where('prisoner_id', 'like', "%{$this->prisoner_id}%")
+                            ->where("status","=", "ATIVO")->first()
         ]);
     }
 

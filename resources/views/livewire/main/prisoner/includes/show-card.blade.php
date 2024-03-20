@@ -46,6 +46,13 @@
 
                 @include('livewire.main.prisoner.includes.profile-photo')
 
+                <div class="mt-4 text-center">
+                    @if (!empty( $unitAddress->prisoner_id))
+                        <dd class="font-normal text-xs">ALA / CELA</dd>
+                        <dd class="text-sm font-semibold uppercase">{{ $unitAddress->cell->cell }}</dd>
+                    @endif
+                </div>
+
                 <livewire:main.prisoner.prisoner-unit-address-livewire :prisoner_id="$prisoner->id" />
                 
             </div>
