@@ -318,5 +318,55 @@
                 </div>
             </div>
         </li>
+
+        {{-- Relatórios --}}
+        <li>
+            <div
+                x-data="{
+                    open: false,
+                    toggle() {
+                        if (this.open) {
+                            return this.close()
+                        }
+                        this.$refs.button.focus()
+                        this.open = true
+                    },
+                    close(focusAfter) {
+                        if (! this.open) return
+                        this.open = false
+                        focusAfter && focusAfter.focus()
+                    }
+                }"
+                x-on:keydown.escape.prevent.stop="close($refs.button)"
+                x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
+                x-id="['dropdown-button']">
+
+                <button 
+                    x-ref="button"
+                    x-on:click="toggle()"
+                    :aria-expanded="open"
+                    :aria-controls="$id('dropdown-button')"
+                    type="button"
+                    class="flex items-center justify-between w-full text-sm font-medium text-zinc-100 md:w-auto hover:bg-zinc-50 md:hover:bg-transparent md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-zinc-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-zinc-700">
+                    @include('icons.bars-arrow-down')
+                    <span class="py-2">Relatórios</span>
+                </button>
+                <div class="absolute z-10 w-auto mt-1 text-sm bg-white border border-zinc-100 rounded-lg shadow-md dark:border-zinc-700 md:grid-cols-3 dark:bg-zinc-700">
+                    <div
+                        x-ref="panel"
+                        x-show="open"
+                        x-transition.origin.top.left
+                        x-on:click.outside="close($refs.button)"
+                        :id="$id('dropdown-button')"
+                        style="display: none;"
+                        class="p-4 pb-0 space-y-1 text-zinc-900 md:pb-4 dark:text-white" >
+                        {{-- Listagem de Presos --}}
+                        <a href="{{ route('users-show.index') }}" class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
+                            <span class="">Listagem de Presos</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </li>
     </ul>
 </nav>

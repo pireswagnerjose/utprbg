@@ -80,7 +80,7 @@ class ProcessLivewire extends Component
     {
         $dataValidated = $this->validate(
             [
-                'date_arrest'               =>'required|min:10|max:10',
+                'date_arrest'               =>'nullable|min:10|max:10',
                 'date_exit'                 =>'nullable|min:10|max:10',
                 'judicial_district_origin'  =>'max:255',
                 'eproc'                     =>'nullable|min:24|max:24',
@@ -129,7 +129,7 @@ class ProcessLivewire extends Component
         $process_update = process::find($this->processUpdate_id);
         $dataValidated = $this->validate(
             [
-                'date_arrest'               =>'required|min:10|max:10',
+                'date_arrest'               =>'nullable|min:10|max:10',
                 'date_exit'                 =>'nullable|min:10|max:10',
                 'judicial_district_origin'  =>'max:255',
                 'eproc'                     =>'nullable|min:24|max:24',

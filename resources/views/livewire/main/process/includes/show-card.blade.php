@@ -23,7 +23,7 @@
                 @endempty
             </div>
             <div>
-                <x-item-topic>Data de Alvará no Processo</x-item-topic>
+                <x-item-topic>Data do Alvará no Processo</x-item-topic>
                 @empty(!$process->date_exit)
                     <x-item-data>{{ \Carbon\Carbon::parse($process->date_exit)->format('d/m/Y') }}</x-item-data>
                 @endempty

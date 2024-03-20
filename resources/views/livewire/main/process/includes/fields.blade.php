@@ -2,17 +2,17 @@
 <div class="grid md:grid-cols-4 mb-8 mt-12 md:gap-6">
     <div class="col-span-1 relative z-0 w-full group">
         <x-input type="date" wire:model="date_arrest" id="date_arrest" />
-        <x-label for="date_arrest" wire:model="date_arrest" value="{{ 'Data de Prisão no Processo' }}" />
+        <x-label for="date_arrest" wire:model="date_arrest" value="{{ 'Data da Prisão no Processo' }}" />
         <x-input-error for="date_arrest" class="mt-2">{{ $message ?? '' }}</x-input-error>
     </div>
     <div class="col-span-1 relative z-0 w-full group">
         <x-input type="date" wire:model="date_exit" id="date_exit" maxlength="10" />
-        <x-label for="date_exit" wire:model="date_exit" value="{{ 'Data de Alvará no Processo' }}" />
+        <x-label for="date_exit" wire:model="date_exit" value="{{ 'Data do Alvará no Processo' }}" />
         <x-input-error for="date_exit" class="mt-2">{{ $message ?? '' }}</x-input-error>
     </div>
     <div class="col-span-2 relative z-0 w-full group">
         <select id="origin_process_id" required wire:model="origin_process_id" class="block py-1 mt-1 px-0 w-full text-sm text-zinc-500 dark:text-zinc-400 bg-transparent border-0 border-b border-zinc-400 dark:border-zinc-600 dark:focus:border-blue-500 focus:border-blue-600 appearance-none focus:outline-none focus:ring-0 peer">
-            <option class="text-zinc-900 dark:text-zinc-600" selected value="{{ $origin_process->id ?? '' }}">{{ $origin_process->id ?? 'Origem da Prisão' }}</option>
+            <option class="text-zinc-900 dark:text-zinc-600" selected value="{{ $origin_process->id ?? '' }}">{{ $origin_process->id ?? 'Origem do Processo' }}</option>
             @foreach ($origin_processes as $origin_process)
                 <option class="text-zinc-900 dark:text-zinc-600" value="{{ $origin_process->id ?? '' }}" @selected(old('origin_process_id') ==  $origin_process->id)>{{ $origin_process->origin_process }}</option>
             @endforeach
