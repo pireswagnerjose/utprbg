@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PrisonerListController;
 use App\Http\Controllers\PrisonerPdfController;
 use App\Livewire\Admin\Cell\CellLivewire;
 use App\Livewire\Admin\Country\CountryLivewire;
@@ -37,6 +38,7 @@ use App\Livewire\Main\Photo\PhotoCreateLivewire;
 use App\Livewire\Main\Prisoner\PrisonerCreateLivewire;
 use App\Livewire\Main\Prisoner\PrisonerLivewire;
 use App\Livewire\Main\Prisoner\PrisonerShowLivewire;
+use App\Livewire\Report\PrisonerList\PrisonerListReport;
 use App\Livewire\User\UserLivewire;
 use Illuminate\Support\Facades\Route;
 
@@ -147,6 +149,10 @@ Route::middleware([
     // REPORT
     // Prisoner Report
     Route::any('/prisoner-report/{prisoner_id}', [PrisonerPdfController::class, 'pdf'])->name('prisoner-report');
+
+    // Prisoner List Report
+    Route::get('/prisoners-list', PrisonerListReport::class)->name('prisoners-list.index');
+    Route::any('/prisoners-list-pdf', [PrisonerListController::class, 'pdf'])->name('prisoner-list.pdf');
 
     //Photo - Foto
     // Route::post('/photo-create', [PhotoCreateLivewire::class, 'photoCreate'])->name('photo.create');

@@ -361,7 +361,7 @@
                         style="display: none;"
                         class="p-4 pb-0 space-y-1 text-zinc-900 md:pb-4 dark:text-white" >
                         {{-- Listagem de Presos --}}
-                        <a href="{{ route('users-show.index') }}" class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
+                        <a href="{{ route('prisoners-list.index') }}" class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
                             <span class="">Listagem de Presos</span>
                         </a>
                     </div>
