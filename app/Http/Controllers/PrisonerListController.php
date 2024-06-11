@@ -16,15 +16,30 @@ class PrisonerListController extends Controller
     public function pdf(Request $request)
     {
         $c_s_photo  = $request->c_s_photo;
-        //$prisoners = Prisoner::where('status_prison_id', $request->status_prison_id);
-        $prisoner_id    = Prison::where('prison_unit_id', Auth::user()->prison_unit_id)->get('prisoner_id');
-        $prisons = Prison::orderBy('entry_date', 'desc')->first();
-        
-        if ($request->ward_id) {
-            $unit_addresses = UnitAddress::where('status', 'ATIVO')->where('ward_id', $request->ward_id)->get();
-        }else{
-            $unit_addresses = UnitAddress::where('status', 'ATIVO')->get();
+
+        $prisons = Prison::where('prison_unit_id', Auth::user()->prison_unit_id)->get();
+        $prison_arr_id = [];
+        foreach ($prisons as $prison) {
+            $prison_arr_id[] = $prison->prisoner_id;
         }
+
+        $prisoners = Prisoner::where('prisoners.status_prison_id', 1);
+        $prisoners = $prisoners->whereIn('prisoners.id', $prison_arr_id)->get();
+
+        $prisons = Prison::orderBy('entry_date', 'desc')->first();
+
+        $prisoner_arr_id = [];
+        foreach ($prisoners as $prisoner) {
+            $prisoner_arr_id[] = $prisoner->id;
+        }
+        if ($request->ward_id) {
+            $unit_addresses = UnitAddress::whereIn('unit_addresses.prisoner_id', $prisoner_arr_id)->where('ward_id', $request->ward_id);
+            $unit_addresses = $unit_addresses->where('unit_addresses.status', 'ATIVO')->get();
+        }else{
+            $unit_addresses = UnitAddress::whereIn('unit_addresses.prisoner_id', $prisoner_arr_id);
+            $unit_addresses = $unit_addresses->where('unit_addresses.status', 'ATIVO')->get();
+        }
+
         $ward = Ward::where('id', $request->ward_id)->first('ward');
         //$prisoners->whereIn('prisoners.id', $prisoner_id);
         //$prisoners = $prisoners->get();
