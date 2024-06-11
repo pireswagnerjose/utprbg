@@ -41,8 +41,6 @@ class PrisonerListController extends Controller
         }
 
         $ward = Ward::where('id', $request->ward_id)->first('ward');
-        //$prisoners->whereIn('prisoners.id', $prisoner_id);
-        //$prisoners = $prisoners->get();
 
         $pdf = Pdf::loadView(
             'reports.prisoner-list.prisoner-list',
