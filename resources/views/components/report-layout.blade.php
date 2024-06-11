@@ -92,6 +92,9 @@
             width: 73%;
             margin-left: 27%;
         }
+        tr:nth-child(even) {
+            background: #CCC
+        }
     </style>
 </head>
 <body>
