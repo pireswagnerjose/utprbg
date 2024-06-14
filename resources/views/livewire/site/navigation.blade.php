@@ -364,6 +364,10 @@
                         <a href="{{ route('prisoners-list.index') }}" class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
                             <span class="">Listagem de Presos</span>
                         </a>
+                        {{-- VCAM --}}
+                        <a href="{{ route('vcam-list.index') }}" class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
+                            <span class="">VCAM</span>
+                        </a>
                     </div>
                 </div>
             </div>
