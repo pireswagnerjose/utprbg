@@ -158,7 +158,8 @@ Route::middleware([
 
     // VCAM Report
     Route::get('/vcam-list', VcamReport::class)->name('vcam-list.index');
-    Route::any('/vcam-list-pdf', [VcamController::class, 'pdf'])->name('vcam-list.pdf');
+    // Route::any('/vcam-list-pdf', [VcamController::class, 'pdf'])->name('vcam-list.pdf');
+    Route::any('/vcam-list-csv', [VcamController::class, 'csv'])->name('vcam-list.csv');
 
     //Photo - Foto
     // Route::post('/photo-create', [PhotoCreateLivewire::class, 'photoCreate'])->name('photo.create');

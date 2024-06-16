@@ -29,7 +29,10 @@
                DIÁRIAS
             </th>
             <th scope="col" class="cell" style="width: 15%">
-               VR. DIARIAS
+               VR. DIÁRIA
+            </th>
+            <th scope="col" class="cell" style="width: 15%">
+               VR. TOTAL
             </th>
          </tr>
       </thead>
@@ -39,7 +42,7 @@
          <tr style="border: 1px solid #ccc">
 
             <td style="text-align: center; padding: 0 2px">
-               <p> {{ $indice }} </p>
+               <p> {{ $indice + 1 }} </p>
             </td>
 
             <td style="padding: 0 2px">
@@ -58,36 +61,61 @@
 
             <td style="text-align: center;">
                @php
-                  $start = $prison->entry_date;
-                  $end = $prison->exit_date;
-                  $data_entry = \Carbon\Carbon::createFromFormat('Y-m-d', $start);
+                  // retorna o a data de entrada do preso na unidade
+                  $data_entry = \Carbon\Carbon::parse($prison->entry_date);
 
-                  $data_entry_2 = \Carbon\Carbon::createFromFormat('Y-m-d', $start_date);
-                  $data_exit_2 = \Carbon\Carbon::createFromFormat('Y-m-d', $end_date);
-                  
-                  if (!empty($end)) {
-                     $data_exit = \Carbon\Carbon::createFromFormat('Y-m-d', $end);
-                  } else {
-                     $data_exit = \Carbon\Carbon::createFromFormat('Y-m-d', $end_date);
+                  // retorna a data de saída do preso da unidade
+                  if (!empty($prison->exit_date)) {
+                     $exit_date = \Carbon\Carbon::parse($prison->exit_date);
                   }
                   
-                  if ($data_entry->diffInDays($data_exit) >= $data_entry_2->diffInDays($data_exit_2)) {
-                     $days = $data_entry_2->diffInDays($data_exit_2) + 1;
+                  // retorna o primeiro dia do mês para cálculo
+                  $first_day = \Carbon\Carbon::parse($start_date);
+
+                  // retorna o último dia do mês para cálculo = 30 ou 31
+                  $last_day = \Carbon\Carbon::parse($end_date);
+                  
+                  if (!empty($prison->exit_date)) {
+                     if ($first_day->diffInDays($exit_date) < $first_day->diffInDays($last_day)) {
+                        $days = $first_day->diffInDays($exit_date) + 1;
+                     } elseif ($data_entry->diffInDays($last_day) < $first_day->diffInDays($last_day)) {
+                        $days = $data_entry->diffInDays($last_day) + 1;
+                     } else {
+                        $days = $first_day->diffInDays($last_day) + 1;
+                     }
                   } else {
-                     $days = $data_entry->diffInDays($data_exit) + 1;
+                     if ($data_entry->diffInDays($last_day) < $first_day->diffInDays($last_day)) {
+                        $days = $data_entry->diffInDays($last_day) + 1;
+                     } else {
+                        $days = $first_day->diffInDays($last_day) + 1;
+                     }
                   }
                @endphp
                <p>{{ $days }}</p>
             </td>
 
+            @php
+               $d1 = 5543.98 / 30;
+               $d2 = 5543.98 / 31;
+               $valor30 = $d1  * $days;
+               $valor31 = $d2 * $days;
+            @endphp
+
             <td style="text-align: center;">
-               @php
-                  $d1 = 5543.98 / 30;
-                  $d2 = 5543.98 / 31 * $days;
-                  $valor30 = number_format($d1, 2);
-                  $valor31 = number_format($d2, 2);
-               @endphp
-               <p>{{ $valor31 }}</p>
+               @if ($days == 31)
+                  <p>{{  number_format($d2, 2, ',', '.') }}</p>
+               @else
+                  <p>{{ number_format($d1, 2, ',', '.') }}</p>
+               @endif
+               
+            </td>
+
+            <td style="text-align: center;">
+               @if ($days == 31)
+                  <p>{{  number_format($valor31, 2, ',', '.') }}</p>
+               @else
+                  <p>{{ number_format($valor30, 2, ',', '.') }}</p>
+               @endif
             </td>
 
          </tr>
