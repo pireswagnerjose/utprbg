@@ -20,7 +20,7 @@ class PrisonUnit extends Model
         return $this->hasMany(User::class);
     }
     
-    public function prisions()
+    public function prisons()
     {
         return $this->hasMany(Prison::class);
     }

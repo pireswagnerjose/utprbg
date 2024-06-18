@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Livewire\Main\Prisoner\PrisonerShowLivewire;
+use App\Models\Admin\Cell;
+use App\Models\Admin\PrisonUnit;
 use App\Models\Admin\Ward;
 use App\Models\Main\Prison;
 use App\Models\Main\Prisoner;
@@ -16,36 +19,22 @@ class PrisonerListController extends Controller
     public function pdf(Request $request)
     {
         $c_s_photo  = $request->c_s_photo;
-
-        $prisons = Prison::where('prison_unit_id', Auth::user()->prison_unit_id)->get();
-        $prison_arr_id = [];
-        foreach ($prisons as $prison) {
-            $prison_arr_id[] = $prison->prisoner_id;
-        }
-
-        $prisoners = Prisoner::where('prisoners.status_prison_id', 1);
-        $prisoners = $prisoners->whereIn('prisoners.id', $prison_arr_id)->get();
-
-        $prisons = Prison::orderBy('entry_date', 'desc')->first();
-
-        $prisoner_arr_id = [];
-        foreach ($prisoners as $prisoner) {
-            $prisoner_arr_id[] = $prisoner->id;
-        }
+        $prisons = Prison::get();
+        $unit_addresses = UnitAddress::where('status', 'ATIVO')->orderBy('cell_id', 'asc')
+                                    ->with('prisoner', 'cell')
+                                    ->whereHas('prisoner', function ($querey){
+                                        $querey->where('status_prison_id', 1);
+                                    });
         if ($request->ward_id) {
-            $unit_addresses = UnitAddress::whereIn('unit_addresses.prisoner_id', $prisoner_arr_id)->where('ward_id', $request->ward_id);
-            $unit_addresses = $unit_addresses->where('unit_addresses.status', 'ATIVO')->get();
-        }else{
-            $unit_addresses = UnitAddress::whereIn('unit_addresses.prisoner_id', $prisoner_arr_id);
-            $unit_addresses = $unit_addresses->where('unit_addresses.status', 'ATIVO')->get();
+            $unit_addresses = $unit_addresses->where('ward_id', $request->ward_id);
         }
 
-        $ward = Ward::where('id', $request->ward_id)->first('ward');
+        $unit_addresses = $unit_addresses->get();
 
         $pdf = Pdf::loadView(
             'reports.prisoner-list.prisoner-list',
             compact(
-                'unit_addresses', 'c_s_photo', 'prisons', 'ward'
+                'unit_addresses', 'c_s_photo', 'prisons'
             )
         );
         return $pdf->stream('Lista de Presos'.'.pdf');

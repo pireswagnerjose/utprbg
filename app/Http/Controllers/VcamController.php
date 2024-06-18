@@ -88,7 +88,7 @@ class VcamController extends Controller
             // ---------------------
 
             // CÁLCULO DAS DIÁRIAS -----------------------
-            $value_month = str_replace(",", ".", $request->value_month);
+            $value_month = str_replace(",", ".", $request->value_month);//substitui a vírgula pelo ponto.
             $value_thirty_days = $value_month / 30; //$d1 = 5543.98 / 30;
             $value_thirty_one_days = $value_month / 31; //$d2 = 5543.98 / 31;
             $valor30 = $value_thirty_days * $days; //$d1  * $days;
@@ -106,15 +106,24 @@ class VcamController extends Controller
             else
                 $valor_total = number_format($valor30, 2, ',', '.');
             // ---------------------
+            // converte a data de entrada e saída para o padrão pt-br
+            $entry_date_formated = '';
+            if (!empty($prison->entry_date)) {
+                $entry_date_formated = \Carbon\Carbon::parse($prison->entry_date)->format('d/m/Y');
+            }
+            $exit_date_formated = '';
+            if (!empty($prison->exit_date)) {
+                $exit_date_formated = \Carbon\Carbon::parse($prison->exit_date)->format('d/m/Y');
+            }
             // Criar Array com os dados da linha do excel
             $prisonArr = [
-                'id' => $id + 1,
-                'name' => mb_convert_encoding($prison->prisoner->name, 'ISO-8859-1', 'UTF-8'),
-                'dt_entry' => \Carbon\Carbon::parse($prison->entry_date)->format('d/m/Y'),
-                'dt_exit' =>  \Carbon\Carbon::parse($prison->exit_date)->format('d/m/Y'),
-                'qt_days' => $days,
-                'vr_day' => $valor_diaria,
-                'vr_full' => $valor_total,
+                'id'        => $id + 1,
+                'name'      => mb_convert_encoding($prison->prisoner->name, 'ISO-8859-1', 'UTF-8'),
+                'dt_entry'  => $entry_date_formated,
+                'dt_exit'   => $exit_date_formated,
+                'qt_days'   => $days,
+                'vr_day'    => $valor_diaria,
+                'vr_full'   => $valor_total,
             ];
             //Escrever o conteúdo no arquivo
             fputcsv($csv_open, $prisonArr, ';');
