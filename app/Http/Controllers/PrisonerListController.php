@@ -40,16 +40,14 @@ class PrisonerListController extends Controller
             return $pdf->stream('Lista de Presos'.'.pdf');
         }
 
-
-        // ->whereHas('unit_addresses', function ($querey) use ($ward_id){
-        //     $querey->where('unit_addresses.cell_id', $ward_id);
-        // })
-        
         // retorna os presos divididos por cela
         if ($request->list_type == 'conference') {
             $ward_id = $request->ward_id;
             $cells = Cell::where('ward_id', $request->ward_id)
-                        ->with('unit_addresses');
+                        ->with('unit_addresses')
+                        ->whereHas('unit_addresses', function ($querey){
+                                $querey->where('status', 'ATIVO');
+                        });
 
             $cells = $cells->get();
             $pdf = Pdf::loadView('reports.prisoner-list.prisoner-conference',
