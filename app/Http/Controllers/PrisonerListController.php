@@ -20,23 +20,44 @@ class PrisonerListController extends Controller
     {
         $c_s_photo  = $request->c_s_photo;
         $prisons = Prison::get();
-        $unit_addresses = UnitAddress::where('status', 'ATIVO')->orderBy('cell_id', 'asc')
-                                    ->with('prisoner', 'cell')
-                                    ->whereHas('prisoner', function ($querey){
-                                        $querey->where('status_prison_id', 1);
-                                    });
-        if ($request->ward_id) {
-            $unit_addresses = $unit_addresses->where('ward_id', $request->ward_id);
+
+        // retorna a listagem geral de presos
+        if ($request->list_type == 'list') {
+            $unit_addresses = UnitAddress::where('status', 'ATIVO')->orderBy('cell_id', 'asc')
+                                        ->with('prisoner', 'cell')
+                                        ->whereHas('prisoner', function ($querey){
+                                            $querey->where('status_prison_id', 1);
+                                        });
+            if ($request->ward_id) {
+                $unit_addresses = $unit_addresses->where('ward_id', $request->ward_id);
+            }
+            $unit_addresses = $unit_addresses->get();
+            $pdf = Pdf::loadView('reports.prisoner-list.prisoner-list',
+                compact(
+                    'unit_addresses', 'c_s_photo', 'prisons'
+                )
+            );
+            return $pdf->stream('Lista de Presos'.'.pdf');
         }
 
-        $unit_addresses = $unit_addresses->get();
 
-        $pdf = Pdf::loadView(
-            'reports.prisoner-list.prisoner-list',
-            compact(
-                'unit_addresses', 'c_s_photo', 'prisons'
-            )
-        );
-        return $pdf->stream('Lista de Presos'.'.pdf');
+        // ->whereHas('unit_addresses', function ($querey) use ($ward_id){
+        //     $querey->where('unit_addresses.cell_id', $ward_id);
+        // })
+        
+        // retorna os presos divididos por cela
+        if ($request->list_type == 'conference') {
+            $ward_id = $request->ward_id;
+            $cells = Cell::where('ward_id', $request->ward_id)
+                        ->with('unit_addresses');
+
+            $cells = $cells->get();
+            $pdf = Pdf::loadView('reports.prisoner-list.prisoner-conference',
+                compact(
+                    'cells', 'c_s_photo', 'prisons'
+                )
+            );
+            return $pdf->stream('Lista de Presos'.'.pdf');
+        }
     }
 }
