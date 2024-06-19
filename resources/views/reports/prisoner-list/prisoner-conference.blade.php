@@ -3,13 +3,6 @@
         <?php $date = new DateTimeImmutable();
       echo '<strong>LISTAGEM DE INTERNOS </strong> - Data: '.$date->format('d-m-Y'); ?>
     </div>
-    <div>
-        {{-- @if ($ward)
-         - 
-        <h1 style="text-align: center; font-size: 20px; font-stretch: condensed">{{ $ward->ward }}</h1>
-        @endif --}}
-    </div>
-
 
     @foreach ($cells as $cell)
         <h3 style="width: 100%; text-align: center; margin-top: 10px;">{{ $cell->cell }}</h3>
@@ -38,8 +31,13 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse ($cell->unit_addresses as $id => $unit_address)
-                <tr style="border: 1px solid #ccc">
+                @php
+                    $unit_adds = $unit_addresses->where('cell_id', $cell->id)
+                                                ->where('status', 'ATIVO');
+                    $index = 1;
+                @endphp
+                @forelse ($unit_adds as $unit_address)
+                <tr style="border: 1px solid #ccc; font-size: 13px;">
                     @if ($c_s_photo == 1)
                         <td style="text-align: center; height: 78px; padding: 2px">
                             <img src="{{ storage_path('app/public/'.$unit_address->prisoner->photo) }}" width="78"
@@ -47,14 +45,15 @@
                         </td>
                     @else
                         <td style="text-align: center; padding: 0 2px">
-                            <p> {{ $id + 1 }} </p>
+                            <p> {{ $index ++ }} </p>
                         </td>
                     @endif
-                    <td style="">
+                    <td style="padding: 3px 0;">
                         <p>{{ $unit_address->prisoner->name }}</p>
                     </td>
                     @php
-                        $prison = $prisons->where('prisoner_id', $unit_address->prisoner_id)->first();
+                        $prison = $prisons->where('prisoner_id', $unit_address->prisoner_id)
+                                        ->first();
                     @endphp
                     <td style="text-align: center;">
                         <p>{{ \Carbon\Carbon::parse($prison->entry_date)->format('d/m/Y') }}</p>
@@ -65,8 +64,8 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="6" style="padding-top: 10px; text-align: center; font-size: 12px">
-                        Não foram encontrados registros na sua pesquisa!
+                    <td colspan="6" style="border: 1px solid #ccc; padding-top: 10px; text-align: center; font-size: 12px">
+                        CELA VAZIA!
                     </td>
                 </tr>
                 @endforelse

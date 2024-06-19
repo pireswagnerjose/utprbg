@@ -19,22 +19,44 @@ class PrisonerListController extends Controller
     public function pdf(Request $request)
     {
         $c_s_photo  = $request->c_s_photo;
-        $prisons = Prison::get();
+        $prisons = Prison::where('prison_unit_id', Auth::user()->prison_unit_id)
+                    ->where('exit_date', NULL)->get();
+        
+        // retorna os presos ativos
+        foreach ($prisons as $prison) {
+            $prisoner_id_arr[] = $prison->prisoner_id;
+        }
+
+        $unit_addresses = UnitAddress::with('cell')
+                                        ->where('prison_unit_id', Auth::user()->prison_unit_id)
+                                        ->whereIn('prisoner_id', $prisoner_id_arr)
+                                        ->get();
 
         // retorna a listagem geral de presos
         if ($request->list_type == 'list') {
-            $unit_addresses = UnitAddress::where('status', 'ATIVO')->orderBy('cell_id', 'asc')
-                                        ->with('prisoner', 'cell')
-                                        ->whereHas('prisoner', function ($querey){
-                                            $querey->where('status_prison_id', 1);
-                                        });
-            if ($request->ward_id) {
-                $unit_addresses = $unit_addresses->where('ward_id', $request->ward_id);
+
+            // por ala
+            if($request->ward_id){
+                $unit_adds = UnitAddress::with('cell', 'prisoner')
+                                        ->join('prisoners', 'prisoners.id','=', 'unit_addresses.prisoner_id')
+                                        ->where('ward_id', $request->ward_id)
+                                        ->where('status', 'ATIVO')
+                                        ->whereIn('prisoner_id', $prisoner_id_arr)
+                                        ->orderBy('prisoners.name')
+                                        ->get();
+            }else{
+            // todas as alas
+                $unit_adds = UnitAddress::with('cell', 'prisoner')
+                                        ->join('prisoners', 'prisoners.id','=', 'unit_addresses.prisoner_id')
+                                        ->where('status', 'ATIVO')
+                                        ->whereIn('prisoner_id', $prisoner_id_arr)
+                                        ->orderBy('prisoners.name')
+                                        ->get();
             }
-            $unit_addresses = $unit_addresses->get();
+
             $pdf = Pdf::loadView('reports.prisoner-list.prisoner-list',
                 compact(
-                    'unit_addresses', 'c_s_photo', 'prisons'
+                    'unit_adds', 'c_s_photo', 'prisons'
                 )
             );
             return $pdf->stream('Lista de Presos'.'.pdf');
@@ -42,17 +64,25 @@ class PrisonerListController extends Controller
 
         // retorna os presos divididos por cela
         if ($request->list_type == 'conference') {
-            $ward_id = $request->ward_id;
-            $cells = Cell::where('ward_id', $request->ward_id)
+            // por ala
+            if ($request->ward_id) {
+                $cells = Cell::where('ward_id', $request->ward_id)
                         ->with('unit_addresses')
                         ->whereHas('unit_addresses', function ($querey){
                                 $querey->where('status', 'ATIVO');
                         });
-
+            }else {
+                $cells = Cell::with('unit_addresses')
+                        ->whereHas('unit_addresses', function ($querey){
+                                $querey->where('status', 'ATIVO');
+                        });
+            }
+            
             $cells = $cells->get();
+
             $pdf = Pdf::loadView('reports.prisoner-list.prisoner-conference',
                 compact(
-                    'cells', 'c_s_photo', 'prisons'
+                    'cells', 'unit_addresses', 'c_s_photo', 'prisons'
                 )
             );
             return $pdf->stream('Lista de Presos'.'.pdf');
