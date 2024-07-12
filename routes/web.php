@@ -35,6 +35,9 @@ use App\Livewire\Admin\Sex\SexLivewire;
 use App\Livewire\Admin\SexualOrientation\SexualOrientationLivewire;
 use App\Livewire\Admin\State\StateLivewire;
 use App\Livewire\Admin\Ward\WardLivewire;
+use App\Livewire\Infopen\CertificateOfSentence\CertificateOfSentence;
+use App\Livewire\Infopen\CriminalTypes\CriminalTypes;
+use App\Livewire\Infopen\Sentence\Sentence;
 use App\Livewire\Main\Photo\PhotoCreateLivewire;
 use App\Livewire\Main\Prisoner\PrisonerCreateLivewire;
 use App\Livewire\Main\Prisoner\PrisonerLivewire;
@@ -160,6 +163,11 @@ Route::middleware([
     Route::get('/vcam-list', VcamReport::class)->name('vcam-list.index');
     // Route::any('/vcam-list-pdf', [VcamController::class, 'pdf'])->name('vcam-list.pdf');
     Route::any('/vcam-list-csv', [VcamController::class, 'csv'])->name('vcam-list.csv');
+
+    //INFOPEN
+    Route::get('/infopen-certificate-of-sentence', CertificateOfSentence::class)->name('infopen.certificate-of-sentence');
+    Route::get('/infopen-sentence', Sentence::class)->name('infopen.sentence');
+    Route::get('/infopen-criminal-types', CriminalTypes::class)->name('infopen.criminal-types');
 
     //Photo - Foto
     // Route::post('/photo-create', [PhotoCreateLivewire::class, 'photoCreate'])->name('photo.create');
