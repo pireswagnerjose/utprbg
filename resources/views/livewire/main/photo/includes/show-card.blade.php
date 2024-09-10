@@ -4,10 +4,12 @@
             <div class="text-center">
 
                 {{-- botões de edição e exclusão --}}
-                <div class="flex">
-                    <button wire:click="modalPhotoUpdate({{ $photo->id }})"><span class="text-blue-700 hover:text-blue-500 text-xs mr-4">[ Editar ]</span></button>
-                    <button wire:click="modalPhotoDelete({{ $photo->id }})"><span class="text-red-700 hover:text-red-500 text-xs">[ excluir ]</span></button>
-                </div>
+                @can('admin-cartorio_admin')
+                    <div class="flex">
+                        <button wire:click="modalPhotoUpdate({{ $photo->id }})"><span class="text-blue-700 hover:text-blue-500 text-xs mr-4">[ Editar ]</span></button>
+                        <button wire:click="modalPhotoDelete({{ $photo->id }})"><span class="text-red-700 hover:text-red-500 text-xs">[ excluir ]</span></button>
+                    </div>
+                @endcan
 
                 {{-- imagens --}}
                 <div class="h-52 w-52">

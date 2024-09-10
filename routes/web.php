@@ -42,6 +42,7 @@ use App\Livewire\Main\Photo\PhotoCreateLivewire;
 use App\Livewire\Main\Prisoner\PrisonerCreateLivewire;
 use App\Livewire\Main\Prisoner\PrisonerLivewire;
 use App\Livewire\Main\Prisoner\PrisonerShowLivewire;
+use App\Livewire\Main\Visitant\VisitantLivewire;
 use App\Livewire\Report\PrisonerList\PrisonerListReport;
 use App\Livewire\Report\Vcam\VcamReport;
 use App\Livewire\User\UserLivewire;
@@ -61,77 +62,77 @@ Route::middleware([
     })->name('dashboard');
 
     // Level Access - Nível de Acesso
-    Route::get('/level-accesses', LevelAccessLivewire::class)->name('level-accesses.index');
+    Route::get('/level-accesses', LevelAccessLivewire::class)->name('level-accesses.index')->middleware('can:admin');
     // Users - Usuários
-    Route::get('/users-show', UserLivewire::class)->name('users-show.index');
+    Route::get('/users-show', UserLivewire::class)->name('users-show.index')->middleware('can:admin');
     // Prison Unit - Unidades Prisionais
-    Route::get('/prison-units', PrisonUnitLivewire::class)->name('prison-units.index');
+    Route::get('/prison-units', PrisonUnitLivewire::class)->name('prison-units.index')->middleware('can:admin');
     // Country - País
-    Route::get('/countries', CountryLivewire::class)->name('countries.index');
+    Route::get('/countries', CountryLivewire::class)->name('countries.index')->middleware('can:admin');
     // State - Estado
-    Route::get('/states', StateLivewire::class)->name('states.index');
+    Route::get('/states', StateLivewire::class)->name('states.index')->middleware('can:admin');
     // Municipality - Município
-    Route::get('/municipalities', MunicipalityLivewire::class)->name('municipalities.index');
+    Route::get('/municipalities', MunicipalityLivewire::class)->name('municipalities.index')->middleware('can:admin');
     // Education Levels - Escolaridade
-    Route::get('/education-levels', EducationLevelLivewire::class)->name('education-levels.index');
+    Route::get('/education-levels', EducationLevelLivewire::class)->name('education-levels.index')->middleware('can:admin');
     // Civil Status - Estado Civil
-    Route::get('/civil-statuses', EducationLevelLivewire::class)->name('civil-statuses.index');
+    Route::get('/civil-statuses', EducationLevelLivewire::class)->name('civil-statuses.index')->middleware('can:admin');
     // ethnicity - Etnia
-    Route::get('/ethnicities', EthnicityLivewire::class)->name('ethnicities.index');
+    Route::get('/ethnicities', EthnicityLivewire::class)->name('ethnicities.index')->middleware('can:admin');
     // Sexual Orientations - Orientação Sexual
-    Route::get('/sexual-orientations', SexualOrientationLivewire::class)->name('sexual-orientations.index');
+    Route::get('/sexual-orientations', SexualOrientationLivewire::class)->name('sexual-orientations.index')->middleware('can:admin');
     // Sex - Sexo
-    Route::get('/sexes', SexLivewire::class)->name('sexes.index');
+    Route::get('/sexes', SexLivewire::class)->name('sexes.index')->middleware('can:admin');
 
     // CADASTROS DA UNIDADE
     // Ward - Ala/Pavilhão
-    Route::get('/wards', WardLivewire::class)->name('wards.index');
+    Route::get('/wards', WardLivewire::class)->name('wards.index')->middleware('can:admin');
     // Cell - Cela
-    Route::get('/cells', CellLivewire::class)->name('cells.index');
+    Route::get('/cells', CellLivewire::class)->name('cells.index')->middleware('can:admin');
     
     // PRISON
     // Prison Origins - Origem da Prisão
-    Route::get('/prison-origins', PrisonOriginLivewire::class)->name('prison-origins.index');
+    Route::get('/prison-origins', PrisonOriginLivewire::class)->name('prison-origins.index')->middleware('can:admin');
     // Type Prisons - Tipo de Prisão
-    Route::get('/type-prisons', TypePrisonLivewire::class)->name('type-prisons.index');
+    Route::get('/type-prisons', TypePrisonLivewire::class)->name('type-prisons.index')->middleware('can:admin');
     // Status Prisons - Status da Prisão
-    Route::get('/status-prisons', StatusPrisonLivewire::class)->name('status-prisons.index');
+    Route::get('/status-prisons', StatusPrisonLivewire::class)->name('status-prisons.index')->middleware('can:admin');
     // Output Types - Status da Prisão
-    Route::get('/output-types', OutputTypeLivewire::class)->name('output-types.index');
+    Route::get('/output-types', OutputTypeLivewire::class)->name('output-types.index')->middleware('can:admin');
 
     // PROCESS
     // Penal Types - Tipo Penal
-    Route::get('/penal-types', PenalTypeLivewire::class)->name('penal-types.index');
+    Route::get('/penal-types', PenalTypeLivewire::class)->name('penal-types.index')->middleware('can:admin');
     // Origin Processes - Tipo Penal
-    Route::get('/origin-processes', OriginProcessLivewire::class)->name('origin-processes.index');
+    Route::get('/origin-processes', OriginProcessLivewire::class)->name('origin-processes.index')->middleware('can:admin');
     // Process Regimes - Regime do Processo
-    Route::get('/process-regimes', ProcessRegimeLivewire::class)->name('process-regimes.index');
+    Route::get('/process-regimes', ProcessRegimeLivewire::class)->name('process-regimes.index')->middleware('can:admin');
     
     // INTERNAL SERVICE
     // Type Services - Tipos de Atendimento
-    Route::get('/type-services', TypeServiceLivewire::class)->name('type-services.index');
+    Route::get('/type-services', TypeServiceLivewire::class)->name('type-services.index')->middleware('can:admin');
 
     // EXTERNAL OUTPUT
     // Requestings - Requisitante
-    Route::get('/requestings', RequestingLivewire::class)->name('requestings.index');
+    Route::get('/requestings', RequestingLivewire::class)->name('requestings.index')->middleware('can:admin');
     // Exit Reasons - Motivo da Saída
-    Route::get('/exit-reasons', ExitReasonLivewire::class)->name('exit-reasons.index');
+    Route::get('/exit-reasons', ExitReasonLivewire::class)->name('exit-reasons.index')->middleware('can:admin');
 
     // LEGAL ASSISTANCE
     // lawyers - Advogados
-    Route::get('/lawyers', LawyersLivewire::class)->name('lawyers.index');
+    Route::get('/lawyers', LawyersLivewire::class)->name('lawyers.index')->middleware('can:admin');
     // Type Cares - Tipo de Atendimento
-    Route::get('/type-cares', TypeCareLivewire::class)->name('type-cares.index');
+    Route::get('/type-cares', TypeCareLivewire::class)->name('type-cares.index')->middleware('can:admin');
     // Modality Care - Modalidade do Atendimento
-    Route::get('/modality-cares', ModalityCareLivewire::class)->name('modality-cares.index');
+    Route::get('/modality-cares', ModalityCareLivewire::class)->name('modality-cares.index')->middleware('can:admin');
     // District - Comarcas
-    Route::get('/districts', DistrictLivewire::class)->name('districts.index');
+    Route::get('/districts', DistrictLivewire::class)->name('districts.index')->middleware('can:admin');
     // Criminal Court - Vara Criminal
-    Route::get('/criminal-courts', CriminalCourtLivewire::class)->name('criminal-courts.index');
+    Route::get('/criminal-courts', CriminalCourtLivewire::class)->name('criminal-courts.index')->middleware('can:admin');
 
     // FAMILIES
     // Degree Of Kinship - Grau de Parentesco
-    Route::get('/degrees-of-kinship', DegreeOfKinshipLivewire::class)->name('degrees-of-kinship.index');
+    Route::get('/degrees-of-kinship', DegreeOfKinshipLivewire::class)->name('degrees-of-kinship.index')->middleware('can:admin');
 
     // PAD
     // Type Of Occurrence - Tipo de Ocorrência
@@ -149,7 +150,7 @@ Route::middleware([
     // Prisoner - Preso
     Route::get('/prisoners-search', PrisonerLivewire::class)->name('prisoners.search');
     Route::get('/prisoners/{prisoner_id}', PrisonerShowLivewire::class)->name('prisoners.show');
-    Route::get('/prisoners-create', PrisonerCreateLivewire::class)->name('prisoners.create');
+    Route::get('/prisoners-create', PrisonerCreateLivewire::class)->name('prisoners.create')->middleware('can:admin-cartorio_admin-cartorio_user');
 
     // REPORT
     // Prisoner Report
@@ -160,15 +161,19 @@ Route::middleware([
     Route::any('/prisoners-list-pdf', [PrisonerListController::class, 'pdf'])->name('prisoner-list.pdf');
 
     // VCAM Report
-    Route::get('/vcam-list', VcamReport::class)->name('vcam-list.index');
+    Route::get('/vcam-list', VcamReport::class)->name('vcam-list.index')->middleware('can:admin');
     // Route::any('/vcam-list-pdf', [VcamController::class, 'pdf'])->name('vcam-list.pdf');
-    Route::any('/vcam-list-csv', [VcamController::class, 'csv'])->name('vcam-list.csv');
+    Route::any('/vcam-list-csv', [VcamController::class, 'csv'])->name('vcam-list.csv')->middleware('can:admin');
 
     //INFOPEN
-    Route::get('/infopen-certificate-of-sentence', CertificateOfSentence::class)->name('infopen.certificate-of-sentence');
-    Route::get('/infopen-sentence', Sentence::class)->name('infopen.sentence');
-    Route::get('/infopen-criminal-types', CriminalTypes::class)->name('infopen.criminal-types');
+    Route::get('/infopen-certificate-of-sentence', CertificateOfSentence::class)->name('infopen.certificate-of-sentence')->middleware('can:admin');
+    Route::get('/infopen-sentence', Sentence::class)->name('infopen.sentence')->middleware('can:admin');
+    Route::get('/infopen-criminal-types', CriminalTypes::class)->name('infopen.criminal-types')->middleware('can:admin');
 
     //Photo - Foto
     // Route::post('/photo-create', [PhotoCreateLivewire::class, 'photoCreate'])->name('photo.create');
+
+    // VISITANT
+    // Visitant - Visitante
+    Route::get('/visitant', VisitantLivewire::class)->name('visitant.index');
 });

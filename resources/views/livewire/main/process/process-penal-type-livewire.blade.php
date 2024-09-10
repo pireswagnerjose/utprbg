@@ -1,5 +1,7 @@
 <div>
-    <button wire:click="addNew"><span class="text-blue-600 mr-4">[ Adicionar ]</span></button>
+    @can('admin-cartorio_admin')
+        <button wire:click="addNew"><span class="text-blue-600 mr-4">[ Adicionar ]</span></button>
+    @endcan
     {{-- create --}}
     @if($add_new == true)
         <div id="search-box" class="flex flex-col items-center px-2 my-4 justify-center w-full border-b border-blue-300 dark:border-blue-500 pb-3">
@@ -25,9 +27,11 @@
                         {{ $penal_type_process->penal_type->item }} <span class="font-light text-xs"> 
                         - {{ $penal_type_process->penal_type->description }}</span>
                     </div>
-                    <div class="w-1/12 text-end">
-                        <button wire:click="modalProcessPenealTypeDelete({{ $penal_type_process->id }})"><span class="text-red-600 text-xs">[ excluir ]</span></button>
-                    </div>
+                    @can('admin-cartorio_admin')
+                        <div class="w-1/12 text-end">
+                            <button wire:click="modalProcessPenealTypeDelete({{ $penal_type_process->id }})"><span class="text-red-600 text-xs">[ excluir ]</span></button>
+                        </div>
+                    @endcan
                 </div>
             @endforeach
         </div>

@@ -6,31 +6,26 @@
             <x-title-page>Dados do Preso</x-title-page>
 
             {{-- botões --}}
-            <div class="flex justify-end gap-2 px-2">
+            <div class="grid grid-cols-3 gap-2 px-2 justify-items-end">
                 {{-- chama o modal para exclusão do item --}}
-                @can('admin')
-                    <div class="group grid justify-items-center w-16 border-b border-zinc-200 dark:border-zinc-600">
-                        <button type="button" wire:click="modalPrisonerDelete({{ $prisoner->id }})" class="w-8 h-8 bg-red-600 dark:bg-red-500 rounded-full p-2">
-                            <svg class="w-4 h-4 text-red-50 dark:text-red-50 hover:text-red-400 hover:dark:text-red-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 8h6m-9-3.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0ZM5 11h3a4 4 0 0 1 4 4v2H1v-2a4 4 0 0 1 4-4Z" />
-                            </svg>
-                        </button>
-                        <span class="text-xs text-zinc-600 dark:text-zinc-400">Excluir</span>
-                    </div> 
-                @endcan
-                
+                <div class="group grid justify-items-center w-16 border-b border-zinc-200 dark:border-zinc-600">
+                    <button type="button" wire:click="modalPrisonerDelete({{ $prisoner->id }})" class="w-8 h-8 bg-red-600 dark:bg-red-500 rounded-full p-2">
+                        <svg class="w-4 h-4 text-red-50 dark:text-red-50 hover:text-red-400 hover:dark:text-red-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 8h6m-9-3.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0ZM5 11h3a4 4 0 0 1 4 4v2H1v-2a4 4 0 0 1 4-4Z" />
+                        </svg>
+                    </button>
+                    <span class="text-xs text-zinc-600 dark:text-zinc-400">Excluir</span>
+                </div>
 
                 {{-- Editar --}}
-                @can('admin-cartorio_admin') 
-                    <div class="group grid justify-items-center w-16 border-b border-zinc-200 dark:border-zinc-600">
-                        <button wire:click="modalPrisonerUpdate({{ $prisoner->id }})" class="w-8 h-8 bg-blue-600 dark:bg-blue-500 rounded-full p-2">
-                            <svg class=" w-4 h-4 text-blue-50 dark:text-blue-50 hover:text-blue-400 hover:dark:text-blue-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.109 17H1v-2a4 4 0 0 1 4-4h.87M10 4.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm7.95 2.55a2 2 0 0 1 0 2.829l-6.364 6.364-3.536.707.707-3.536 6.364-6.364a2 2 0 0 1 2.829 0Z" />
-                            </svg>
-                        </button>
-                        <span class="text-xs text-zinc-600 dark:text-zinc-400">Editar</span>
-                    </div>
-                @endcan
+                <div class="group grid justify-items-center w-16 border-b border-zinc-200 dark:border-zinc-600">
+                    <button wire:click="modalPrisonerUpdate({{ $prisoner->id }})" class="w-8 h-8 bg-blue-600 dark:bg-blue-500 rounded-full p-2">
+                        <svg class=" w-4 h-4 text-blue-50 dark:text-blue-50 hover:text-blue-400 hover:dark:text-blue-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.109 17H1v-2a4 4 0 0 1 4-4h.87M10 4.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm7.95 2.55a2 2 0 0 1 0 2.829l-6.364 6.364-3.536.707.707-3.536 6.364-6.364a2 2 0 0 1 2.829 0Z" />
+                        </svg>
+                    </button>
+                    <span class="text-xs text-zinc-600 dark:text-zinc-400">Editar</span>
+                </div>
 
                 {{-- Relatório PDF --}}
                 <div class="group grid justify-items-center w-16 border-b border-zinc-200 dark:border-zinc-600">
@@ -61,10 +56,8 @@
                         @endforeach
                     @endif
                 </div>
-                @can('admin-cartorio_admin-cartorio_user')
-                    <livewire:main.prisoner.prisoner-unit-address-livewire :prisoner_id="$prisoner->id" />
-                @endcan
-                
+
+                <livewire:main.prisoner.prisoner-unit-address-livewire :prisoner_id="$prisoner->id" />
                 
             </div>
             <div class="w-full col-span-10">

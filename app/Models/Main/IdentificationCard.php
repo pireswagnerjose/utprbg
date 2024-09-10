@@ -5,10 +5,10 @@ namespace App\Models\Main;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class BookingVisit extends Model
+class IdentificationCard extends Model
 {
     use HasFactory;
-    protected $table    = 'booking_visits';
+    protected $table    = 'identification_cards';
     protected $guarded  = [];
 
     public function prisoners()
