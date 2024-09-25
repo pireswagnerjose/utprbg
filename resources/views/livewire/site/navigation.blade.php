@@ -103,6 +103,13 @@
                         <a href="{{ route('visitant.index') }}" class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
                             <span class="">Pesquisar</span>
                         </a>
+
+                        {{-- Cadastro de preso --}}
+                        @can('admin-cartorio_admin-cartorio_user')
+                            <a href="{{ route('visitant.create') }}" wire:navigate class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
+                                Cadastrar
+                            </a>
+                        @endcan
                     </div>
                 </div>
             </div>

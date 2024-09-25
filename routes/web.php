@@ -43,6 +43,8 @@ use App\Livewire\Main\Prisoner\PrisonerCreateLivewire;
 use App\Livewire\Main\Prisoner\PrisonerLivewire;
 use App\Livewire\Main\Prisoner\PrisonerShowLivewire;
 use App\Livewire\Main\Visitant\VisitantLivewire;
+use App\Livewire\Main\Visitant\VisitantCreateLivewire;
+use App\Livewire\Main\Visitant\VisitantShowLivewire;
 use App\Livewire\Report\PrisonerList\PrisonerListReport;
 use App\Livewire\Report\Vcam\VcamReport;
 use App\Livewire\User\UserLivewire;
@@ -176,4 +178,6 @@ Route::middleware([
     // VISITANT
     // Visitant - Visitante
     Route::get('/visitant', VisitantLivewire::class)->name('visitant.index');
+    Route::get('/visitant-create', VisitantCreateLivewire::class)->name('visitant.create');
+    Route::get('/visitant-show/{visitant_id}', VisitantShowLivewire::class)->name('visitant.show');
 });
