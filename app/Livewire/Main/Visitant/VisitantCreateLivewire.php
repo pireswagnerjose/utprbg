@@ -48,6 +48,11 @@ class VisitantCreateLivewire extends Component
         );
     }
 
+    public function cancel()
+    {
+        redirect('dashboard');
+    }
+
     public function create()
     {
         $dataValidated = $this->validate(
