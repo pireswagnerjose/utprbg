@@ -14,17 +14,14 @@
         <x-label for="name" wire:model="name" value="{{ 'Nome' }}" />
         <x-input-error for="name" class="mt-2">{{ $message ?? '' }}</x-input-error>
     </div>
-    <div class="col-span-1 relative z-0 w-full group">
+    <div class="col-span-2 relative z-0 w-full group">
         <x-input type="text" wire:model="contact" id="contact" />
         <x-label for="contact" wire:model="contact" value="{{ 'Contato' }}" />
         <x-input-error for="contact" class="mt-2">{{ $message ?? '' }}</x-input-error>
     </div>
-    <div class="col-span-1 relative z-0 w-full group">
+    <div class="col-span-1 relative z-0 w-full group" hidden>
         <select id="status" wire:model="status" class="uppercase block py-1 mt-1 px-0 w-full text-sm text-zinc-500 dark:text-zinc-400 bg-transparent border-0 border-b border-zinc-400 dark:border-zinc-600 dark:focus:border-blue-500 focus:border-blue-600 appearance-none focus:outline-none focus:ring-0 peer">
-            <option class="text-zinc-900 dark:text-zinc-600" selected value="{{ $status ?? '' }}">{{ $status ?? 'Status (ativo ou inativo)' }}</option>
-            @foreach ($statuses as $status)
-                <option class="text-zinc-900 dark:text-zinc-600" value="{{ $status ?? '' }}" @selected(old('status') ==  $status)>{{$status }}</option>
-            @endforeach
+            <option class="text-zinc-900 dark:text-zinc-600" selected value="INATIVO">Status (ativo ou inativo)</option>
         </select>
         <x-input-error for="status" class="mt-2">{{ $message ?? '' }}</x-input-error>
     </div>

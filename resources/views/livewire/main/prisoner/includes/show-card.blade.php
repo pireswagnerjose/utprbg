@@ -185,4 +185,6 @@
         </div>
     </div>
 </div>
-@include('livewire.main.prisoner.includes.tabs')
+@can('guest')
+    @include('livewire.main.prisoner.includes.tabs')
+@endcan

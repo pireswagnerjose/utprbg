@@ -1,5 +1,8 @@
 <div>
-    <button wire:click="modalProcessDocument({{ $process_id }})"><span class="text-blue-600">[ Adicionar ]</span></button>
+    @can('admin-cartorio_admin')
+        <button wire:click="modalProcessDocument({{ $process_id }})"><span class="text-blue-600">[ Adicionar ]</span></button>
+    @endcan
+        
     <div class="pt-4">
         <div class="grid grid-cols-2 p-2 rounded-lg gap-6">
             @foreach ($process_documents as $process_document)
