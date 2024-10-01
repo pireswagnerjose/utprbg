@@ -17,7 +17,7 @@ class FamilyLivewire extends Component
     public $prison_unit_id;
     public $name = '';
     public $contact = '';
-    public $status;
+    public $status = 'INATIVO';
     public $remark = '';
     public $degree_of_kinship_id = '';
     public $degree_of_kinships = [];
