@@ -23,7 +23,7 @@
                 {{-- Editar --}}
                 @can('admin-cartorio_admin') 
                     <div class="group grid justify-items-center w-16 border-b border-zinc-200 dark:border-zinc-600">
-                        <button wire:click="modalVisitantUpdate({{ $visitant->id }})" class="w-8 h-8 bg-blue-600 dark:bg-blue-500 rounded-full p-2">
+                        <button wire:click="modalVisitantEdit({{ $visitant->id }})" class="w-8 h-8 bg-blue-600 dark:bg-blue-500 rounded-full p-2">
                             <svg class=" w-4 h-4 text-blue-50 dark:text-blue-50 hover:text-blue-400 hover:dark:text-blue-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.109 17H1v-2a4 4 0 0 1 4-4h.87M10 4.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm7.95 2.55a2 2 0 0 1 0 2.829l-6.364 6.364-3.536.707.707-3.536 6.364-6.364a2 2 0 0 1 2.829 0Z" />
                             </svg>
@@ -66,7 +66,7 @@
                     </div>
                     <div>
                         <x-item-topic>Fone</x-item-topic>
-                        <x-item-data>{{ $visitant->fone }}</x-item-data>
+                        <x-item-data>{{ $visitant->phone }}</x-item-data>
                     </div>
                 </div>
                 {{-- linha 2 --}}
@@ -89,4 +89,6 @@
             </div>
         </div>
     </div>
+    @include("livewire.main.visitant.includes.modal-update")
+    @include("livewire.main.visitant.includes.modal-delete")
 </div>

@@ -4,7 +4,6 @@ namespace App\Livewire\Main\Visitant;
 
 use App\Models\Main\Visitant;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 
@@ -53,6 +52,7 @@ class VisitantCreateLivewire extends Component
         redirect('dashboard');
     }
 
+    //CREATE
     public function create()
     {
         $dataValidated = $this->validate(
