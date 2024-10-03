@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('visitant_documents', function (Blueprint $table) {
             $table->id();
-            $table->string('document', 100);//documento do visitante
+            $table->string('document');//documento do visitante
             $table->string('title', 100);//titulo do documento
-            $table->string('description', 100)->nullable();//descrição do documento
+            $table->string('description', 255)->nullable();//descrição do documento
             $table->longText('remark')->nullable();//Observações sobre o documento
 
-            $table->string('user_create', 100);//usuário que criou o documento
-            $table->string('user_update', 100);//usuário que modificou o documento
+            $table->string('user_create', 100)->nullable();//usuário que criou o documento
+            $table->string('user_update', 100)->nullable();//usuário que modificou o documento
             $table->string('prison_unit_id', 100);//unidade prisional
 
             /* chaves estrangeiras */

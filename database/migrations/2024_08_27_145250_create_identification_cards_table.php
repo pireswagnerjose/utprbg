@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('status');//status ativa ou suspensa
             $table->longText('remark')->nullable();//observações sobre a carteirinha
             
-            $table->string('user_create', 100);//usuário que criou o documento
-            $table->string('user_update', 100);//usuário que modificou o documento
+            $table->string('user_create', 100)->nullable();//usuário que criou o documento
+            $table->string('user_update', 100)->nullable();//usuário que modificou o documento
             $table->string('prison_unit_id', 100);//unidade prisional
 
             /* chaves estrangeiras */

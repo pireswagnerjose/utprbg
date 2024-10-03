@@ -5,6 +5,7 @@ namespace App\Models\Admin;
 use App\Models\Main\Address;
 use App\Models\Main\ExternalExit;
 use App\Models\Main\Prisoner;
+use App\Models\Main\Visitant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -32,5 +33,10 @@ class State extends Model
     public function external_exits()
     {
         return $this->hasMany(ExternalExit::class);
+    }
+
+    public function visitants()
+    {
+        return $this->hasMany(Visitant::class);
     }
 }
