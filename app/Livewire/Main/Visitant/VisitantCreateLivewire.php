@@ -108,27 +108,21 @@ class VisitantCreateLivewire extends Component
                 'user_create'       =>'required|max:10',
                 'remark'            =>'nullable',
             ]
-        );
-
-        if ($this->photo) {
-            $visitant_name = trim($this->name);
-            $visitant_name = str_replace("/", "-", $this->name);
-            /* cria o nome da photo com a extensão */
-            $photo = $visitant_name . ' - ' . date('d-m-Y_H_m_s') . '.' . $dataValidated['photo']->getClientOriginalExtension();
-            /* faz o upload e retorna o endereco do arquivo */
-            $dataValidated['photo'] = $dataValidated['photo']->storeAs('visitant/' . $photo);
-        }
-
-        // Transforma os caracteres em maiusculos
-        $dataValidated = $this->convertUppercase($dataValidated);
-        //Remove espaço em branco no começo do nome
-        $dataValidated['name'] = trim($dataValidated['name']);
-        // Cadastra os dados no banco
-        Visitant::create($dataValidated);
-        // Limpa os campos
-        $this->clearFields();
-        $visitant_id = Visitant::orderBy('created_at', 'desc')->first()->id;
-        $this->redirectRoute('visitant.show', ['visitant_id' => $visitant_id]);
+        ); 
+        $dataValidated = $this->convertUppercase($dataValidated);// Transforma os caracteres em maiusculos 
+        $dataValidated['name'] = trim($dataValidated['name']);//Remove espaço em branco no começo do nome 
+        $visitant = Visitant::create($dataValidated);// Cadastra os dados no banco
+        
+        // Cadastra a foto do visitante
+        if ($visitant) {
+            $visitant_name = trim($visitant->name);//Limpa os espaços vazios no início do nome
+            $visitant_name = str_replace("/", "-", $this->name);//substitui a barra por traço no nome
+            $photo = $visitant->id . ' - ' . $visitant_name . '.' . $dataValidated['photo']->getClientOriginalExtension();/* cria o nome da photo com a extensão */
+            $dataValidated['photo'] = $dataValidated['photo']->storeAs('visitant/' . 'id - ' . $visitant->id, $photo);/* faz o upload e retorna o endereco do arquivo */
+            $visitant->update($dataValidated);//Atualiza o endereço da foto no banco
+        } 
+        $this->clearFields();// Limpa os campos
+        $this->redirectRoute('visitant.show', ['visitant_id' => $visitant->id]);// Redireciona para a página do visitante cadastrado
     }
 
     public function render()

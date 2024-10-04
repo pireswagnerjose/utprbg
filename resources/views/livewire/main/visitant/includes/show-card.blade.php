@@ -127,10 +127,20 @@
                         <x-item-data>{{ $visitant->state->state }}</x-item-data>
                     </div>
                 </div>
+
                 {{-- linha 5 --}}
                 <div>
                     <x-item-topic>Informações Complementares</x-item-topic>
                     <x-item-data>{{ $visitant->remark }}</x-item-data>
+                </div>
+            </div>
+        </div>
+        {{-- Documentos Relacionados --}}
+        <div>
+            <div class="grid mb-5 border-t pt-2 border-blue-600 ">
+                <x-item-topic> Documentos do Visitante </x-item-topic>
+                <div class="px-4">
+                    <livewire:main.visitant.visitant-document-livewire :visitant_id="$visitant->id" />
                 </div>
             </div>
         </div>

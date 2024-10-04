@@ -6,7 +6,6 @@ use App\Models\Main\Process;
 use App\Models\Main\ProcessDocument;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
-use Illuminate\Validation\Rules\File;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Reactive;
 use Livewire\Features\SupportFileUploads\WithFileUploads;

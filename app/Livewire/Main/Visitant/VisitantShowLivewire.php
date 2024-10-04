@@ -146,7 +146,7 @@ class VisitantShowLivewire extends Component
                 [
                     'name'              =>'required|max:100',
                     'date_of_birth'     =>'required',
-                    'cpf'               =>'required|min:14|max:14|unique:visitants',
+                    'cpf'               =>"required|min:14|max:14|unique:visitants,cpf,{$this->visitant_id},id",
                     'phone'             =>'required|min:15|max:15',
                     'street'            =>'required|max:255',
                     'number'            =>'nullable|max:50',
@@ -176,9 +176,9 @@ class VisitantShowLivewire extends Component
             $visitant_name = trim($this->name);
             $visitant_name = str_replace("/", "-", $this->name);
             /* cria o nome da photo com a extensão */
-            $photo = $visitant_name . ' - ' . date('d-m-Y_H_m_s') . '.' . $dataValidated['photo']->getClientOriginalExtension();
+            $photo = $visitant->id . ' - ' . $visitant_name . '.' . $dataValidated['photo']->getClientOriginalExtension();
             /* faz o upload e retorna o endereco do arquivo */
-            $dataValidated['photo'] = $dataValidated['photo']->storeAs('visitant/' . $photo);
+            $dataValidated['photo'] = $dataValidated['photo']->storeAs('visitant/' . 'id - ' . $visitant->id, $photo);
         }
         $visitant->update($dataValidated);
         $this->openModalVisitantEdit = false;
@@ -193,9 +193,12 @@ class VisitantShowLivewire extends Component
     //DELETE
     public function visitantDelete(Visitant $visitant)
     {
+        $visitant_delete = explode('/', $visitant->photo);//pega o endereço do diretório a ser excluído
+        $diretory_delete = $visitant_delete[0]. '/' .$visitant_delete[1];//recupera o diretório a ser excluído
+        
         /* responsável por excluir o documento */
         if (!empty($visitant->photo)) {
-            Storage::disk('public')->delete($visitant->photo);
+            Storage::disk('public')->deleteDirectory($diretory_delete);
         }
         $visitant->delete();
         $this->openModalVisitantDelete = false;
