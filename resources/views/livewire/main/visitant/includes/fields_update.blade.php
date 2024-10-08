@@ -100,9 +100,9 @@
                 <select id="type_of_residence" wire:model="type_of_residence"
                     class="uppercase block py-1 mt-1 px-0 w-full text-sm text-zinc-500 dark:text-zinc-400 bg-transparent border-0 border-b border-zinc-400 dark:border-zinc-600 dark:focus:border-blue-500 focus:border-blue-600 appearance-none focus:outline-none focus:ring-0 peer">
                     <option class="text-zinc-900 dark:text-zinc-600" selected value="">Tipo de Residência</option> 
-                    <option class="text-zinc-900 dark:text-zinc-600" value="ATIVO">PRÓPRIA</option>
-                    <option class="text-zinc-900 dark:text-zinc-600" value="INATIVO">ALUGADA</option> 
-                    <option class="text-zinc-900 dark:text-zinc-600" value="INATIVO">CEDIDA</option> 
+                    <option class="text-zinc-900 dark:text-zinc-600" value="PRÓPRIA">PRÓPRIA</option>
+                    <option class="text-zinc-900 dark:text-zinc-600" value="ALUGADA">ALUGADA</option> 
+                    <option class="text-zinc-900 dark:text-zinc-600" value="CEDIDA">CEDIDA</option> 
                 </select>
                 <x-input-error for="type_of_residence" class="mt-2">{{ $message ?? '' }}</x-input-error>
             </div>

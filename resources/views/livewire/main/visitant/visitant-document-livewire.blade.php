@@ -1,5 +1,5 @@
 <div>
-    @can('admin-cartorio_admin')
+    @can('admin-recepcao')
         <button wire:click="modalVisitantDocumentCreate({{ $visitant_id }})"><span class="text-blue-600">[ Adicionar ]</span></button>
     @endcan
         
@@ -15,10 +15,12 @@
                             <dd class=" text-zinc-600 dark:text-zinc-400">{{ $visitant_document->remark }}</dd>
                         </div>
                     </div>
-                    <div class="flex justify-end">
-                        <button wire:click="modalVisitantDocumentEdit({{ $visitant_document->id }})"><span class="text-green-600 text-xs mr-4">[ Editar ]</span></button>
-                        <button wire:click="modalVisitantDocumentDelete({{ $visitant_document->id }})"><span class="text-red-600 text-xs">[ excluir ]</span></button>
-                    </div>
+                    @can('admin-recepcao')
+                        <div class="flex justify-end">
+                            <button wire:click="modalVisitantDocumentEdit({{ $visitant_document->id }})"><span class="text-green-600 text-xs mr-4">[ Editar ]</span></button>
+                            <button wire:click="modalVisitantDocumentDelete({{ $visitant_document->id }})"><span class="text-red-600 text-xs">[ excluir ]</span></button>
+                        </div>
+                    @endcan
                 </div>
             @endforeach
         </div>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PrisonerListController;
 use App\Http\Controllers\PrisonerPdfController;
+use App\Http\Controllers\Report\VisitantReportController;
 use App\Http\Controllers\VcamController;
 use App\Livewire\Admin\Cell\CellLivewire;
 use App\Livewire\Admin\Country\CountryLivewire;
@@ -180,4 +181,5 @@ Route::middleware([
     Route::get('/visitant', VisitantLivewire::class)->name('visitant.index');
     Route::get('/visitant-create', VisitantCreateLivewire::class)->name('visitant.create');
     Route::get('/visitant-show/{visitant_id}', VisitantShowLivewire::class)->name('visitant.show');
+    Route::post('/visitant-report/{visitant_id}', [VisitantReportController::class, 'report'])->name('visitant.report');
 });

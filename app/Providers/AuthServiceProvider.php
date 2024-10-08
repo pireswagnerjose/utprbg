@@ -21,6 +21,14 @@ class AuthServiceProvider extends ServiceProvider
 
     /**
      * Register any authentication / authorization services.
+     * 1 - ADMINISTRADOR
+     * 2 - CARTORIO_ADMIN
+     * 3 - CARTORIO_USER
+     * 4 - ESCOLTA
+     * 5 - PAD
+     * 6 - USUARIO
+     * 7 - RECEPCAO
+     * 8 - SAUDE
      */
     public function boot(): void
     {
@@ -83,6 +91,27 @@ class AuthServiceProvider extends ServiceProvider
                 $user->level_access_id == 4 or
                 $user->level_access_id == 5 or
                 $user->level_access_id == 6
+                ){
+                return true;
+            }
+        });
+
+        // somente administrador e recepcao e usuários pode acessar
+        Gate::define('admin-recepcao-guest', function (User $user) {
+            if(
+                $user->level_access_id == 1 or
+                $user->level_access_id == 6 or
+                $user->level_access_id == 7
+                ){
+                return true;
+            }
+        });
+
+        // somente administrador e recepcao e usuários pode acessar
+        Gate::define('admin-recepcao', function (User $user) {
+            if(
+                $user->level_access_id == 1 or
+                $user->level_access_id == 7
                 ){
                 return true;
             }
