@@ -104,13 +104,20 @@
                             class="p-4 pb-0 space-y-1 text-zinc-900 md:pb-4 dark:text-white" >
                             {{-- Pesquisar Visitante --}}
                             <a href="{{ route('visitant.index') }}" class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
-                                <span class="">Pesquisar</span>
+                                <span class="">Pesquisar Visitante</span>
                             </a>
 
                             {{-- Cadastro de preso --}}
                             @can('admin-recepcao')
                                 <a href="{{ route('visitant.create') }}" wire:navigate class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
-                                    Cadastrar
+                                    Cadastrar Visitante
+                                </a>
+                            @endcan
+
+                            {{-- Cadastro de preso --}}
+                            @can('admin-recepcao')
+                                <a href="{{ route('identification-card.index') }}" wire:navigate class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
+                                    Carteirinha
                                 </a>
                             @endcan
                         </div>

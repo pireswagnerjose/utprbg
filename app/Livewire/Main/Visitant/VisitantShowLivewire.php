@@ -208,7 +208,9 @@ class VisitantShowLivewire extends Component
     public function render()
     {
         return view('livewire.main.visitant.visitant-show-livewire', [
-            'visitant' => Visitant::where('id', $this->visitant_id)->first()
+            'visitant' => Visitant::where('id', $this->visitant_id)
+                ->with('civil_status', 'sex', 'municipality', 'state', 'identification_cards')
+                ->first()
         ]);
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\IdentificationCardController;
 use App\Http\Controllers\PrisonerListController;
 use App\Http\Controllers\PrisonerPdfController;
 use App\Http\Controllers\Report\VisitantReportController;
@@ -39,6 +40,8 @@ use App\Livewire\Admin\Ward\WardLivewire;
 use App\Livewire\Infopen\CertificateOfSentence\CertificateOfSentence;
 use App\Livewire\Infopen\CriminalTypes\CriminalTypes;
 use App\Livewire\Infopen\Sentence\Sentence;
+use App\Livewire\Main\IdentificationCard\IdentificationCardLivewire;
+use App\Livewire\Main\IdentificationCard\IdentificationCardShowLivewire;
 use App\Livewire\Main\Photo\PhotoCreateLivewire;
 use App\Livewire\Main\Prisoner\PrisonerCreateLivewire;
 use App\Livewire\Main\Prisoner\PrisonerLivewire;
@@ -177,9 +180,12 @@ Route::middleware([
     // Route::post('/photo-create', [PhotoCreateLivewire::class, 'photoCreate'])->name('photo.create');
 
     // VISITANT
-    // Visitant - Visitante
     Route::get('/visitant', VisitantLivewire::class)->name('visitant.index');
     Route::get('/visitant-create', VisitantCreateLivewire::class)->name('visitant.create');
     Route::get('/visitant-show/{visitant_id}', VisitantShowLivewire::class)->name('visitant.show');
     Route::post('/visitant-report/{visitant_id}', [VisitantReportController::class, 'report'])->name('visitant.report');
+
+    // IDENTIFICATION CARD
+    Route::get('/identification-card', IdentificationCardLivewire::class)->name('identification-card.index');
+    Route::any('/identification-card-show/{identification_card_id}', IdentificationCardShowLivewire::class)->name('identification-card.show');
 });

@@ -259,7 +259,10 @@ class PrisonerShowLivewire extends Component
     public function render()
     {
         return view('livewire.main.prisoner.prisoner-show-livewire', [
-            'prisoner' => Prisoner::where('id', $this->prisoner_id)->first()
+            'prisoner' => Prisoner::where('id', $this->prisoner_id)
+                ->with('status_prison', 'education_level', 'civil_status', 'sex', 'sexual_orientation',
+                    'ethnicity', 'country', 'municipality', 'state')
+                ->first()
         ]);
     }
 

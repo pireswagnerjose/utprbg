@@ -173,7 +173,10 @@ class ProcessLivewire extends Component
     public function render()
     {
         return view('livewire.main.process.process-livewire', [
-            'processes' => Process::where('prisoner_id', $this->prisoner_id)->orderBy('date_arrest', 'desc')->paginate(10)
+            'processes' => Process::where('prisoner_id', $this->prisoner_id)
+                ->with('origin_process',  'process_regime')
+                ->orderBy('date_arrest', 'desc')
+                ->paginate(10)
         ]);
     }
 }

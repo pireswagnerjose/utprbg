@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('identification_cards', function (Blueprint $table) {
             $table->id();//numero da carteirinha
-            $table->string('date_of_creation');//data da criaçao da carteirinha
-            $table->string('expiration_date');//data de validade da carteirinha
+            $table->date('date_of_creation');//data da criaçao da carteirinha
+            $table->date('expiration_date');//data de validade da carteirinha
+            $table->string('type');//social ou íntima
             $table->string('status');//status ativa ou suspensa
             $table->longText('remark')->nullable();//observações sobre a carteirinha
             
@@ -25,6 +26,7 @@ return new class extends Migration
             /* chaves estrangeiras */
             $table->foreignId('prisoner_id')->constrained('prisoners')->onDelete('cascade');
             $table->foreignId('visitant_id')->constrained('visitants')->onDelete('cascade');
+            $table->foreignId('degree_of_kinship_id')->constrained('degrees_of_kinship');
 
             $table->timestamps();
         });

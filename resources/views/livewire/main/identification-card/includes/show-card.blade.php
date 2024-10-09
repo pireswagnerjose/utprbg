@@ -143,24 +143,6 @@
                 </div>
             </div>
         </div>
-        
-        {{-- Presoss Relacionados --}}
-        <div class="border-t pt-2 border-blue-600">
-            <x-item-topic> Presos Vinculados </x-item-topic>
-            <div class="grid grid-cols-3 my-4 ">
-                <div class="px-4 ">
-                    @foreach ($visitant->identification_cards as $identification_card)
-                        <a href="{{ route('prisoners.show', ['prisoner_id' => $identification_card->prisoner_id]) }}" class="font-semibold text-blue-700 dark:text-blue-500 hover:underline">
-                            <span class="flex flex-col items-center">
-                                <img class="object-cover h-24 w-24 rounded-lg" src='{{ asset("storage/" . $identification_card->prisoner->photo ) }}' alt="{{ $identification_card->prisoner->name }}">
-                                <h1>{{ $identification_card->prisoner->name }}</h1>
-                            </span>
-                        </a>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-
         {{-- Documentos Relacionados --}}
         <div>
             <div class="grid mb-5 border-t pt-2 border-blue-600 ">

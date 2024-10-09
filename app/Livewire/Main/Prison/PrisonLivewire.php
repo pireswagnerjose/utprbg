@@ -183,7 +183,10 @@ class PrisonLivewire extends Component
     public function render()
     {
         return view('livewire.main.prison.prison-livewire', [
-            'prisons' => Prison::where('prisoner_id', $this->prisoner_id)->orderBy('entry_date', 'desc')->paginate(10)
+            'prisons' => Prison::where('prisoner_id', $this->prisoner_id)
+                ->with('prison_unit', 'prison_origin', 'type_prison', 'output_type')
+                ->orderBy('entry_date', 'desc')
+                ->paginate(10)
         ]);
     }
 
@@ -220,10 +223,6 @@ class PrisonLivewire extends Component
         $dataValidated['description'] = mb_strtoupper ($dataValidated['description'],'utf-8');
 
         if ($this->document) {
-            /* responsável por excluir o documento */
-            if (!empty($dataValidated->document)) {
-                Storage::disk('public')->delete($dataValidated->document);
-            }
             /* cria o nome com a extensão */
             $document = 'id-'.$this->prisoner_id . '_date-' . date('d-m-Y_H_m_s') . '.' . $this->document->getClientOriginalExtension();
             /* faz o upload e retorna o endereco do arquivo */
