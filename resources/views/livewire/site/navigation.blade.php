@@ -1,7 +1,7 @@
 <nav class="flex justify-center border-t bg-zinc-500 dark:bg-zinc-700 border-zinc-400 dark:border-zinc-800">
     <ul class="flex font-medium md:flex-row md:space-x-4 md:mt-0">
         {{-- presos --}}
-        @can('guest')
+        @can('admin-saude-guest')
             <li>
                 <div
                     x-data="{

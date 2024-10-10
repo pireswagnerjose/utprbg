@@ -112,14 +112,24 @@
             <section class="prisoner">
                <article class="prisoner_img">
                   @if ($external_exit->prisoner->photo)
-                  <div class="">
-                        <img src='{{ storage_path('app/public/' . $external_exit->prisoner->photo) }}' alt="{{ $external_exit->prisoner->name }}" class="rounded-lg" >
-                  </div>
+                     <div class="">
+                           <img src='{{ storage_path('app/public/' . $external_exit->prisoner->photo) }}' alt="{{ $external_exit->prisoner->name }}" class="rounded-lg" >
+                     </div>
                   @else
-                  <div width="150px" height="200px" style="border-radius: 5px">
-                        <img src='{{ storage_path('app/public/site/sem_imagem.jpeg') }}' alt="sem imagem" class="rounded-lg">
-                  </div>
+                     <div width="150px" height="200px" style="border-radius: 5px">
+                           <img src='{{ storage_path('app/public/site/sem_imagem.jpeg') }}' alt="sem imagem" class="rounded-lg">
+                     </div>
                   @endif
+                  <div style="text-align: center; margin-top:12px; font-weight: bold;">
+                     @if (!empty( $external_exit->prisoner->unit_address))
+                         @foreach ( $external_exit->prisoner->unit_address as $unit_address)
+                             @if ($unit_address->status == "ATIVO")
+                                 <dd style="font-size: 12px">ALA / CELA</dd>
+                                 <dd style="font-size: 16px; text-transform: uppercase; color: red">{{ $unit_address->cell->cell }}</dd>
+                             @endif
+                         @endforeach
+                     @endif
+                 </div>
                </article>
                {{-- Dados Básicos --}}
                <article class="prisoner_data">

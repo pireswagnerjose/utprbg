@@ -107,11 +107,26 @@ class AuthServiceProvider extends ServiceProvider
             }
         });
 
-        // somente administrador e recepcao e usuários pode acessar
+        // somente administrador e recepcao pode acessar
         Gate::define('admin-recepcao', function (User $user) {
             if(
                 $user->level_access_id == 1 or
                 $user->level_access_id == 7
+                ){
+                return true;
+            }
+        });
+
+        // somente administrador e recepcao pode acessar
+        Gate::define('admin-saude-guest', function (User $user) {
+            if(
+                $user->level_access_id == 1 or
+                $user->level_access_id == 2 or
+                $user->level_access_id == 3 or
+                $user->level_access_id == 4 or
+                $user->level_access_id == 5 or
+                $user->level_access_id == 6 or
+                $user->level_access_id == 8
                 ){
                 return true;
             }
