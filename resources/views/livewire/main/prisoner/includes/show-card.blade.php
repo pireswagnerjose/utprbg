@@ -19,7 +19,6 @@
                     </div> 
                 @endcan
                 
-
                 {{-- Editar --}}
                 @can('admin-cartorio_admin') 
                     <div class="group grid justify-items-center w-16 border-b border-zinc-200 dark:border-zinc-600">

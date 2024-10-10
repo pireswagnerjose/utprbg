@@ -3,6 +3,7 @@
 use App\Http\Controllers\IdentificationCardController;
 use App\Http\Controllers\PrisonerListController;
 use App\Http\Controllers\PrisonerPdfController;
+use App\Http\Controllers\Report\ExternalExitReportController;
 use App\Http\Controllers\Report\VisitantReportController;
 use App\Http\Controllers\VcamController;
 use App\Livewire\Admin\Cell\CellLivewire;
@@ -165,6 +166,9 @@ Route::middleware([
     // Prisoner List Report
     Route::get('/prisoners-list', PrisonerListReport::class)->name('prisoners-list.index');
     Route::any('/prisoners-list-pdf', [PrisonerListController::class, 'pdf'])->name('prisoner-list.pdf');
+
+    // External Exit
+    Route::post('/external-exit-report/{external_exit_id}', [ExternalExitReportController::class, 'report'])->name('external-exit.report');
 
     // VCAM Report
     Route::get('/vcam-list', VcamReport::class)->name('vcam-list.index')->middleware('can:admin');

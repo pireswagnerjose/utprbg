@@ -5,7 +5,6 @@ namespace App\Livewire\Main\ExternalExit;
 use App\Models\Admin\ExternalOutput\ExitReason;
 use App\Models\Admin\ExternalOutput\Requesting;
 use App\Models\Admin\Municipality;
-use App\Models\Admin\PrisonUnit;
 use App\Models\Admin\State;
 use App\Models\Main\ExternalExit;
 use Illuminate\Support\Facades\Auth;
@@ -23,8 +22,11 @@ class ExternalExitLivewire extends Component
     public $user_create;
     public $user_update;
     public $prison_unit_id;
-    public $exit_date;
+    public $event_date;
+    public $event_time;
+    public $departure_date;
     public $departure_time;
+    public $arrival_date;
     public $arrival_time;
     public $status;
     public $document;
@@ -34,7 +36,6 @@ class ExternalExitLivewire extends Component
     public $requesting_id;
     public $exit_reason_id;
     public $states = [];
-    public $prison_units = [];
     public $municipalities = [];
     public $requestings = [];
     public $exit_reasons = [];
@@ -43,12 +44,12 @@ class ExternalExitLivewire extends Component
 
     public function mount()
     {
-        $this->user_create  = Auth::user()->id;
-        $this->user_update  = Auth::user()->id;
-        $this->prison_units = PrisonUnit::all();
-        $this->states       = State::all();
-        $this->requestings  = Requesting::all();
-        $this->exit_reasons = ExitReason::all();
+        $this->user_create      = Auth::user()->id;
+        $this->user_update      = Auth::user()->id;
+        $this->prison_unit_id   = Auth::user()->prison_unit_id;
+        $this->states           = State::all();
+        $this->requestings      = Requesting::all();
+        $this->exit_reasons     = ExitReason::all();
     }
     // Seleciona o município conforme o estado escolhido
     public function selectMunicipality()
@@ -59,8 +60,10 @@ class ExternalExitLivewire extends Component
     // CLEAR FIELDS - LIMPAR CAMPOS
     public function clearFields()
     {
-        $this->reset('exit_date', 'departure_time', 'arrival_time', 'status', 'document', 'remark', 'state_id',
-        'municipality_id','prison_unit_id','requesting_id','exit_reason_id');
+        $this->reset(
+            'event_date', 'event_time', 'departure_date', 'departure_time',
+            'arrival_date', 'arrival_time', 'status', 'document', 'remark', 'state_id',
+            'municipality_id', 'requesting_id','exit_reason_id');
     }
 
     // CLOSE MODAL
@@ -69,6 +72,7 @@ class ExternalExitLivewire extends Component
         $this->openModalExternalExitCreate = false;
         $this->openModalExternalExitUpdate = false;
         $this->openModalExternalExitDelete = false;
+        $this->clearFields();
     }
 
     // Transforma os caracteres em maiusculos
@@ -93,18 +97,21 @@ class ExternalExitLivewire extends Component
                     'nullable',
                     File::types(['pdf']),
                 ],
-                'exit_date'         =>'required|max:255',
-                'departure_time'    =>'nullable|max:255',
-                'arrival_time'      =>'nullable|max:255',
+                'event_date'        =>'required|max:10',
+                'event_time'        =>'required|max:10',
+                'departure_date'    =>'nullable|max:10',
+                'departure_time'    =>'nullable|max:10',
+                'arrival_date'      =>'nullable|max:10',
+                'arrival_time'      =>'nullable|max:10',
                 'status'            =>'nullable|max:100',
                 'remark'            =>'nullable',
-                'user_create'       =>'required|max:10',
-                'prisoner_id'       =>'required|max:10',
                 'state_id'          =>'required|max:10',
                 'municipality_id'   =>'required|max:10',
-                'prison_unit_id'    =>'required|max:10',
                 'requesting_id'     =>'required|max:10',
                 'exit_reason_id'    =>'required|max:10',
+                'user_create'       =>'required|max:10',
+                'prisoner_id'       =>'required|max:10',
+                'prison_unit_id'    =>'required|max:10',
             ]
         );
         // Transforma os caracteres em maiusculos
@@ -130,8 +137,11 @@ class ExternalExitLivewire extends Component
     public $openModalExternalExitUpdate = false;
     public function modalExternalExitUpdate(ExternalExit $external_exit)
     {
-        $this->exit_date                    =$external_exit->exit_date;
+        $this->event_date                   =$external_exit->event_date;
+        $this->event_time                   =$external_exit->event_time;
+        $this->departure_date               =$external_exit->departure_date;
         $this->departure_time               =$external_exit->departure_time;
+        $this->arrival_date                 =$external_exit->arrival_date;
         $this->arrival_time                 =$external_exit->arrival_time;
         $this->status                       =$external_exit->status;
         $this->remark                       =$external_exit->remark;
@@ -152,33 +162,41 @@ class ExternalExitLivewire extends Component
                         'nullable',
                         File::types(['pdf']),
                     ],
-                    'exit_date'         =>'required|max:255',
-                    'departure_time'    =>'nullable|max:255',
-                    'arrival_time'      =>'nullable|max:255',
+                    'event_date'        =>'required|max:10',
+                    'event_time'        =>'required|max:10',
+                    'departure_date'    =>'nullable|max:10',
+                    'departure_time'    =>'nullable|max:10',
+                    'arrival_date'      =>'nullable|max:10',
+                    'arrival_time'      =>'nullable|max:10',
                     'status'            =>'nullable|max:100',
                     'remark'            =>'nullable',
-                    'user_update'       =>'required|max:10',
                     'state_id'          =>'required|max:10',
                     'municipality_id'   =>'required|max:10',
-                    'prison_unit_id'    =>'required|max:10',
                     'requesting_id'     =>'required|max:10',
                     'exit_reason_id'    =>'required|max:10',
+                    'user_update'       =>'required|max:10',
+                    'prisoner_id'       =>'required|max:10',
+                    'prison_unit_id'    =>'required|max:10',
                 ]
             );
         } else {
             $dataValidated = $this->validate(
                 [
-                    'exit_date'         =>'required|max:255',
-                    'departure_time'    =>'nullable|max:255',
-                    'arrival_time'      =>'nullable|max:255',
+                    'event_date'        =>'required|max:10',
+                    'event_time'        =>'required|max:10',
+                    'departure_date'    =>'nullable|max:10',
+                    'departure_time'    =>'nullable|max:10',
+                    'arrival_date'      =>'nullable|max:10',
+                    'arrival_time'      =>'nullable|max:10',
                     'status'            =>'nullable|max:100',
                     'remark'            =>'nullable',
-                    'user_update'       =>'required|max:10',
                     'state_id'          =>'required|max:10',
                     'municipality_id'   =>'required|max:10',
-                    'prison_unit_id'    =>'required|max:10',
                     'requesting_id'     =>'required|max:10',
                     'exit_reason_id'    =>'required|max:10',
+                    'user_update'       =>'required|max:10',
+                    'prisoner_id'       =>'required|max:10',
+                    'prison_unit_id'    =>'required|max:10',
                 ]
             );
         }

@@ -1,13 +1,12 @@
 <div>
     {{-- quando está sem imagem --}}
     @if (empty( $prisoner->photo))
-    <span class="flex flex-col w-full items-center">
-        <img class="object-cover h-full w-full rounded-lg" src='{{ asset("storage/site/no-image.jpg") }}' alt="sem foto">
-    </span>
-    @can('admin-cartorio_admin')
-        <button wire:click="modalPrisonerProfilePhoto({{ $prisoner->id }})" class="font-medium text-xs text-blue-600 dark:text-blue-500 hover:underline">Cadastrar Foto</button>
-    @endcan
-    
+        <span class="flex flex-col w-full items-center">
+            <img class="object-cover h-full w-full rounded-lg" src='{{ asset("storage/site/no-image.jpg") }}' alt="sem foto">
+        </span>
+        @can('admin-cartorio_admin')
+            <button wire:click="modalPrisonerProfilePhoto({{ $prisoner->id }})" class="font-medium text-xs text-blue-600 dark:text-blue-500 hover:underline">Cadastrar Foto</button>
+        @endcan
     @endif
 
     {{-- quando está com imagem --}}

@@ -17,7 +17,9 @@
 
     <div class="w-full flex justify-center">
         @if ($photo)
-            <img class="w-72 h-80 mt-6 rounded-md" src="{{ $photo->temporaryUrl() }}" alt="">
+            @if (in_array($photo->extension(), ['png', 'jpg', 'jpeg']))
+                <img class="w-72 h-80 mt-6 rounded-md" src="{{ $photo->temporaryUrl() }}" alt="">
+            @endif
         @endif
     </div>
 </div>

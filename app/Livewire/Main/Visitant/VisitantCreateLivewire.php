@@ -8,6 +8,7 @@ use App\Models\Admin\Sex;
 use App\Models\Admin\State;
 use App\Models\Main\Visitant;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 
@@ -16,6 +17,8 @@ class VisitantCreateLivewire extends Component
     use WithFileUploads;
 
     public $name = '';
+
+    #[Validate('required|mimes:jpeg,jpg,png')] 
     public $photo = '';
     public $cpf = '';
     public $date_of_birth = '';

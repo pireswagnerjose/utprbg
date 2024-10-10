@@ -26,7 +26,9 @@
         {{-- Miniatura da photo --}}
         <div class="w-full flex justify-center">
             @if ($photo_create_form->photo)
-                <img class="w-72 h-80 mt-6 rounded-md" src="{{ $photo_create_form->photo->temporaryUrl() }}" alt="">
+                @if (in_array($photo_create_form->photo->extension(), ['png', 'jpg', 'jpeg']))
+                    <img class="w-72 h-80 mt-6 rounded-md" src="{{ $photo_create_form->photo->temporaryUrl() }}" alt="">
+                @endif
             @endif
         </div>
     </div>
