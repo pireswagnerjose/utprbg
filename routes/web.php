@@ -4,6 +4,8 @@ use App\Http\Controllers\IdentificationCardController;
 use App\Http\Controllers\PrisonerListController;
 use App\Http\Controllers\PrisonerPdfController;
 use App\Http\Controllers\Report\ExternalExitReportController;
+use App\Http\Controllers\Report\InternalServiceReportController;
+use App\Http\Controllers\Report\LegalAssistanceReportController;
 use App\Http\Controllers\Report\VisitantReportController;
 use App\Http\Controllers\VcamController;
 use App\Livewire\Admin\Cell\CellLivewire;
@@ -50,6 +52,9 @@ use App\Livewire\Main\Prisoner\PrisonerShowLivewire;
 use App\Livewire\Main\Visitant\VisitantLivewire;
 use App\Livewire\Main\Visitant\VisitantCreateLivewire;
 use App\Livewire\Main\Visitant\VisitantShowLivewire;
+use App\Livewire\Report\ExternalExit\ExternalExitReportLivewire;
+use App\Livewire\Report\InternalService\InternalServiceReport;
+use App\Livewire\Report\LegalAssistance\LegalAssistanceReport;
 use App\Livewire\Report\PrisonerList\PrisonerListReport;
 use App\Livewire\Report\Vcam\VcamReport;
 use App\Livewire\User\UserLivewire;
@@ -167,7 +172,17 @@ Route::middleware([
     Route::get('/prisoners-list', PrisonerListReport::class)->name('prisoners-list.index');
     Route::any('/prisoners-list-pdf', [PrisonerListController::class, 'pdf'])->name('prisoner-list.pdf');
 
+    // Internal Service
+    Route::get('/internal-service', InternalServiceReport::class)->name('internal-services.index');
+    Route::any('/internal-service-pdf', [InternalServiceReportController::class, 'pdf'])->name('internal-services.pdf');
+    
+    // Legal Assistance
+    Route::get('/legal-assistances', LegalAssistanceReport::class)->name('legal-assistances.index');
+    Route::any('/legal-assistances-pdf', [LegalAssistanceReportController::class, 'pdf'])->name('legal-assistances.pdf');
+
     // External Exit
+    Route::get('/external-exit', ExternalExitReportLivewire::class)->name('external-exits.index');
+    Route::any('/external-exit-pdf', [ExternalExitReportController::class, 'pdf'])->name('external-exits.pdf');
     Route::post('/external-exit-report/{external_exit_id}', [ExternalExitReportController::class, 'report'])->name('external-exit.report');
 
     // VCAM Report

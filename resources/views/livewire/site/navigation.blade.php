@@ -439,10 +439,32 @@
                             <a href="{{ route('prisoners-list.index') }}" class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
                                 <span class="">Listagem de Presos</span>
                             </a>
+
                             {{-- VCAM --}}
                             @can('admin')
                                 <a href="{{ route('vcam-list.index') }}" class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
                                     <span class="">VCAM</span>
+                                </a>
+                            @endcan
+
+                            {{-- Atendimentos Internos --}}
+                            @can('guest')
+                                <a href="{{ route('internal-services.index') }}" class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
+                                    <span class="">Atendimentos Internos</span>
+                                </a>
+                            @endcan
+
+                            {{-- Atendimentos Jurídicos --}}
+                            @can('guest')
+                                <a href="{{ route('legal-assistances.index') }}" class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
+                                    <span class="">Atendimentos Jurídicos</span>
+                                </a>
+                            @endcan
+
+                            {{-- Saídas Externas --}}
+                            @can('guest')
+                                <a href="{{ route('external-exits.index') }}" class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
+                                    <span class="">Saídas Externas</span>
                                 </a>
                             @endcan
                         </div>
