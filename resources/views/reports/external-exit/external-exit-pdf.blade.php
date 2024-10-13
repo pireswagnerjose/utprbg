@@ -110,7 +110,6 @@
                      Não existe agendamentos feitos.
                </td>
             @endforelse
-             
          </tbody>
       </table>
     </main>
