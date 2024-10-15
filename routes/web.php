@@ -188,7 +188,7 @@ Route::middleware([
     // VCAM Report
     Route::get('/vcam-list', VcamReport::class)->name('vcam-list.index')->middleware('can:admin');
     // Route::any('/vcam-list-pdf', [VcamController::class, 'pdf'])->name('vcam-list.pdf');
-    Route::any('/vcam-list-csv', [VcamController::class, 'csv'])->name('vcam-list.csv')->middleware('can:admin');
+    Route::any('/vcam-list-pdf', [VcamController::class, 'pdf'])->name('vcam-list.pdf')->middleware('can:admin');
 
     //INFOPEN
     Route::get('/infopen-certificate-of-sentence', CertificateOfSentence::class)->name('infopen.certificate-of-sentence')->middleware('can:admin');

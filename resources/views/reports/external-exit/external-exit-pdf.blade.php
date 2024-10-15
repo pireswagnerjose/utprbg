@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Prisoner Report</title>
+    <title>Saídas Externas</title>
 
     <style>
         *, 
@@ -60,58 +60,76 @@
     </header>
     <!-- Page Content -->
     <main>
-      <table>
-         <thead>
-             <tr>
-                 <th scope="col">
-                     Cód
-                 </th>
-                 <th scope="col" class="px-2 py-3">
-                     Nome do Preso
-                 </th>
-                 <th scope="col" class="px-2 py-3">
-                     Requisitante
-                 </th>
-                 <th scope="col" class="px-2 py-3 text-center">
-                     Data do Evento
-                 </th>
-                 <th scope="col" class="px-2 py-3 text-center">
-                     Hora do Evento
-                 </th>
-                 <th scope="col" class="px-2 py-3 text-center">
-                     Status
-                 </th>
-             </tr>
-         </thead>
-         <tbody>
-            @forelse ( $external_exits as $key=>$external_exit )
-               <tr>
-                     <td style="width: 5%; text-align: center;">
-                        {{ $key+1 }}
-                     </td>
-                     <td style="width: 40%;">
-                        {{ $external_exit->prisoner->name }}
-                     </td>
-                     <td style="width: 25%;">
-                        {{ $external_exit->requesting->requesting }}
-                     </td>
-                     <td style="width: 10%; text-align: center;">
-                        {{ \Carbon\Carbon::parse($external_exit->event_date)->format('d/m/Y') }}
-                     </td>
-                     <td style="width: 10%; text-align: center;">
-                        {{ $external_exit->event_time }}
-                     </td>
-                     <td style="width: 10%; text-align: center;">
-                        {{ $external_exit->status }}
-                     </td>
-               </tr>
-            @empty
-               <td class="px-2">
-                     Não existe agendamentos feitos.
-               </td>
-            @endforelse
-         </tbody>
-      </table>
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">
+                        Cód
+                    </th>
+                    <th scope="col" class="px-2 py-3">
+                        Nome do Preso
+                    </th>
+                    <th scope="col" class="px-2 py-3 text-center">
+                        Cela
+                    </th>
+                    <th scope="col" class="px-2 py-3">
+                        Requisitante
+                    </th>
+                    <th scope="col" class="px-2 py-3 text-center">
+                        Data
+                    </th>
+                    <th scope="col" class="px-2 py-3 text-center">
+                        Hora
+                    </th>
+                    <th scope="col" class="px-2 py-3 text-center">
+                        Status
+                    </th>
+                    <th scope="col" class="px-2 py-3 text-center">
+                        Obs.
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ( $external_exits as $key=>$external_exit )
+                    <tr>
+                        <td style="width: 3%; text-align: center;">
+                            {{ $key+1 }}
+                        </td>
+                        <td style="width: 27%;">
+                            {{ $external_exit->prisoner->name }}
+                        </td>
+                        <td style="width: 5%; text-align: center; font-weight: bold;">
+                            @if (!empty( $external_exit->prisoner->unit_address))
+                                @foreach ( $external_exit->prisoner->unit_address as $unit_address)
+                                    @if ($unit_address->status == "ATIVO")
+                                        {{ $unit_address->cell->cell }}
+                                    @endif
+                                @endforeach
+                            @endif
+                        </td>
+                        <td style="width: 20%;">
+                            {{ $external_exit->requesting->requesting }}
+                        </td>
+                        <td style="width: 7%; text-align: center;">
+                            {{ \Carbon\Carbon::parse($external_exit->event_date)->format('d/m/Y') }}
+                        </td>
+                        <td style="width: 7%; text-align: center;">
+                            {{ $external_exit->event_time }}
+                        </td>
+                        <td style="width: 7%; text-align: center;">
+                            {{ $external_exit->status }}
+                        </td>
+                        <td style="width: 24%;">
+                            {{ $external_exit->remark }}
+                        </td>
+                    </tr>
+                @empty
+                    <td class="px-2">
+                        Não existe agendamentos feitos.
+                    </td>
+                @endforelse
+            </tbody>
+        </table>
     </main>
 </body>
 </html>
