@@ -285,6 +285,10 @@
                             <a href="{{ route('lawyers.index') }}" class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
                                 <span class="">Advogado</span>
                             </a>
+                            {{-- Defensor Públic --}}
+                            <a href="{{ route('public-defender.index') }}" class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
+                                <span class="">Defensor Público</span>
+                            </a>
                             {{-- Tipo de Atendimento --}}
                             <a href="{{ route('type-cares.index') }}" class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
                                 <span class="">Tipo de Atendimento</span>

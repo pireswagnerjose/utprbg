@@ -2,15 +2,14 @@
 
 namespace App\Livewire\Admin\LegalAssistance\Lawyers;
 
+use App\Livewire\Forms\LawyerForm;
 use App\Models\Admin\LegalAssistance\Lawyer;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Illuminate\Validation\Rules\File;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 
 #[Layout("layouts.app")]
@@ -19,141 +18,72 @@ class LawyersLivewire extends Component
 {
     use WithPagination;
     use WithFileUploads;
-    // CLASS ACESSORIES
-    public int $user_create;
-    public int $user_update;
-    public $prison_unit_id;
-    public $photo = '';
-    public $lawyer = '';
-    public $register = '';
-    public $contact = '';
-    public $remark = '';
+    public LawyerForm $lawyer_form;
 
     public function mount()
     {
-        $this->prison_unit_id   = Auth::user()->prison_unit_id;
-        $this->user_create      = Auth::user()->id;
-        $this->user_update      = Auth::user()->id;
+        $this->lawyer_form->prison_unit_id   = Auth::user()->prison_unit_id;
+        $this->lawyer_form->user_create      = Auth::user()->id;
     }
-
-    // SEARCH - PESQUISA
+    // search
     #[Url]
     public $search;
     public function updatingSearch()
     {
         $this->resetPage();
     }
-
-    //ADD NEW - ADICIONAR NOVO 
+    // add new
     public $add_new;
     public function addNew()
     {
         $this->add_new = true;
+        $this->lawyer_form->clearFields();
     }
-    public function cancel()
-    {
-        $this->add_new = false;
-    }
-
-    // CLEAR FIELDS - LIMPAR CAMPOS
+    // close modal
     public function closeModal()
     {
-        $this->openModalLawyerUpdate = false;
-        $this->openModalLawyerDelete = false;
+        $this->add_new = false;
+        $this->openModalDelete = false;
+        $this->openModalUpdate = false;
+        $this->lawyer_form->clearFields();
     }
-
-    // CONVERT UPPERCASE
-    public function convertUppercase($dataValidated)
+    // crete
+    public function create()
     {
-        $dataValidated['lawyer'] = mb_strtoupper ($dataValidated['lawyer'],'utf-8');
-        $dataValidated['register'] = mb_strtoupper ($dataValidated['register'],'utf-8');
-        $dataValidated['contact'] = mb_strtoupper ($dataValidated['contact'],'utf-8');
-        $dataValidated['remark'] = mb_strtoupper ($dataValidated['remark'],'utf-8');
-        return $dataValidated;
-    }
-
-    //CREATE NEW - CRIAR NOVO
-    public function lawyerCreate()
-    {
-        $dataValidated = $this->validate(
-            [
-                'photo'         =>['nullable', File::image()->types(['jpeg', 'jpg', 'png'])],
-                'lawyer'        =>'required|max:100',
-                'register'      =>'required|max:100|unique:lawyers,lawyer',
-                'contact'       =>'nullable|max:100',
-                'remark'        =>'nullable',
-                'user_create'   =>'required|max:10',
-                'prison_unit_id'=>'required|max:10',
-            ]
-        );
-        if ($this->photo) {
-            /* responsável por excluir o diretório e a foto */
-            if (!empty($photo)) {
-                Storage::disk('public')->delete($photo);
-            }
-            $photo_name = str_replace("/", "-", $dataValidated['lawyer']. '_' .$dataValidated['register']);
-            $photo_name = str_replace("\"", "", $photo_name);
-            $photo_name = str_replace("\'", "", $photo_name);
-
-            /* cria o nome da photo com a extensão */
-            $photo_name = $photo_name . '.' . $dataValidated['photo']->getClientOriginalExtension();
-            /* faz o upload e retorna o endereco do arquivo */
-            $dataValidated['photo'] = $dataValidated['photo']->storeAs('lawyer/'. $dataValidated['lawyer']. '_' .$dataValidated['register'], $photo_name);
-        }
-        // Transforma os caracteres em maiusculos
-        $dataValidated = $this->convertUppercase($dataValidated);
-        Lawyer::create($dataValidated);
-        $this->reset('lawyer');
+        $this->lawyer_form->store();
+        $this->lawyer_form->clearFields();
         session()->flash('success', 'Criado com sucesso.');
-        $this->resetPage();
+        $this->add_new = false;
     }
-
-    // MODAL UPDATE
-    public $openModalLawyerUpdate = false;
-    public function modalLawyerUpdate(Lawyer $lawyer)
+    // modal update
+    public $openModalUpdate = false;
+    public function modalUpdate(Lawyer $lawyer)
     {
-        $this->lawyer               = $lawyer->lawyer;
-        $this->register             = $lawyer->register;
-        $this->contact              = $lawyer->contact;
-        $this->remark               = $lawyer->remark;
-        $this->openModalLawyerUpdate= $lawyer->id;
+        $this->lawyer_form->setPost($lawyer);
+        $this->openModalUpdate = true;
     }
-    // UPDATE
-    public function lawyerUpdate(Lawyer $lawyer)
+    // update
+    public function update()
     {
-        $dataValidated = $this->validate(
-            [
-                'lawyer'     =>"required|max:100|unique:lawyers,lawyer,{$lawyer->id},id",
-                'register'   =>'required|max:100|unique:lawyers,lawyer',
-                'contact'    =>'nullable|max:100',
-                'remark'     =>'nullable',
-                'user_update'=>'required|max:10',
-            ]
-        );
-        // Transforma os caracteres em maiusculos
-        $dataValidated['lawyer'] = mb_strtoupper ($dataValidated['lawyer'],'utf-8');
-
-        $lawyer->update($dataValidated);//atualiza os dados no banco
-        $this->reset('lawyer');
-        $this->openModalLawyerUpdate = false;
-        $this->resetPage();
+        $dataValidated = $this->validate();
+        $this->lawyer_form->update($dataValidated);
+        $this->openModalUpdate = false;
+        $this->lawyer_form->clearFields();
+        session()->flash('success', 'Atualizado com sucesso.');
     }
-
-    // MODAL DELETE
-    public $openModalLawyerDelete = false;
-    public function modalLawyerDelete($lawyer)
+    // modal delete
+    public $openModalDelete = false;
+    public function modalDelete($lawyer)
     {
-        $this->openModalLawyerDelete = $lawyer;
+        $this->openModalDelete = $lawyer;
     }
-    // LEVEL ACCESS DELETE
-    public function lawyerDelete(Lawyer $lawyer)
+    // delete
+    public function delete(Lawyer $lawyer)
     {
-        /* responsável por excluir o arquivo */
-        if (!empty($lawyer->photo)) {
-            Storage::disk('public')->delete($lawyer->photo);
-        }
-        $lawyer->delete();
-        $this->openModalLawyerDelete = false;
+        $this->lawyer_form->delete($lawyer);
+        $this->openModalDelete = false;
+        $this->lawyer_form->clearFields();
+        session()->flash('success', 'Excluído com sucesso.');
     }
     public function render()
     {

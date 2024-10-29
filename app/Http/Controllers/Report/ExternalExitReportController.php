@@ -20,7 +20,7 @@ class ExternalExitReportController extends Controller
 
     public function pdf(Request $request)
     {
-        $external_exits = ExternalExit::with('prisoner', 'requesting')->orderBy('event_date', 'asc')
+        $external_exits = ExternalExit::with('prisoner', 'requesting', 'municipality', 'state')->orderBy('event_date', 'asc')
             ->where('requesting_id', 'like', "%{$request->requesting_id}%")
             ->where('status', 'like', "%{$request->status}%");
 

@@ -1,6 +1,6 @@
 
 <!-- Delete User Confirmation Modal -->
-<x-dialog-modal wire:model.live="openModalLawyerDelete">
+<x-dialog-modal wire:model.live="openModalDelete">
     <x-slot name="title">
         {{ 'Excluir Advogado' }}
     </x-slot>
@@ -14,7 +14,7 @@
             {{ __('Cancel') }}
         </x-secondary-button>
 
-        <x-danger-button class="ms-3" wire:click="lawyerDelete({{ $openModalLawyerDelete }})" wire:loading.attr="disabled">
+        <x-danger-button class="ms-3" wire:click="delete({{ $openModalDelete }})" wire:loading.attr="disabled">
             {{ 'Excluir' }}
         </x-danger-button>
     </x-slot>

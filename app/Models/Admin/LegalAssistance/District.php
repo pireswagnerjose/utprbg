@@ -2,7 +2,7 @@
 
 namespace App\Models\Admin\LegalAssistance;
 
-use App\Models\Main\LegalAssistance;
+use App\Models\Main\VideoconferenceHearing;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,8 +12,12 @@ class District extends Model
     protected $table    = 'districts';
     protected $guarded  = [];
 
-    public function legal_assistances()
+    /**
+     * faz referência a tabela atendimento por vídeoconferência
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function videoconference_hearings()
     {
-        return $this->hasMany(LegalAssistance::class);
+        return $this->hasMany(VideoconferenceHearing::class);
     }
 }

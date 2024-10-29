@@ -82,6 +82,9 @@
                         Hora
                     </th>
                     <th scope="col" class="px-2 py-3 text-center">
+                        Município
+                    </th>
+                    <th scope="col" class="px-2 py-3 text-center">
                         Status
                     </th>
                     <th scope="col" class="px-2 py-3 text-center">
@@ -95,7 +98,7 @@
                         <td style="width: 3%; text-align: center;">
                             {{ $key+1 }}
                         </td>
-                        <td style="width: 27%;">
+                        <td style="width: 24%;">
                             {{ $external_exit->prisoner->name }}
                         </td>
                         <td style="width: 5%; text-align: center; font-weight: bold;">
@@ -107,7 +110,7 @@
                                 @endforeach
                             @endif
                         </td>
-                        <td style="width: 20%;">
+                        <td style="width: 15%;">
                             {{ $external_exit->requesting->requesting }}
                         </td>
                         <td style="width: 7%; text-align: center;">
@@ -115,6 +118,9 @@
                         </td>
                         <td style="width: 7%; text-align: center;">
                             {{ $external_exit->event_time }}
+                        </td>
+                        <td style="width: 12%  text-align: center; text-transform: uppercase;">
+                            {{ $external_exit->municipality->municipality }}/{{ $external_exit->municipality->state->uf }}
                         </td>
                         <td style="width: 7%; text-align: center;">
                             {{ $external_exit->status }}

@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\IdentificationCardController;
 use App\Http\Controllers\PrisonerListController;
 use App\Http\Controllers\PrisonerPdfController;
 use App\Http\Controllers\Report\ExternalExitReportController;
@@ -36,6 +35,7 @@ use App\Livewire\Admin\PrisonUnit\PrisonUnitLivewire;
 use App\Livewire\Admin\Process\OriginProcess\OriginProcessLivewire;
 use App\Livewire\Admin\Process\PenalType\PenalTypeLivewire;
 use App\Livewire\Admin\Process\ProcessRegime\ProcessRegimeLivewire;
+use App\Livewire\Admin\PublicDefender\PublicDefenderLivewire;
 use App\Livewire\Admin\Sex\SexLivewire;
 use App\Livewire\Admin\SexualOrientation\SexualOrientationLivewire;
 use App\Livewire\Admin\State\StateLivewire;
@@ -45,7 +45,6 @@ use App\Livewire\Infopen\CriminalTypes\CriminalTypes;
 use App\Livewire\Infopen\Sentence\Sentence;
 use App\Livewire\Main\IdentificationCard\IdentificationCardLivewire;
 use App\Livewire\Main\IdentificationCard\IdentificationCardShowLivewire;
-use App\Livewire\Main\Photo\PhotoCreateLivewire;
 use App\Livewire\Main\Prisoner\PrisonerCreateLivewire;
 use App\Livewire\Main\Prisoner\PrisonerLivewire;
 use App\Livewire\Main\Prisoner\PrisonerShowLivewire;
@@ -133,6 +132,8 @@ Route::middleware([
     // LEGAL ASSISTANCE
     // lawyers - Advogados
     Route::get('/lawyers', LawyersLivewire::class)->name('lawyers.index')->middleware('can:admin');
+    // Public Defender - Defensor Público
+    Route::get('/public-defender', PublicDefenderLivewire::class)->name('public-defender.index')->middleware('can:admin');
     // Type Cares - Tipo de Atendimento
     Route::get('/type-cares', TypeCareLivewire::class)->name('type-cares.index')->middleware('can:admin');
     // Modality Care - Modalidade do Atendimento

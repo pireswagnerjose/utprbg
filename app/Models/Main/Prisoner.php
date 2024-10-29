@@ -105,13 +105,41 @@ class Prisoner extends Model
         return $this->hasMany(UnitAddress::class);
     }
 
-    public function booking_visits()
+    /**
+     * faz referência a tabela atendimento com advogados
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function assistance_with_lawyers()
     {
-        // return $this->hasMany(BookingVisit::class);
+        return $this->hasMany(AssistanceWithLawyer::class);
     }
 
-    public function penal_type_processes()
+    /**
+     * faz referência a tabela atendimento com a defensoria pública
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function assistance_with_public_defenders()
     {
-        // return $this->hasMany(PenalTypeProcess::class);
+        return $this->hasMany(AssistanceWithPublicDefender::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * faz referência a tabela atendimento com a justiça restaurativa
+     */
+    public function restorative_justices()
+    {
+        return $this->hasMany(RestorativeJustice::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * faz referência a tabela oitiva com o delegado
+     */
+    public function hearing_with_police_officers()
+    {
+        return $this->hasMany(HearingWithPoliceOfficer::class);
     }
 }

@@ -24,7 +24,7 @@ class ExternalExitReportLivewire extends Component
 
     public function search()
     {
-        $external_exits = ExternalExit::with('prisoner', 'requesting')->orderBy('event_date', 'asc')
+        $external_exits = ExternalExit::with('prisoner', 'requesting', 'municipality', 'state')->orderBy('event_date', 'asc')
             ->where('requesting_id', 'like', "%{$this->requesting_id}%")
             ->where('status', 'like', "%{$this->status}%");
 
