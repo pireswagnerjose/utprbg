@@ -13,19 +13,17 @@
         </button>
     </div>
     {{-- linha 1 --}}
-    <div class="grid grid-cols-2 gap-4 mb-5">
-        <div class="col-span-1">
+    <div class="grid grid-cols-10 gap-4 mb-5">
+        <div class="col-span-2">
             <x-item-topic>Delegado: </x-item-topic>
             <x-item-data>{{ $hearing_with_police_officer->delegate }}</x-item-data>
         </div>
 
-        <div class="col-span-1">
+        <div class="col-span-2">
             <x-item-topic>Delegacia: </x-item-topic>
             <x-item-data>{{ $hearing_with_police_officer->police_station }}</x-item-data>
         </div>
-    </div>
-
-    <div class="grid grid-cols-4 gap-4 mb-5">
+    
         <div class="col-span-1">
             <x-item-topic>Data </x-item-topic>
             <x-item-data>{{ \Carbon\Carbon::parse($hearing_with_police_officer->date_of_service)->format('d/m/Y' ) }}</x-item-data>
@@ -41,7 +39,7 @@
             <x-item-data>{{ $hearing_with_police_officer->status }}</x-item-data>
         </div>
 
-        <div class="col-span-1">
+        <div class="col-span-2">
             <x-item-topic>Tipo do Atendimento</x-item-topic>
             <x-item-data>{{ $hearing_with_police_officer->modality_care->modality_care }}</x-item-data>
         </div>

@@ -102,7 +102,7 @@ class VideoconferenceHearingForm extends Form
             ]);
         
         /* cria o nome do documento */
-        $document_name = $data['title'].'-'.date('Y-m-d H:i:s');
+        $document_name = $data['title'].'-'.date('Y-m-d s');
         /* faz o upload e retorna o endereco do arquivo */
         $data['path'] = $this->path->storeAs('prisoner/'.$this->prisoner_id.'/documents'.'/legal_assistance', $document_name.'.'.$data['path']->getClientOriginalExtension());
 
@@ -112,12 +112,12 @@ class VideoconferenceHearingForm extends Form
         session()->flash('success', 'Criado com sucesso.');
     }
     // delete document
-    public function deleteDocument($deleteDocument)
+    public function deleteDocument($document)
     {
         /* responsável por excluir o arquivo */
-        if (!empty($deleteDocument->path)) {
-            Storage::disk('public')->delete($deleteDocument->path);
+        if (!empty($document->path)) {
+            Storage::disk('public')->delete($document->path);
         }
-        $deleteDocument->delete();
+        $document->delete();
     }
 }

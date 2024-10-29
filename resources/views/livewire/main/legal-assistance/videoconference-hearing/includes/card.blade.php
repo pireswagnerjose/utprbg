@@ -13,20 +13,17 @@
         </button>
     </div>
     {{-- linha 1 --}}
-    <div class="grid grid-cols-2 gap-4 mb-5">
-        <div class="col-span-1">
+    <div class="grid grid-cols-9 gap-4 mb-5">
+        <div class="col-span-2">
             <x-item-topic>Comarca: </x-item-topic>
             <x-item-data>{{ $videoconference_hearing->district->district }}</x-item-data>
         </div>
 
-        <div class="col-span-1">
+        <div class="col-span-3">
             <x-item-topic>Vara Criminal: </x-item-topic>
             <x-item-data>{{ $videoconference_hearing->criminal_court->criminal_court }}</x-item-data>
         </div>
-    </div>
 
-    {{-- linha 2 --}}
-    <div class="grid grid-cols-4 gap-4 mb-5">
         <div class="col-span-1">
             <x-item-topic>Data </x-item-topic>
             <x-item-data>{{ \Carbon\Carbon::parse($videoconference_hearing->date_of_service)->format('d/m/Y' ) }}</x-item-data>
@@ -43,7 +40,7 @@
         </div>
     </div>
     
-    {{-- linha 3 --}}
+    {{-- linha 2 --}}
     <div>
         <x-item-topic>Observações</x-item-topic>
         <x-item-data class="text-justify">{{ $videoconference_hearing->remark }}</x-item-data>

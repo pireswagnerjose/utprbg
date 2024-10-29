@@ -1,21 +1,24 @@
 {{-- linha1 --}}
-<div class="grid md:grid-cols-2 md:gap-6 mt-16">
+<div class="grid md:grid-cols-1 md:gap-6 mt-16">
     {{-- Delegado --}}
     <div class="col-span-1 relative z-0 w-full group">
         <x-input type="text" wire:model="hearing_with_police_officer_form.delegate" />
         <x-label for="hearing_with_police_officer_form.delegate" value="{{ 'Delegado' }}" />
         <x-input-error for="hearing_with_police_officer_form.delegate" class="mt-2">{{ $message ?? '' }}</x-input-error>
     </div>
+</div>
 
+{{-- linha2 --}}
+<div class="grid md:grid-cols-3 md:gap-6 mt-8">
     {{-- Delegacia --}}
-    <div class="col-span-1 relative z-0 w-full group">
+    <div class="col-span-2 relative z-0 w-full group">
         <x-input type="text" wire:model="hearing_with_police_officer_form.police_station" />
         <x-label for="hearing_with_police_officer_form.police_station" value="{{ 'Delegacia' }}" />
         <x-input-error for="hearing_with_police_officer_form.police_station" class="mt-2">{{ $message ?? '' }}</x-input-error>
     </div>
 
     {{-- Tipo do Atendimento --}}
-    <div class="relative z-0 w-full group">
+    <div class="col-span-1 relative z-0 w-full group">
         <select wire:model="hearing_with_police_officer_form.modality_care_id" class="uppercase block py-1 mt-1 px-0 w-full text-sm text-zinc-500 dark:text-zinc-400 bg-transparent border-0 border-b border-zinc-400 dark:border-zinc-600 dark:focus:border-blue-500 focus:border-blue-600 appearance-none focus:outline-none focus:ring-0 peer">
             <option class="text-zinc-900 dark:text-zinc-600" selected value="{{ $modality_care->id ?? '' }}">{{ $modality_care->id ?? 'Tipo do Atendimento' }}</option>
             @foreach ($modality_cares as $modality_care)
@@ -26,8 +29,9 @@
     </div>
 </div>
 
-{{-- linha2 --}}
+{{-- linha3 --}}
 <div class="grid md:grid-cols-3 md:gap-6 mt-8">
+     
     {{-- Data do Atendimento --}}
     <div class="col-span-1 relative z-0 w-full group">
         <x-input type="date" wire:model="hearing_with_police_officer_form.date_of_service" />

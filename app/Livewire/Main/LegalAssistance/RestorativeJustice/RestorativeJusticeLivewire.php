@@ -105,9 +105,9 @@ class RestorativeJusticeLivewire extends Component
     // related document delete
     public function deleteRelatedDocumment(RestorativeJusticeDocument $document)
     {
-        $this->restorative_justices_form->deleteDocument($document);
+        $this->restorative_justice_form->deleteDocument($document);
         $this->openModalRelatedDocumentDelete = false;
-        $this->restorative_justices_form->clearFields();
+        $this->restorative_justice_form->clearFields();
         session()->flash('success', 'Excluído com sucesso.');
     }
     public function render()

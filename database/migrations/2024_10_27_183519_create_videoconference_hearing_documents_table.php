@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('prison_unit_id', 100);//unidade prisional
 
             /* chaves estrangeiras */
-            $table->foreignId('pk_v_h_id')->constrained('videoconference_hearing_documents');
+            $table->foreignId('pk_v_h_id')->constrained('videoconference_hearings');
 
             $table->timestamps();
         });

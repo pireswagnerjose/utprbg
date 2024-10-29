@@ -13,8 +13,8 @@
         </button>
     </div>
     {{-- linha 1 --}}
-    <div class="grid grid-cols-6 gap-4 mb-5">
-        <div class="col-span-2">
+    <div class="grid grid-cols-9 gap-4 mb-5">
+        <div class="col-span-3">
             <x-item-topic>Facilitador: </x-item-topic>
             <x-item-data>{{ $restorative_justice->facilitator_conciliator }}</x-item-data>
         </div>
@@ -34,7 +34,7 @@
             <x-item-data>{{ $restorative_justice->status }}</x-item-data>
         </div>
 
-        <div class="col-span-1">
+        <div class="col-span-2">
             <x-item-topic>Tipo do Atendimento</x-item-topic>
             <x-item-data>{{ $restorative_justice->modality_care->modality_care }}</x-item-data>
         </div>

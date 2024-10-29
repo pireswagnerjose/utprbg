@@ -71,7 +71,7 @@ class RestorativeJusticeForm extends Form
     // update
     public function update($dataValidated)
     {
-        $dataValidated['restorative_justice']  = mb_strtoupper($dataValidated['restorative_justice'], 'utf-8');
+        $dataValidated['facilitator_conciliator']  = mb_strtoupper($dataValidated['facilitator_conciliator'], 'utf-8');
         $dataValidated['remark']  = mb_strtoupper($dataValidated['remark'], 'utf-8');
         $this->restorative_justice_model->update($dataValidated);
         $this->clearFields();
