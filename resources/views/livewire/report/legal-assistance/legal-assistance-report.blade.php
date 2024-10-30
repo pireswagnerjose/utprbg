@@ -6,7 +6,6 @@
         {{-- Formulário --}}
         <form action="{{ route('legal-assistances.pdf') }}" method="any" target="_blank">
             @csrf
-            <input type="hidden" name="type_care_id" value="{{ $type_care_id }}">
             <input type="hidden" name="start_date" value="{{ $start_date }}">
             <input type="hidden" name="end_date" value="{{ $end_date }}">
             <input type="hidden" name="status" value="{{ $status }}">
@@ -15,13 +14,11 @@
                 <x-blue-button class="ml-4 bg-green-600">{{ 'Gerar PDF' }} </x-blue-button>
             </div>
         </form>
-
-        @include('livewire.report.legal-assistance.includes.table')
-    </div>
-    
-    {{-- paginação --}}
-    <div class="pl-2 py-4 mt-4 text-zinc-50 dark:text-zinc-400 border-t border-blue-300 dark:border-blue-500 pb-3">
-        {{ $legal_assistances->onEachSide(1)->links() }}
+        @include('livewire.report.legal-assistance.includes.assistance-with-lawyer-table')
+        @include('livewire.report.legal-assistance.includes.assistance-with-public-defender-table')
+        @include('livewire.report.legal-assistance.includes.hearing-with-police-officer-table')
+        @include('livewire.report.legal-assistance.includes.restorative-justice-table')
+        @include('livewire.report.legal-assistance.includes.videoconference-hearing-table')
     </div>
 </div>
 

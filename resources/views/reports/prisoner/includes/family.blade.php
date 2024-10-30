@@ -1,11 +1,11 @@
 {{-- Familiares --}}
-@if (isset($families) && $families->count() > 0)
+@if (isset($prisoner->families) && $prisoner->families->count() > 0)
 <div style="padding-bottom: 8px;">
    {{-- Título --}}
    <h1 class="title">FAMILIARES</h1>
    {{-- Conteúdo --}}
    <section>
-      @foreach ($families as $family)
+      @foreach ($prisoner->families as $family)
 
       <div class="w-full flex gap-2">
          <div class="colum" style="width: 25%;">

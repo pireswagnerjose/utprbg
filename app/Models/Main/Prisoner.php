@@ -95,6 +95,11 @@ class Prisoner extends Model
         return $this->hasMany(ExternalExit::class);
     }
 
+    public function families()
+    {
+        return $this->hasMany(Family::class);
+    }
+
     public function documents()
     {
         return $this->hasMany(Document::class);
@@ -141,5 +146,10 @@ class Prisoner extends Model
     public function hearing_with_police_officers()
     {
         return $this->hasMany(HearingWithPoliceOfficer::class);
+    }
+
+    public function videoconference_hearings()
+    {
+        return $this->hasMany(VideoconferenceHearing::class);
     }
 }

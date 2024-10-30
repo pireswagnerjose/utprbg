@@ -1,11 +1,11 @@
 {{-- PRISÕES --}}
-@if (isset($prisons) && $prisons->count() > 0)
+@if (isset($prisoner->prisons) && $prisoner->prisons->count() > 0)
 <div style="padding-bottom: 8px;">
     {{-- Título --}}
     <h1 class="title">HISTÓRICO DE PRISÕES</h1>
     {{-- Conteúdo --}}
     <section class="box">
-        @foreach ($prisons as $prison)
+        @foreach ($prisoner->prisons as $prison)
         <div class="line">
             <div class="colum" style="width: 60%;">
                 <span class="item_span">Unidade Prisional:</span>

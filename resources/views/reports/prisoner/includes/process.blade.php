@@ -1,11 +1,11 @@
 {{-- PROCESSOS --}}
-@if (isset($processes) && $processes->count() > 0)
+@if (isset($prisoner->processes) && $prisoner->processes->count() > 0)
 <div class="pb-2">
     {{-- Título --}}
     <h1 class="title">PROCESSOS</h1>
     {{-- Conteúdo --}}
     <section>
-        @foreach ($processes as $process)
+        @foreach ($prisoner->processes as $process)
         <div class="line">
             <div class="colum" style="width: 25%;">
                 <span class="item_span">Data da Prisão no Processo: </span>

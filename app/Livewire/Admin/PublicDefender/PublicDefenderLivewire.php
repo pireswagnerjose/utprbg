@@ -66,6 +66,7 @@ class PublicDefenderLivewire extends Component
     public function store()
     {
         $data = $this->validate();
+        $data['public_defender']  = mb_strtoupper($data['public_defender'], 'utf-8');
         PublicDefender::create($data);
         $this->clearFields();
         session()->flash('success', 'Criado com sucesso.');
@@ -86,6 +87,7 @@ class PublicDefenderLivewire extends Component
     public function update(PublicDefender $public_defender)
     {
         $data = $this->validate();
+        $data['public_defender']  = mb_strtoupper($data['public_defender'], 'utf-8');
         $public_defender->update($data);
         $this->clearFields();
         $this->openModalPublicDefenderUpdate = false;

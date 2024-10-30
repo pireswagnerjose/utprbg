@@ -1,11 +1,11 @@
 {{-- Saídas Externas --}}
-@if (isset($external_exits) && $external_exits->count() > 0)
+@if (isset($prisoner->external_exits) && $prisoner->external_exits->count() > 0)
 <div style="padding-bottom: 8px;">
    {{-- Título --}}
    <h1 class="title">SAÍDAS EXTERNAS</h1>
    {{-- Conteúdo --}}
    <section>
-      @foreach ($external_exits as $external_exit)
+      @foreach ($prisoner->external_exits as $external_exit)
 
       <div class="line">
          <div class="colum" style="width: 40%;">

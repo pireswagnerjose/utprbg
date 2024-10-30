@@ -1,11 +1,11 @@
 {{-- Atendimentos Internos --}}
-@if (isset($internal_services) && $internal_services->count() > 0)
+@if (isset($prisoner->internal_services) && $prisoner->internal_services->count() > 0)
 <div style="padding-bottom: 8px;">
     {{-- Título --}}
     <h1 class="title">ATENDIMENTOS INTERNOS</h1>
     {{-- Conteúdo --}}
     <section>
-        @foreach ($internal_services as $internal_service)
+        @foreach ($prisoner->internal_services as $internal_service)
         <div class="line">
             <div class="colum" style="width: 49%;">
                 <span class="item_span">Tipo do Atendimento:</span>

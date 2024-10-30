@@ -2,15 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Main\Address;
-use App\Models\Main\ExternalExit;
-use App\Models\Main\Family;
-use App\Models\Main\InternalService;
-use App\Models\Main\LegalAssistance;
-use App\Models\Main\Photo;
-use App\Models\Main\Prison;
+
 use App\Models\Main\Prisoner;
-use App\Models\Main\Process;
 use Illuminate\Http\Request;
 
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -19,15 +12,10 @@ class PrisonerPdfController extends Controller
 {
     public function pdf(Request $request, $prisoner_id)
     {
-        $prisoner          = Prisoner::find($prisoner_id);
-        $prisons           = Prison::where('prisoner_id', $prisoner_id)->get();
-        $processes         = Process::where('prisoner_id', $prisoner_id)->get();
-        $photos            = Photo::where('prisoner_id', $prisoner_id)->get();
-        $addresses         = Address::where('prisoner_id', $prisoner_id)->get();
-        $internal_services = InternalService::where('prisoner_id', $prisoner_id)->get();
-        $legal_assistances = LegalAssistance::where('prisoner_id', $prisoner_id)->get();
-        $external_exits    = ExternalExit::where('prisoner_id', $prisoner_id)->get();
-        $families          = Family::where('prisoner_id', $prisoner_id)->get();
+        $prisoner = Prisoner::with('prisons', 'processes', 'photos', 'addresses', 'internal_services', 'external_exits',
+                'families', 'assistance_with_lawyers', 'assistance_with_public_defenders', 'restorative_justices', 
+                'hearing_with_police_officers', 'videoconference_hearings')
+                ->find($prisoner_id);
 
         // Itens que irão aparecer no RELATÓRIO
         $prisonsPDF           = $request->prisons;
@@ -41,16 +29,7 @@ class PrisonerPdfController extends Controller
 
         $pdf = Pdf::loadView(
             'reports.prisoner.prisoner-report',
-            compact(
-                'prisoner',
-                'prisons',
-                'processes',
-                'photos',
-                'addresses',
-                'internal_services',
-                'legal_assistances',
-                'external_exits',
-                'families',
+            compact('prisoner',
                 'prisonsPDF',
                 'processesPDF',
                 'photosPDF',

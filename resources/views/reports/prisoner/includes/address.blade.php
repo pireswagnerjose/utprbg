@@ -1,11 +1,11 @@
 {{-- Endereços --}}
-@if (isset($addresses) && $addresses->count() > 0)
+@if (isset($prisoner->addresses) && $prisoner->addresses->count() > 0)
 <div style="padding-bottom: 8px;">
     {{-- Título --}}
     <h1 class="title">ENDEREÇOS CONHECIDOS</h1>
     {{-- Conteúdo --}}
     <section>
-        @foreach ($addresses as $address)
+        @foreach ($prisoner->addresses as $address)
         <div class="line">
             <div class="colum" style="width: 50%;">
                 <span class="item_span">Logradouro:</span>
