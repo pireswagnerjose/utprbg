@@ -14,11 +14,23 @@
                 <x-blue-button class="ml-4 bg-green-600">{{ 'Gerar PDF' }} </x-blue-button>
             </div>
         </form>
-        @include('livewire.report.legal-assistance.includes.assistance-with-lawyer-table')
-        @include('livewire.report.legal-assistance.includes.assistance-with-public-defender-table')
-        @include('livewire.report.legal-assistance.includes.hearing-with-police-officer-table')
-        @include('livewire.report.legal-assistance.includes.restorative-justice-table')
-        @include('livewire.report.legal-assistance.includes.videoconference-hearing-table')
+        <main>
+            @if (isset($assistance_with_lawyers) && $assistance_with_lawyers->count() > 0)
+                @include('livewire.report.legal-assistance.includes.assistance-with-lawyer-table')
+            @endif
+            @if (isset($assistance_with_public_defenders) && $assistance_with_public_defenders->count() > 0)
+                @include('livewire.report.legal-assistance.includes.assistance-with-public-defender-table')
+            @endif
+            @if (isset($hearing_with_police_officers) && $hearing_with_police_officers->count() > 0)
+                @include('livewire.report.legal-assistance.includes.hearing-with-police-officer-table')
+            @endif
+            @if (isset($restorative_justices) && $restorative_justices->count() > 0)
+                @include('livewire.report.legal-assistance.includes.restorative-justice-table')
+            @endif
+            @if (isset($videoconference_hearings) && $videoconference_hearings->count() > 0)
+                @include('livewire.report.legal-assistance.includes.videoconference-hearing-table')
+            @endif
+        </main>
     </div>
 </div>
 

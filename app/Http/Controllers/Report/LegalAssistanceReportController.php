@@ -3,27 +3,37 @@
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
-use App\Models\Main\LegalAssistance;
+use App\Services\LegalAssistanceReportService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class LegalAssistanceReportController extends Controller
 {
+    
     public function pdf(Request $request)
     {
-        $legal_assistances = LegalAssistance::with('prisoner', 'type_care')->orderBy('date', 'asc')
-            ->where('type_care_id', 'like', "%{$request->type_care_id}%")
-            ->where('status', 'like', "%{$request->status}%");
 
-        if($request->start_date != '' && $request->end_date != ''){
-            $legal_assistances = $legal_assistances->where('date', '>=', $request->start_date);
-            $legal_assistances = $legal_assistances->where('date', '<=', $request->end_date);
-        }
+        $assistance_with_lawyers = (new LegalAssistanceReportService())
+            ->search_assistance_with_lawyer($request->start_date, $request->end_date, $request->status);
 
-        $legal_assistances = $legal_assistances->get();
+        $assistance_with_public_defenders = (new LegalAssistanceReportService())
+            ->search_assistance_with_public_defender($request->start_date, $request->end_date, $request->status);
+
+        $hearing_with_police_officers = (new LegalAssistanceReportService())
+            ->search_hearing_with_police_officer($request->start_date, $request->end_date, $request->status);
+
+        $restorative_justices = (new LegalAssistanceReportService())
+            ->search_restorative_justice($request->start_date, $request->end_date, $request->status);
+
+        $videoconference_hearings = (new LegalAssistanceReportService())
+            ->search_videoconference_hearing($request->start_date, $request->end_date, $request->status);
+
 
         $pdf = Pdf::loadView( 'reports.legal-assistance.legal-assistance-report',
-         compact( 'legal_assistances' ) );
+         compact( 'assistance_with_lawyers', 'assistance_with_public_defenders', 'hearing_with_police_officers',
+                'restorative_justices', 'videoconference_hearings')
+        );
+
         return $pdf->stream('Atendimentos Jurídicos.pdf');
     }
 }

@@ -8,44 +8,32 @@
         *, 
         *:after,
         *:before {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            text-decoration: none;
-            font-family: Arial, Helvetica, sans-serif;
-            border:0;
+            margin: 0; padding: 0; box-sizing: border-box; text-decoration: none;
+            font-family: Arial, Helvetica, sans-serif; border:0;
         }
         body{
-            margin:1cm;
-            font-size: 100%;
-            list-style-type: none;
+            margin:1cm; font-size: 100%; list-style-type: none;
         }
         header{
-            width: 100%;
-            padding-bottom: 2px;
+            width: 100%;  padding-bottom: 2px;
         }
         header img{
-            width: 96%;
-            align-items: center;
+            width: 96%; align-items: center;
         }
         main{
-            margin-top: 2px;
-            padding-top: 2px;
-            border-top: 1px solid #ccc;
+            margin-top: 2px; padding-top: 2px; border-top: 1px solid #ccc;
+        }
+        main h1{
+            font-size: 12px; text-align: center; color: #666; text-transform: uppercase; font-weight: bold; margin: 12px 0 0 0;
         }
         main table{
-         width: 100%;
+            width: 100%; margin: 6px 0; border-collapse: collapse;
         }
         main th{
-         font-size: 8px;
-         height: 16px;
-         background-color: #333;
-         color: #CCC;
+            font-size: 8px; height: 16px; background-color: #666; color: #CCC; border: 1px solid white;
         }
         main td{
-         font-size: 8px;
-         height: 16px;
-         padding: 2px;
+            font-size: 8px; height: 16px; padding: 2px; border: 1px solid #ccc;
         }
         
         tr:nth-child(even) {
@@ -60,76 +48,21 @@
     </header>
     <!-- Page Content -->
     <main>
-        <table>
-            <thead>
-                <tr>
-                    <th scope="col">
-                        Cód
-                    </th>
-                    <th scope="col" class="px-2 py-3">
-                        Nome do Preso
-                    </th>
-                    <th scope="col" class="px-2 py-3 text-center">
-                        Cela
-                    </th>
-                    <th scope="col" class="px-2 py-3">
-                        Tipo do Atendimento
-                    </th>
-                    <th scope="col" class="px-2 py-3 text-center">
-                        Data
-                    </th>
-                    <th scope="col" class="px-2 py-3 text-center">
-                        Hora
-                    </th>
-                    <th scope="col" class="px-2 py-3 text-center">
-                        Status
-                    </th>
-                    <th scope="col" class="px-2 py-3 text-center">
-                        Obs.
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ( $legal_assistances as $key=>$legal_assistance )
-                    <tr>
-                        <td style="width: 3%; text-align: center;">
-                            {{ $key+1 }}
-                        </td>
-                        <td style="width: 27%;">
-                            {{ $legal_assistance->prisoner->name }}
-                        </td>
-                        <td style="width: 5%; text-align: center; font-weight: bold;">
-                            @if (!empty( $legal_assistance->prisoner->unit_address))
-                                @foreach ( $legal_assistance->prisoner->unit_address as $unit_address)
-                                    @if ($unit_address->status == "ATIVO")
-                                        {{ $unit_address->cell->cell }}
-                                    @endif
-                                @endforeach
-                            @endif
-                        </td>
-                        <td style="width: 20%;">
-                            {{ $legal_assistance->type_care->type_care }}
-                        </td>
-                        <td style="width: 7%; text-align: center;">
-                            {{ \Carbon\Carbon::parse($legal_assistance->date)->format('d/m/Y') }}
-                        </td>
-                        <td style="width: 7%; text-align: center;">
-                            {{ $legal_assistance->time }}
-                        </td>
-                        <td style="width: 7%; text-align: center;">
-                            {{ $legal_assistance->status }}
-                        </td>
-                        <td style="width: 24%;">
-                            {{ $legal_assistance->remark }}
-                        </td>
-                    </tr>
-                @empty
-                    <td class="px-2">
-                        Não existe agendamentos feitos.
-                    </td>
-                @endforelse
-            </tbody>
-        </table>
+        @if (isset($assistance_with_lawyers) && $assistance_with_lawyers->count() > 0)
+            @include('reports.legal-assistance.includes.assistance-with-lawyer-table')
+        @endif
+        @if (isset($assistance_with_public_defenders) && $assistance_with_public_defenders->count() > 0)
+            @include('reports.legal-assistance.includes.assistance-with-public-defender-table')
+        @endif
+        @if (isset($hearing_with_police_officers) && $hearing_with_police_officers->count() > 0)
+            @include('reports.legal-assistance.includes.hearing-with-police-officer-table')
+        @endif
+        @if (isset($restorative_justices) && $restorative_justices->count() > 0)
+            @include('reports.legal-assistance.includes.restorative-justice-table')
+        @endif
+        @if (isset($videoconference_hearings) && $videoconference_hearings->count() > 0)
+            @include('reports.legal-assistance.includes.videoconference-hearing-table')
+        @endif
     </main>
 </body>
 </html>

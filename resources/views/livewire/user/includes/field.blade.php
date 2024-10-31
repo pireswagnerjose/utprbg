@@ -25,7 +25,7 @@
    <div class="grid md:grid-cols-4 md:gap-6">
         <div class="">
             <div class="relative z-0 w-full group">
-                <x-input type="text" wire:model="userPhone" id="userPhone" required />
+                <x-input type="text" wire:model="userPhone" id="userPhone" required x-mask="(99) 99999-9999" />
                 <x-label for="userPhone" wire:model="userPhone" value="{{ 'Telefone' }}" />
             </div>
             <x-input-error for="userPhone" class="mt-2">{{ $message ?? '' }}</x-input-error>

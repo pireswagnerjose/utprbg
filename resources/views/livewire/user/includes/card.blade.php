@@ -2,7 +2,7 @@
 <div class="flex justify-center ">
     <div class="w-full flex items-end justify-center space-y-6 hover:bg-zinc-200 dark:hover:bg-zinc-700 border-b border-zinc-200 dark:border-zinc-700">
         <div class="pl-3 w-full">
-            <div class="grid grid-cols-6 text-base font-semibold uppercase justify-between w-full pr-12">
+            <div class="grid grid-cols-6 gap-8 text-base font-semibold uppercase justify-between w-full pr-12">
                 <div class="col-span-2">
                     <span class="font-light text-xs text-zinc-400 dark:text-zinc-500">Nome: </span>
                     <p>{{ $user->first_name }} {{ $user->last_name }}</p>

@@ -180,10 +180,11 @@ class UserLivewire extends Component
     public function render()
     {
         return view('livewire.user.user', [
-            'users' => User::latest()
+            'users' => User::orderBy('first_name', 'asc')
                 ->where('first_name', 'like', "%{$this->search}%")
                 ->orWhere('last_name', 'like', "%{$this->search}%")
-                ->orWhere('email', 'like', "%{$this->search}%")->paginate(10)
+                ->orWhere('email', 'like', "%{$this->search}%")
+                ->paginate(10)
         ]);
     }
 }

@@ -18,7 +18,7 @@
         <x-input-error for="registry" class="mt-2">{{ $message ?? '' }}</x-input-error>
     </div>
     <div class="relative z-0 w-full group">
-        <x-input type="text" id="phone" wire:model="userPhone" />
+        <x-input type="text" id="phone" wire:model="userPhone" x-mask="(99) 99999-9999" />
         <x-label for="phone" wire:model="phone" value="{{ __('Phone') }}" />
         <x-input-error for="phone" class="mt-2">{{ $message ?? '' }}</x-input-error>
     </div>
