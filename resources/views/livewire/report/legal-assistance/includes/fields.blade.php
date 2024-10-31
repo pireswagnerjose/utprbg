@@ -1,5 +1,5 @@
 {{-- Linha 1 --}}
-<div class="grid grid-cols-3 gap-6 w-[80%] mx-auto mt-8">
+<div class="grid grid-cols-3 gap-6 w-[90%] mx-auto mt-6">
    <div class="relative z-0 w-full group">
        <x-input type="date" wire:model.live.debounce.500ms="start_date" />
        <x-label for="data_inicial" value="{{ 'DATA INICIAL' }}" />

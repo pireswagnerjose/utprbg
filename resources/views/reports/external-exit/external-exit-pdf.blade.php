@@ -8,44 +8,29 @@
         *, 
         *:after,
         *:before {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            text-decoration: none;
-            font-family: Arial, Helvetica, sans-serif;
-            border:0;
+            margin: 0; padding: 0; box-sizing: border-box; text-decoration: none;
+            font-family: Arial, Helvetica, sans-serif; border:0;
         }
         body{
-            margin:1cm;
-            font-size: 100%;
-            list-style-type: none;
+            margin:1cm; font-size: 100%; list-style-type: none;
         }
         header{
-            width: 100%;
-            padding-bottom: 2px;
+            width: 100%;  padding-bottom: 2px;
         }
         header img{
-            width: 96%;
-            align-items: center;
+            width: 96%; align-items: center;
         }
         main{
-            margin-top: 2px;
-            padding-top: 2px;
-            border-top: 1px solid #ccc;
+            margin-top: 2px; padding-top: 2px; border-top: 1px solid #ccc;
         }
         main table{
-         width: 100%;
+            width: 100%; margin: 6px 0; border-collapse: collapse;
         }
         main th{
-         font-size: 8px;
-         height: 16px;
-         background-color: #333;
-         color: #CCC;
+            font-size: 8px; height: 16px; background-color: #666; color: #CCC; border: 1px solid white;
         }
         main td{
-         font-size: 8px;
-         height: 16px;
-         padding: 2px;
+            font-size: 8px; height: 16px; padding: 2px; border: 1px solid #ccc;
         }
         
         tr:nth-child(even) {
@@ -63,45 +48,23 @@
         <table>
             <thead>
                 <tr>
-                    <th scope="col">
-                        Cód
-                    </th>
-                    <th scope="col" class="px-2 py-3">
-                        Nome do Preso
-                    </th>
-                    <th scope="col" class="px-2 py-3 text-center">
-                        Cela
-                    </th>
-                    <th scope="col" class="px-2 py-3">
-                        Requisitante
-                    </th>
-                    <th scope="col" class="px-2 py-3 text-center">
-                        Data
-                    </th>
-                    <th scope="col" class="px-2 py-3 text-center">
-                        Hora
-                    </th>
-                    <th scope="col" class="px-2 py-3 text-center">
-                        Município
-                    </th>
-                    <th scope="col" class="px-2 py-3 text-center">
-                        Status
-                    </th>
-                    <th scope="col" class="px-2 py-3 text-center">
-                        Obs.
-                    </th>
+                    <th scope="col"> Cód </th>
+                    <th scope="col"> Nome do Preso </th>
+                    <th scope="col"> Cela </th>
+                    <th scope="col"> Requisitante </th>
+                    <th scope="col"> Data </th>
+                    <th scope="col"> Hora </th>
+                    <th scope="col"> Município </th>
+                    <th scope="col"> Status </th>
+                    <th scope="col"> Obs. </th>
                 </tr>
             </thead>
             <tbody>
                 @forelse ( $external_exits as $key=>$external_exit )
                     <tr>
-                        <td style="width: 3%; text-align: center;">
-                            {{ $key+1 }}
-                        </td>
-                        <td style="width: 24%;">
-                            {{ $external_exit->prisoner->name }}
-                        </td>
-                        <td style="width: 5%; text-align: center; font-weight: bold;">
+                        <td> {{ $key+1 }} </td>
+                        <td> {{ $external_exit->prisoner->name }} </td>
+                        <td>
                             @if (!empty( $external_exit->prisoner->unit_address))
                                 @foreach ( $external_exit->prisoner->unit_address as $unit_address)
                                     @if ($unit_address->status == "ATIVO")
@@ -110,29 +73,15 @@
                                 @endforeach
                             @endif
                         </td>
-                        <td style="width: 15%;">
-                            {{ $external_exit->requesting->requesting }}
-                        </td>
-                        <td style="width: 7%; text-align: center;">
-                            {{ \Carbon\Carbon::parse($external_exit->event_date)->format('d/m/Y') }}
-                        </td>
-                        <td style="width: 7%; text-align: center;">
-                            {{ $external_exit->event_time }}
-                        </td>
-                        <td style="width: 12%  text-align: center; text-transform: uppercase;">
-                            {{ $external_exit->municipality->municipality }}/{{ $external_exit->municipality->state->uf }}
-                        </td>
-                        <td style="width: 7%; text-align: center;">
-                            {{ $external_exit->status }}
-                        </td>
-                        <td style="width: 24%;">
-                            {{ $external_exit->remark }}
-                        </td>
+                        <td> {{ $external_exit->requesting->requesting }} </td>
+                        <td> {{ \Carbon\Carbon::parse($external_exit->event_date)->format('d/m/Y') }} </td>
+                        <td> {{ $external_exit->event_time }} </td>
+                        <td style="text-transform: uppercase"> {{ $external_exit->municipality->municipality }}/{{ $external_exit->municipality->state->uf }} </td>
+                        <td> {{ $external_exit->status }} </td>
+                        <td> {{ $external_exit->remark }} </td>
                     </tr>
                 @empty
-                    <td class="px-2">
-                        Não existe agendamentos feitos.
-                    </td>
+                    <td> Não existe agendamentos feitos. </td>
                 @endforelse
             </tbody>
         </table>
