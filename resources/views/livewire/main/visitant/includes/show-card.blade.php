@@ -10,7 +10,7 @@
                 {{-- chama o modal para exclusão do item --}}
                 @can('admin')
                     <div class="group grid justify-items-center w-16 border-b border-zinc-200 dark:border-zinc-600">
-                        <button type="button" wire:click="modalVisitantDelete({{ $visitant->id }})" class="w-8 h-8 bg-red-600 dark:bg-red-500 rounded-full p-2">
+                        <button type="button" wire:click="modalDelete({{ $visitant->id }})" class="w-8 h-8 bg-red-600 dark:bg-red-500 rounded-full p-2">
                             <svg class="w-4 h-4 text-red-50 dark:text-red-50 hover:text-red-400 hover:dark:text-red-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 8h6m-9-3.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0ZM5 11h3a4 4 0 0 1 4 4v2H1v-2a4 4 0 0 1 4-4Z" />
                             </svg>
@@ -22,7 +22,7 @@
                 {{-- Editar --}}
                 @can('admin-recepcao') 
                     <div class="group grid justify-items-center w-16 border-b border-zinc-200 dark:border-zinc-600">
-                        <button wire:click="modalVisitantEdit({{ $visitant->id }})" class="w-8 h-8 bg-blue-600 dark:bg-blue-500 rounded-full p-2">
+                        <button wire:click="modalUpdate({{ $visitant->id }})" class="w-8 h-8 bg-blue-600 dark:bg-blue-500 rounded-full p-2">
                             <svg class=" w-4 h-4 text-blue-50 dark:text-blue-50 hover:text-blue-400 hover:dark:text-blue-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.109 17H1v-2a4 4 0 0 1 4-4h.87M10 4.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm7.95 2.55a2 2 0 0 1 0 2.829l-6.364 6.364-3.536.707.707-3.536 6.364-6.364a2 2 0 0 1 2.829 0Z" />
                             </svg>
@@ -152,7 +152,7 @@
                     @foreach ($visitant->identification_cards as $identification_card)
                         <a href="{{ route('prisoners.show', ['prisoner_id' => $identification_card->prisoner_id]) }}" class="font-semibold text-blue-700 dark:text-blue-500 hover:underline">
                             <span class="flex flex-col items-center">
-                                <img class="object-cover h-24 w-24 rounded-lg" src='{{ asset("storage/" . $identification_card->prisoner->photo ) }}' alt="{{ $identification_card->prisoner->name }}">
+                                <img class="w-24 h-24 bg-zinc-500 rounded-full shadow-lg" src='{{ asset("storage/" . $identification_card->prisoner->photo ) }}' alt="{{ $identification_card->prisoner->name }}">
                                 <h1>{{ $identification_card->prisoner->name }}</h1>
                             </span>
                         </a>

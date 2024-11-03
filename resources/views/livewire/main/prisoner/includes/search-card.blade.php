@@ -1,37 +1,30 @@
-<div class="w-full p-4 bg-white rounded-lg shadow sm:p-8 dark:bg-zinc-800">
-    <ul class="divide-y divide-zinc-200 dark:divide-zinc-700">
-        @forelse ($prisoners as $prisoner)
-        <div class="grid grid-cols-3 gap-6">
-            <li class="py-3 sm:py-4 bg-zinc-100 dark:bg-zinc-700 hover:bg-zinc-200 hover:dark:bg-zinc-900 rounded-lg p-4 shadow-md">
-                <a href="{{ route('prisoners.show', ['prisoner_id' => $prisoner->id]) }}">
-                    <div class="flex items-center space-x-4">
-                        <div class="flex-shrink-0">
-                            @if($prisoner->photo)
-                            <img class="w-24 h-24 rounded-full" src="{{ asset("storage/$prisoner->photo") }}" alt="{{$prisoner->name}}">
-                            @endif
-                            @if (!$prisoner->photo)
-                            <img class="w-24 h-24 rounded-full" src="{{ asset("storage/site/no-image.jpg") }}" alt="">
-                            @endif
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <p class="text-base font-medium uppercase text-zinc-900 truncate dark:text-white">
-                                {{ $prisoner->name }}
-                            </p>
-                            <p class="text-xs uppercase text-zinc-500 truncate dark:text-zinc-400">
-                                {{ $prisoner->nickname }}
-                            </p>
-                        </div>
-                        @empty
-                        {{-- exibe mensagem se não encontrar regristro --}}
-                        <div class="w-full text-center mb-2 text-xl font-medium tracking-tight text-red-700 dark:text-yellow-300">
-                            <h5>
-                                Não foram encontrados registros na sua pesquisa!
-                            </h5>
+<div class="w-full p-4 bg-white rounded-lg shadow dark:bg-zinc-800">
+    <ul class="">
+        <div class="grid grid-cols-4 gap-6">
+            @forelse ($prisoners as $prisoner)
+                <li class="py-2">
+                    <div class="flex flex-col items-center pb-10 gap-1 text-xs text-center">
+                        @if($prisoner->photo)
+                            <img class="w-24 h-24 bg-zinc-500 rounded-full shadow-lg" src='{{ asset("storage/$prisoner->photo") }}' alt="{{$prisoner->name}}"/>
+                        @endif
+                        @if (!$prisoner->photo)
+                            <img class="w-24 h-24 bg-zinc-500 rounded-full shadow-lg" src="{{ asset("storage/site/no-image.jpg") }}" alt="Sem Imagem">
+                        @endif
+                        <h5 class="text-sm font-medium text-zinc-900 dark:text-white">{{ $prisoner->name }}</h5>
+                        <span class="text-xs text-zinc-500 dark:text-zinc-400">Dt. Nasc.: {{ \Carbon\Carbon::parse($prisoner->date_birth)->format('d/m/Y') }}</span>
+                        <div class="flex">
+                            <a href="{{ route('prisoners.show', ['prisoner_id' => $prisoner->id]) }}" class="inline-flex items-center px-4 py-1 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Visualizar</a>
                         </div>
                     </div>
-                </a>
-            </li>
+                </li>
+            @empty
+                {{-- exibe mensagem se não encontrar regristro --}}
+                <div class="w-full text-center mb-2 text-xl font-medium tracking-tight text-red-700 dark:text-yellow-300">
+                    <h5>
+                        Não foram encontrados registros na sua pesquisa!
+                    </h5>
+                </div>
+            @endforelse
         </div>
-        @endforelse
     </ul>
 </div>

@@ -1,11 +1,11 @@
 <!-- update-->
-<x-dialog-modal wire:model="openModalUpdate" maxWidth="6xl">
+<x-dialog-modal wire:model="openModalCreate" maxWidth="6xl">
     <x-slot name="title">
-        {{ 'Atualizar os Dados do Preso' }}
+        {{ 'Cadastrar Visitante' }}
     </x-slot>
 
     <x-slot name="content">
-        @include('livewire.main.prisoner.prisoner-update-livewire')
+        @include('livewire.main.visitant.includes.fields')
     </x-slot>
 
     <x-slot name="footer">
@@ -13,7 +13,7 @@
             {{ __('Cancel') }}
         </x-danger-button>
 
-        <x-blue-button class="ms-3" wire:click="update({{ $openModalUpdate }})" wire:loading.attr="disabled">
+        <x-blue-button class="ms-3" wire:click="create()" wire:loading.attr="disabled">
             {{ __('Save') }}
         </x-blue-button>
     </x-slot>

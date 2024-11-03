@@ -163,7 +163,6 @@ Route::middleware([
     // Prisoner - Preso
     Route::get('/prisoners-search', PrisonerLivewire::class)->name('prisoners.search');
     Route::get('/prisoners/{prisoner_id}', PrisonerShowLivewire::class)->name('prisoners.show');
-    Route::get('/prisoners-create', PrisonerCreateLivewire::class)->name('prisoners.create')->middleware('can:admin-cartorio_admin-cartorio_user');
 
     // REPORT
     // Prisoner Report
@@ -201,7 +200,6 @@ Route::middleware([
 
     // VISITANT
     Route::get('/visitant', VisitantLivewire::class)->name('visitant.index');
-    Route::get('/visitant-create', VisitantCreateLivewire::class)->name('visitant.create');
     Route::get('/visitant-show/{visitant_id}', VisitantShowLivewire::class)->name('visitant.show');
     Route::post('/visitant-report/{visitant_id}', [VisitantReportController::class, 'report'])->name('visitant.report');
 

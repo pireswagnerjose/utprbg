@@ -2,66 +2,70 @@
 
 namespace App\Livewire\Main\Prisoner;
 
-use App\Models\Admin\CivilStatus;
-use App\Models\Admin\Country;
-use App\Models\Admin\Ethnicity;
-use App\Models\Admin\Prison\StatusPrison;
-use App\Models\Admin\SexualOrientation;
-use App\Models\Main\Prisoner;
+use App\Livewire\Forms\Main\PrisonerForm;
+use App\Models\Admin\Municipality;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 
+use App\Models\Admin\CivilStatus;
+use App\Models\Admin\Country;
+use App\Models\Admin\EducationLevel;
+use App\Models\Admin\Ethnicity;
+use App\Models\Admin\Prison\StatusPrison;
+use App\Models\Admin\Sex;
+use App\Models\Admin\SexualOrientation;
+use App\Models\Admin\State;
+use Illuminate\Support\Facades\Auth;
+
 #[Layout("layouts.app")]
 #[Title("Pesquisar")]
 class PrisonerLivewire extends Component
 {
+    public PrisonerForm $prisonerForm;
     use WithPagination;
-    public $name;
-    public $nickname;
-    public $cpf;
-    public $rg;
-    public $title;
-    public $birth_certificate;
-    public $sus_card;
-    public $status_prison_id;
-    public $civil_status_id;
-    public $ethnicity_id;
-    public $sexual_orientation_id;
-    public $country_id;
-    public $status_prisons = [];
-    public $civil_statuses = [];
-    public $ethnicities = [];
-    public $sexual_orientations = [];
-    public $countries = [];
+
+    public $openModalCreate = false;
 
     public function mount()
     {
-        $this->status_prisons       = StatusPrison::all();
-        $this->civil_statuses       = CivilStatus::all();
-        $this->ethnicities          = Ethnicity::all();
-        $this->sexual_orientations  = SexualOrientation::all();
-        $this->countries            = Country::all();
+        $this->prisonerForm->prison_unit_id       = Auth::user()->prison_unit_id;
+        $this->prisonerForm->user_create          = Auth::user()->id;
+        $this->prisonerForm->user_update          = Auth::user()->id;
+        $this->prisonerForm->status_prisons       = StatusPrison::all();
+        $this->prisonerForm->education_levels     = EducationLevel::all();
+        $this->prisonerForm->civil_statuses       = CivilStatus::all();
+        $this->prisonerForm->sexes                = Sex::all();
+        $this->prisonerForm->sexual_orientations  = SexualOrientation::all();
+        $this->prisonerForm->ethnicities          = Ethnicity::all();
+        $this->prisonerForm->states               = State::all();
+        $this->prisonerForm->countries            = Country::all();
+    }
+
+    public function closeModal()
+    {
+        $this->openModalCreate = false;
+        $this->prisonerForm->clearFields();
+    }
+    public function selectMunicipality()
+    {
+        $this->prisonerForm->municipalities = Municipality::where('state_id', $this->prisonerForm->state_id)->get();
+    }
+    public function modalCreate()
+    {
+        $this->openModalCreate = true;
+    }
+    public function create()
+    {
+        $prisoner = $this->prisonerForm->create();
+        $this->closeModal();
+        $this->redirectRoute('prisoners.show', ['prisoner_id' => $prisoner->id]);
     }
 
     public function render()
     {
-        $prisoners = Prisoner::orderBy('name', 'asc')
-            ->where('name', 'like', "%{$this->name}%")
-            ->where('nickname', 'like', "%{$this->nickname}%")
-            ->where('cpf', 'like', "%{$this->cpf}%")
-            ->where('rg', 'like', "%{$this->rg}%")
-            ->where('title', 'like', "%{$this->title}%")
-            ->where('birth_certificate', 'like', "%{$this->birth_certificate}%")
-            ->where('sus_card', 'like', "%{$this->sus_card}%")
-            ->where('status_prison_id', 'like', "%{$this->status_prison_id}%")
-            ->where('civil_status_id', 'like', "%{$this->civil_status_id}%")
-            ->where('ethnicity_id', 'like', "%{$this->ethnicity_id}%")
-            ->where('sexual_orientation_id', 'like', "%{$this->sexual_orientation_id}%")
-            ->where('country_id', 'like', "%{$this->country_id}%")
-            ->paginate(9);
-
-        return view('livewire.main.prisoner.prisoner-livewire', compact('prisoners'));
+        $prisoners = $this->prisonerForm->prisoner_search();
+        return view('livewire.main.prisoner.prisoner-livewire', compact( 'prisoners' ));
     }
 }
