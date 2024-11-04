@@ -154,7 +154,7 @@
             </div>
             <div class="col-span-1 relative z-0 w-full group">
                 <select wire:model="visitantForm.municipality_id" class="uppercase block py-1 mt-1 px-0 w-full text-sm text-zinc-500 dark:text-zinc-400 bg-transparent border-0 border-b border-zinc-400 dark:border-zinc-600 dark:focus:border-blue-500 focus:border-blue-600 appearance-none focus:outline-none focus:ring-0 peer">
-                    <option class="text-zinc-900 dark:text-zinc-600" selected value="{{ $this->visitantForm->municipalityEdit->id ?? '' }}">{{ $this->visitantForm->municipalityEdit->municipality ?? 'Cidade' }}</option>
+                    <option class="text-zinc-900 dark:text-zinc-600" selected value="{{ $municipalityEdit->id ?? '' }}">{{ $municipalityEdit->municipality ?? 'Cidade' }}</option>
                     @foreach ($this->visitantForm->municipalities as $municipality)
                         <option class="text-zinc-900 dark:text-zinc-600" value="{{ $municipality->id ?? '' }}" @selected(old('visitantForm.municipality_id') ==  $municipality->id)>{{$municipality->municipality }} - {{$municipality->state->uf }}</option>
                     @endforeach

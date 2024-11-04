@@ -8,7 +8,6 @@ use App\Models\Admin\Municipality;
 use App\Models\Admin\Sex;
 use App\Models\Admin\State;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\Main\Visitant;
@@ -26,8 +25,12 @@ class VisitantShowLivewire extends Component
     public $openModalUpdate = false;
     public $openModalDelete = false;
 
+    public $prisonerMul; //id do preso a ser exibido na view
+    public $municipalityEdit = []; //quando for editar o município
+
     public function mount()
     {   
+        $this->prisonerMul                    = Visitant::find($this->visitant_id);
         $this->visitantForm->prison_unit_id   = Auth::user()->prison_unit_id;
         $this->visitantForm->user_create      = Auth::user()->id;
         $this->visitantForm->user_update      = Auth::user()->id;
@@ -51,10 +54,9 @@ class VisitantShowLivewire extends Component
     }
 
     // MODAL UPDATE
-    public $openModalVisitantEdit = false;
     public function modalUpdate(Visitant $visitant)
     {
-        $this->visitantForm->municipalityEdit = Municipality::find($this->visitantForm->municipality_id);
+        $this->municipalityEdit = Municipality::find($visitant->municipality_id);
         $this->visitantForm->setPost($visitant);
         $this->openModalUpdate  = $visitant->id;
     }
