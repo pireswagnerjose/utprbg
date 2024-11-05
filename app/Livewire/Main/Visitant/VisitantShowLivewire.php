@@ -45,7 +45,10 @@ class VisitantShowLivewire extends Component
         $this->visitantForm->municipalities = Municipality::where('state_id', $this->visitantForm->state_id)->get();
     }
 
-    // CLOSE MODAL
+    /**
+     * Summary of closeModal
+     * @return void
+     */
     public function closeModal()
     {
         $this->openModalUpdate = false;
@@ -53,7 +56,11 @@ class VisitantShowLivewire extends Component
         $this->visitantForm->clearFields();
     }
 
-    // MODAL UPDATE
+    /**
+     * Summary of modalUpdate
+     * @param \App\Models\Main\Visitant $visitant
+     * @return void
+     */
     public function modalUpdate(Visitant $visitant)
     {
         $this->municipalityEdit = Municipality::find($visitant->municipality_id);
@@ -61,7 +68,10 @@ class VisitantShowLivewire extends Component
         $this->openModalUpdate  = $visitant->id;
     }
 
-    //UPDATE
+    /**
+     * Summary of update
+     * @return void
+     */
     public function update()
     {
         $data = $this->validate();
@@ -70,12 +80,21 @@ class VisitantShowLivewire extends Component
         session()->flash('success', 'Atualizado com sucesso.');
     }
 
-    
+    /**
+     * Summary of modalDelete
+     * @param mixed $visitant_id
+     * @return void
+     */
     public function modalDelete($visitant_id)
     {
         $this->openModalDelete = $visitant_id;
     }
-    //DELETE
+    
+    /**
+     * Summary of delete
+     * @param \App\Models\Main\Visitant $visitant
+     * @return void
+     */
     public function delete(Visitant $visitant)
     {
         $this->visitantForm->delete($visitant);

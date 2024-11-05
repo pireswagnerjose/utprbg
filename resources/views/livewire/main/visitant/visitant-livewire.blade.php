@@ -24,12 +24,13 @@
 
     <div class="mx-auto mt-6 p-6 sm:px-6 lg:px-8 bg-white dark:bg-zinc-800
             overflow-hidden shadow-sm sm:rounded-lg text-zinc-900 dark:text-zinc-100">
-        {{-- paginação --}}
-        <div class="pl-2 py-4 mb-4 text-zinc-50 dark:text-zinc-400
-                border-b border-blue-300 dark:border-blue-500 pb-3">
-            {{ $visitants->onEachSide(1)->links() }}
-        </div>
         @include('livewire.main.visitant.includes.search-card')
         @include('livewire.main.visitant.includes.modal-create')
+
+        {{-- paginação --}}
+        <div class="pl-2 py-4 mt-2 text-zinc-50 dark:text-zinc-400
+                border-t border-blue-300 dark:border-blue-500 pb-3">
+            {{ $visitants->onEachSide(1)->links() }}
+        </div>
     </div>
 </div>

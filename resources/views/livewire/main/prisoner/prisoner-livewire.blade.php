@@ -26,7 +26,7 @@
         @include('livewire.main.prisoner.includes.modal-create')
         
         {{-- paginação --}}
-        <div class=" pl-2 py-1 mt-1 text-zinc-50 dark:text-zinc-400
+        <div class=" pl-2 py-1 mt-2 text-zinc-50 dark:text-zinc-400
                 border-t border-blue-300 dark:border-blue-500 pb-3 ">
             {{ $prisoners->onEachSide(1)->links() }}
         </div>

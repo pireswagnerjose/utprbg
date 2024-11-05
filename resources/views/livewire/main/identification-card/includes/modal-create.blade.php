@@ -1,5 +1,5 @@
 <!-- update-->
-<x-dialog-modal wire:model="openModalIdentificationCardCreate" maxWidth="6xl">
+<x-dialog-modal wire:model="openModalCreate" maxWidth="6xl">
     <x-slot name="title">
         {{ 'Cadastrar Cartão de Identificação do Visitante' }}
     </x-slot>
@@ -13,7 +13,7 @@
             {{ __('Cancel') }}
         </x-danger-button>
 
-        <x-blue-button class="ms-3" wire:click="identificationCardCreate" wire:loading.attr="disabled">
+        <x-blue-button class="ms-3" wire:click="create" wire:loading.attr="disabled">
             {{ __('Save') }}
         </x-blue-button>
     </x-slot>
