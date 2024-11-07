@@ -84,7 +84,7 @@
                         type="button"
                         class="flex items-center justify-between w-full text-sm font-medium text-zinc-100 md:w-auto hover:bg-zinc-50 md:hover:bg-transparent md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-zinc-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-zinc-700">
                         @include('icons.bars-arrow-down')
-                        <span class="py-2">Visitantes</span>
+                        <span class="py-2">Visitas</span>
                     </button>
                     <div class="absolute z-10 w-auto mt-1 text-sm bg-white border border-zinc-100 rounded-lg shadow-md dark:border-zinc-700 md:grid-cols-3 dark:bg-zinc-700">
                         <div
@@ -95,15 +95,22 @@
                             :id="$id('dropdown-button')"
                             style="display: none;"
                             class="p-4 pb-0 space-y-1 text-zinc-900 md:pb-4 dark:text-white" >
-                            {{-- Pesquisar Visitante --}}
+                            {{-- Página de Gerenciamento do Visitante --}}
                             <a href="{{ route('visitant.index') }}" class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
-                                <span class="">Pesquisar Visitante</span>
+                                <span class="">Visitante</span>
                             </a>
 
-                            {{-- Cadastro de preso --}}
+                            {{-- Página de Gerenciamento da Carteirinha do Visitante --}}
                             @can('admin-recepcao')
                                 <a href="{{ route('identification-card.index') }}" wire:navigate class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
                                     Carteirinha
+                                </a>
+                            @endcan
+
+                            {{-- Periodo de Agendamento das Visitas --}}
+                            @can('admin-recepcao')
+                                <a href="{{ route('visit-scheduling-date.index') }}" wire:navigate class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
+                                    Periodo de Agendamento das Visitas
                                 </a>
                             @endcan
                         </div>

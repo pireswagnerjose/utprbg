@@ -45,11 +45,11 @@ use App\Livewire\Infopen\CriminalTypes\CriminalTypes;
 use App\Livewire\Infopen\Sentence\Sentence;
 use App\Livewire\Main\IdentificationCard\IdentificationCardLivewire;
 use App\Livewire\Main\IdentificationCard\IdentificationCardShowLivewire;
-use App\Livewire\Main\Prisoner\PrisonerCreateLivewire;
 use App\Livewire\Main\Prisoner\PrisonerLivewire;
 use App\Livewire\Main\Prisoner\PrisonerShowLivewire;
+use App\Livewire\Main\Visit\VisitLivewire;
+use App\Livewire\Main\Visit\VisitSchedulingDate\VisitSchedulingDateLivewire;
 use App\Livewire\Main\Visitant\VisitantLivewire;
-use App\Livewire\Main\Visitant\VisitantCreateLivewire;
 use App\Livewire\Main\Visitant\VisitantShowLivewire;
 use App\Livewire\Report\ExternalExit\ExternalExitReportLivewire;
 use App\Livewire\Report\InternalService\InternalServiceReport;
@@ -206,4 +206,10 @@ Route::middleware([
     // IDENTIFICATION CARD
     Route::get('/identification-card', IdentificationCardLivewire::class)->name('identification-card.index');
     Route::any('/identification-card-show/{identification_card_id}', IdentificationCardShowLivewire::class)->name('identification-card.show');
+
+    // Periodo de Agendamento das visitas
+    Route::get('/visit-scheduling-date', VisitSchedulingDateLivewire::class)->name('visit-scheduling-date.index');    
 });
+
+// VISIT
+Route::get('/visita', VisitLivewire::class)->name('visit.index');
