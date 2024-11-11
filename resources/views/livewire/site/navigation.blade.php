@@ -113,6 +113,13 @@
                                     Periodo de Agendamento das Visitas
                                 </a>
                             @endcan
+
+                            {{-- Controle de Visitas --}}
+                            @can('admin-recepcao')
+                                <a href="{{ route('visit-control.index') }}" wire:navigate class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
+                                    Controle de Visitas
+                                </a>
+                            @endcan
                         </div>
                     </div>
                 </div>

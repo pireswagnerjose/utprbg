@@ -6,6 +6,7 @@ use App\Models\Admin\CivilStatus;
 use App\Models\Admin\Municipality;
 use App\Models\Admin\Sex;
 use App\Models\Admin\State;
+use App\Models\Main\Visit\VisitScheduling;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -42,5 +43,14 @@ class Visitant extends Model
     public function visitant_documents()
     {
         return $this->hasMany(VisitantDocument::class);
+    }
+
+    /**
+     * faz o relacionamento com a tabela agendamento de visitas
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function visit_schedulings()
+    {
+        return $this->hasMany(VisitScheduling::class);
     }
 }

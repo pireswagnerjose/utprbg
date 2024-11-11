@@ -90,7 +90,7 @@
                 <livewire:main.pad.pad-livewire :$prisoner_id />
             </div>
             <div class="hidden py-4 rounded-lg bg-zinc-50 dark:bg-zinc-800" id="visitas" role="tabpanel" aria-labelledby="visitas-tab">
-                <livewire:main.booking-visit.booking-visit-livewire :$prisoner_id />
+                {{-- <livewire:main.booking-visit.booking-visit-livewire :$prisoner_id /> --}}
             </div>
         </div>
     </div>

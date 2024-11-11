@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('booking_visits', function (Blueprint $table) {
+        Schema::create('visit_schedulings', function (Blueprint $table) {
             $table->id();
             $table->date('date');//Data do Agendamento
             $table->string('type', 10);//Tipo da visita (íntima ou social)
             $table->string('status', 60)->nullable();//Mantida ou cancelada
-            $table->string('identification_card_id', 60);//número da carteirinha
-            $table->string('phone_contact', 60);//telefone para contato
             $table->longText('remark')->nullable();//Observações sobre o agendamento
 
             $table->string('user_create', 100)->nullable();//usuário que criou o documento
@@ -25,9 +23,10 @@ return new class extends Migration
             $table->string('prison_unit_id', 100);//unidade prisional
 
             /* chaves estrangeiras */
+            $table->foreignId('identification_card_id')->constrained('identification_cards')->onDelete('cascade');
             $table->foreignId('prisoner_id')->constrained('prisoners')->onDelete('cascade');
             $table->foreignId('visitant_id')->constrained('visitants')->onDelete('cascade');
-
+            
             $table->timestamps();
         });
     }
@@ -37,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('booking_visits');
+        Schema::dropIfExists('visit_schedulings');
     }
 };

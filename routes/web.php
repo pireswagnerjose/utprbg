@@ -47,6 +47,8 @@ use App\Livewire\Main\IdentificationCard\IdentificationCardLivewire;
 use App\Livewire\Main\IdentificationCard\IdentificationCardShowLivewire;
 use App\Livewire\Main\Prisoner\PrisonerLivewire;
 use App\Livewire\Main\Prisoner\PrisonerShowLivewire;
+use App\Livewire\Main\Visit\VisitCompleted\VisitCompletedLivewire;
+use App\Livewire\Main\Visit\VisitControl\VisitControlLivewire;
 use App\Livewire\Main\Visit\VisitLivewire;
 use App\Livewire\Main\Visit\VisitSchedulingDate\VisitSchedulingDateLivewire;
 use App\Livewire\Main\Visitant\VisitantLivewire;
@@ -209,7 +211,9 @@ Route::middleware([
 
     // Periodo de Agendamento das visitas
     Route::get('/visit-scheduling-date', VisitSchedulingDateLivewire::class)->name('visit-scheduling-date.index');    
+    Route::get('/visit-control', VisitControlLivewire::class)->name('visit-control.index');    
 });
 
 // VISIT
 Route::get('/visita', VisitLivewire::class)->name('visit.index');
+Route::get('/visita-concluida/{visit_completed_id}', VisitCompletedLivewire::class)->name('visit-completed.index');

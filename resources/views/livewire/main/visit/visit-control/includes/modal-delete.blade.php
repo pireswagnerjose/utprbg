@@ -1,12 +1,12 @@
 
 <!-- Delete User Confirmation Modal -->
-<x-dialog-modal wire:model="openModalBookingVisitDelete">
+<x-dialog-modal wire:model="openModalDelete">
     <x-slot name="title">
-        {{ "Excluir o Visita" }}
+        {{ "Excluir Data da Visita" }}
     </x-slot>
 
     <x-slot name="content">
-        {{ __('Você tem certeza!!!') }}
+        {{ __('Você tem certeza!!!.') }}
         
     </x-slot>
 
@@ -15,7 +15,7 @@
             {{ __('Cancel') }}
         </x-blue-button>
 
-        <x-danger-button class="ms-3" wire:click="bookingVisitDelete({{ $openModalBookingVisitDelete }})" wire:loading.attr="disabled">
+        <x-danger-button class="ms-3" wire:click="delete({{ $openModalDelete }})" wire:loading.attr="disabled">
             {{ 'Excluir' }}
         </x-danger-button>
     </x-slot>

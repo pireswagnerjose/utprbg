@@ -13,9 +13,9 @@
                 <img class="w-1/3" src='{{ asset("storage/site/policia_penal_logo.png") }}' >
             </span>
             <h5 class="mb-2 text-3xl text-center uppercase font-bold tracking-tight text-red-700 dark:text-red-600">
-                Fora do período de marcação de visitas
+                Fora do período de marcação de visitas.
             </h5>
-            <p class="text-center italic mt-5">FAVOR VOLTAR NOMENTE NO PERÍODO CORRETO!</p>
+            <p class="text-center italic mt-5">FAVOR VOLTAR NOVAMENTE NO PERÍODO CORRETO!</p>
         </div>
     @endif
 </div>

@@ -1,11 +1,11 @@
 <!-- update-->
-<x-dialog-modal wire:model="openModalBookingVisitCreate" maxWidth="6xl">
+<x-dialog-modal wire:model="openModalUpdate">
     <x-slot name="title">
-        {{ 'Cadastrar Visita' }}
+        {{ 'Atualizar Data da Visita' }}
     </x-slot>
 
     <x-slot name="content">
-        @include('livewire.main.booking-visit.includes.fields')
+        @include('livewire.main.visit.visit-control.includes.fields')
     </x-slot>
 
     <x-slot name="footer">
@@ -13,7 +13,7 @@
             {{ __('Cancel') }}
         </x-danger-button>
 
-        <x-blue-button class="ms-3" wire:click="bookingVisitCreate" wire:loading.attr="disabled">
+        <x-blue-button class="ms-3" wire:click="update({{ $openModalUpdate }})" wire:loading.attr="disabled">
             {{ __('Save') }}
         </x-blue-button>
     </x-slot>

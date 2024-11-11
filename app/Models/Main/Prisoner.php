@@ -11,6 +11,7 @@ use App\Models\Admin\Prison\StatusPrison;
 use App\Models\Admin\Sex;
 use App\Models\Admin\SexualOrientation;
 use App\Models\Admin\State;
+use App\Models\Main\Visit\VisitScheduling;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -151,5 +152,14 @@ class Prisoner extends Model
     public function videoconference_hearings()
     {
         return $this->hasMany(VideoconferenceHearing::class);
+    }
+
+    /**
+     * faz o relacionamento com a tabela agendamento de visitas
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function visit_schedulings()
+    {
+        return $this->hasMany(VisitScheduling::class);
     }
 }

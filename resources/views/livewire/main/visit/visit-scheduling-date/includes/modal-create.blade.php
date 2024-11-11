@@ -1,7 +1,7 @@
 <!-- update-->
 <x-dialog-modal wire:model="openModalCreate">
     <x-slot name="title">
-        {{ 'Cadastrar Cartão de Identificação do Visitante' }}
+        {{ 'Cadastrar Nova Data para Agendamento' }}
     </x-slot>
 
     <x-slot name="content">
