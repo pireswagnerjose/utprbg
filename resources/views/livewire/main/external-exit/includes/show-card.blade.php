@@ -126,6 +126,14 @@
                     <a class="realtive flex items-center" title='{{ $external_exit->document }}' href='{{ asset("storage/$external_exit->document") }}' rel='shadowbox[galeria]'>
                         <dd class="font-semibold text-blue-700 dark:text-blue-500 hover:underline">DOCUMENTO RELACIONADO A SAÍDA</dd>
                     </a>
+                    {{-- exclui o documento --}}
+                    <div class="group grid justify-items-center w-16">
+                        <button wire:click="modalDocumentDelete({{ $external_exit->id }})" class="w-5 h-5 bg-red-600 dark:bg-red-500 rounded-full">
+                            <svg class="w-5 h-5 text-red-50 dark:text-red-50 hover:text-red-400 hover:dark:text-red-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
+                            </svg>
+                        </button>
+                    </div> 
                 </div>
             @endif
         </div>

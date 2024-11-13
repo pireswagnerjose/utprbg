@@ -13,5 +13,6 @@
     @include('livewire.main.external-exit.includes.modal-create')
     @include('livewire.main.external-exit.includes.modal-update')
     @include('livewire.main.external-exit.includes.modal-delete')
+    @include('livewire.main.external-exit.includes.modal-document-delete')
     @include('livewire.main.external-exit.includes.show-card')
 </div>

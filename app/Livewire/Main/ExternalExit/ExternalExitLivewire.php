@@ -40,6 +40,8 @@ class ExternalExitLivewire extends Component
     public $requestings = [];
     public $exit_reasons = [];
 
+    public $openModalDocumentDelete = false;
+
     public $statuses = ['MANTIDO', 'CANCELADO'];
 
     public function mount()
@@ -72,6 +74,7 @@ class ExternalExitLivewire extends Component
         $this->openModalExternalExitCreate = false;
         $this->openModalExternalExitUpdate = false;
         $this->openModalExternalExitDelete = false;
+        $this->openModalDocumentDelete = false;
         $this->clearFields();
     }
 
@@ -155,50 +158,34 @@ class ExternalExitLivewire extends Component
     // UPDATE
     public function externalExitUpdate(ExternalExit $external_exit)
     {
+        $dataValidated = $this->validate(
+            [
+                'event_date'        =>'required|max:10',
+                'event_time'        =>'required|max:10',
+                'departure_date'    =>'nullable|max:10',
+                'departure_time'    =>'nullable|max:10',
+                'arrival_date'      =>'nullable|max:10',
+                'arrival_time'      =>'nullable|max:10',
+                'status'            =>'nullable|max:100',
+                'remark'            =>'nullable',
+                'state_id'          =>'required|max:10',
+                'municipality_id'   =>'required|max:10',
+                'requesting_id'     =>'required|max:10',
+                'exit_reason_id'    =>'required|max:10',
+                'user_update'       =>'required|max:10',
+                'prisoner_id'       =>'required|max:10',
+                'prison_unit_id'    =>'required|max:10',
+            ]
+        );
+        // se ouver documento
         if ($this->document) {
-            $dataValidated = $this->validate(
-                [
-                    'document' => [
+            $pdf = $this->validate([
+                'document' => [
                         'nullable',
                         File::types(['pdf']),
                     ],
-                    'event_date'        =>'required|max:10',
-                    'event_time'        =>'required|max:10',
-                    'departure_date'    =>'nullable|max:10',
-                    'departure_time'    =>'nullable|max:10',
-                    'arrival_date'      =>'nullable|max:10',
-                    'arrival_time'      =>'nullable|max:10',
-                    'status'            =>'nullable|max:100',
-                    'remark'            =>'nullable',
-                    'state_id'          =>'required|max:10',
-                    'municipality_id'   =>'required|max:10',
-                    'requesting_id'     =>'required|max:10',
-                    'exit_reason_id'    =>'required|max:10',
-                    'user_update'       =>'required|max:10',
-                    'prisoner_id'       =>'required|max:10',
-                    'prison_unit_id'    =>'required|max:10',
-                ]
-            );
-        } else {
-            $dataValidated = $this->validate(
-                [
-                    'event_date'        =>'required|max:10',
-                    'event_time'        =>'required|max:10',
-                    'departure_date'    =>'nullable|max:10',
-                    'departure_time'    =>'nullable|max:10',
-                    'arrival_date'      =>'nullable|max:10',
-                    'arrival_time'      =>'nullable|max:10',
-                    'status'            =>'nullable|max:100',
-                    'remark'            =>'nullable',
-                    'state_id'          =>'required|max:10',
-                    'municipality_id'   =>'required|max:10',
-                    'requesting_id'     =>'required|max:10',
-                    'exit_reason_id'    =>'required|max:10',
-                    'user_update'       =>'required|max:10',
-                    'prisoner_id'       =>'required|max:10',
-                    'prison_unit_id'    =>'required|max:10',
-                ]
-            );
+                ]);
+            $dataValidated = array_merge($dataValidated, $pdf);
         }
         // Transforma os caracteres em maiusculos
         $dataValidated = $this->convertUppercase($dataValidated);
@@ -211,7 +198,14 @@ class ExternalExitLivewire extends Component
             $document = date('d-m-Y_H-m-s') . '.' . $this->document->getClientOriginalExtension();
             /* faz o upload e retorna o endereco do arquivo */
             $dataValidated['document'] = $this->document->storeAs('prisoner/'. $this->prisoner_id .'/documents/external_exit', $document);
-        }   
+        }
+        // se as datas forem atualizadas com valores vazios
+        if ($dataValidated['departure_date'] == '') {
+            $dataValidated['departure_date'] = null;
+        }
+        if ($dataValidated['arrival_date'] == '') {
+            $dataValidated['arrival_date'] = null;
+        }
         // grava os dados no banco
         $external_exit->update($dataValidated);
         $this->closeModal();
@@ -234,13 +228,37 @@ class ExternalExitLivewire extends Component
         }
         $external_exit->delete();
         $this->closeModal();
-        $this->clearFields();
     }
     
     public function render()
     {
         return view('livewire.main.external-exit.external-exit-livewire', [
-            'external_exits' => ExternalExit::where('prisoner_id', $this->prisoner_id)->orderBy('id','desc')->paginate(10),
+            'external_exits' => ExternalExit::where('prisoner_id', $this->prisoner_id)
+                ->orderBy('id','desc')
+                ->paginate(6),
         ]);
+    }
+
+    /**
+     * abre o modal para confirmação da exclusão do documento da saída externa
+     * @param mixed $external_exit_id
+     * @return void
+     */
+    public function modalDocumentDelete($external_exit_id)
+    {
+        $this->openModalDocumentDelete = $external_exit_id;
+    }
+
+    /**
+     * exclui o documento da saída externa
+     * @param \App\Models\Main\ExternalExit $external_exit
+     * @return void
+     */
+    public function documentDelete(ExternalExit $external_exit)
+    {
+        Storage::disk('public')->delete($external_exit->document);
+        $external_exit['document'] = '';
+        $external_exit->update($external_exit->toArray());
+        $this->closeModal();
     }
 }
