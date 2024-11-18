@@ -53,6 +53,7 @@ use App\Livewire\Main\Visit\VisitLivewire;
 use App\Livewire\Main\Visit\VisitSchedulingDate\VisitSchedulingDateLivewire;
 use App\Livewire\Main\Visitant\VisitantLivewire;
 use App\Livewire\Main\Visitant\VisitantShowLivewire;
+use App\Livewire\Pages\Photo\PhotoLivewire;
 use App\Livewire\Report\ExternalExit\ExternalExitReportLivewire;
 use App\Livewire\Report\InternalService\InternalServiceReport;
 use App\Livewire\Report\LegalAssistance\LegalAssistanceReport;

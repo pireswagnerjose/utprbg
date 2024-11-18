@@ -12,9 +12,15 @@
                         @endif
                         <h5 class="text-sm font-medium text-zinc-900 dark:text-white">{{ $prisoner->name }}</h5>
                         <span class="text-xs text-zinc-500 dark:text-zinc-400">Dt. Nasc.: {{ \Carbon\Carbon::parse($prisoner->date_birth)->format('d/m/Y') }}</span>
-                        <div class="flex">
-                            <a href="{{ route('prisoners.show', ['prisoner_id' => $prisoner->id]) }}" class="inline-flex items-center px-4 py-1 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Visualizar</a>
-                        </div>
+                        @if ($prisoner->status_prison_id === 1)
+                            <div class="flex">
+                                <a href="{{ route('prisoners.show', ['prisoner_id' => $prisoner->id]) }}" class="inline-flex items-center px-4 py-1 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Visualizar</a>
+                            </div>
+                        @else
+                            <div class="flex">
+                                <a href="{{ route('prisoners.show', ['prisoner_id' => $prisoner->id]) }}" class="inline-flex items-center px-4 py-1 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Visualizar</a>
+                            </div>
+                        @endif
                     </div>
                 </li>
             @empty

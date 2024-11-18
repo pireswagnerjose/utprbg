@@ -19,10 +19,10 @@ use App\Models\Admin\SexualOrientation;
 use App\Models\Admin\State;
 use Illuminate\Support\Facades\Auth;
 
-#[Layout("layouts.app")]
-#[Title("Pesquisar")]
 class PrisonerLivewire extends Component
 {
+    #[Layout("layouts.app")]
+    #[Title("Pesquisar")]
     public PrisonerForm $prisonerForm;
     use WithPagination;
 
