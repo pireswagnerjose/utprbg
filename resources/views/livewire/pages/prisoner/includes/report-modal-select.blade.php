@@ -4,7 +4,7 @@
     </x-slot>
 
     <x-slot name="content">
-        @include('livewire.main.prisoner.includes.report-itens')
+        @include('livewire.pages.prisoner.includes.report-itens')
     </x-slot>
 
     <x-slot name="footer"></x-slot>

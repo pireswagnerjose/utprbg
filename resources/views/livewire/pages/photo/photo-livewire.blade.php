@@ -1,5 +1,4 @@
 <div>
-    
     {{-- Alert component --}}
     <div class="my-2">
         @include('livewire.pages.photo.includes.alerts')

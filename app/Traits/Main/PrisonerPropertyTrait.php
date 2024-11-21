@@ -39,6 +39,7 @@ trait PrisonerPropertyTrait
     public $municipalities = [];
     public $states = [];
     public $countries = [];
+    public $prisoner;
     // clear fields
     public function clearFields()
     {

@@ -1,4 +1,4 @@
-<div class="py-1 mx-4">
+<div>
     <div class="mx-auto p-6 sm:px-6 lg:px-8 bg-white dark:bg-zinc-800 overflow-hidden shadow-sm sm:rounded-lg text-zinc-900 dark:text-zinc-100">
         <ul class="flex flex-wrap h-12 justify-center items-center text-xs font-semibold text-center border-b border-zinc-200 dark:border-zinc-700" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
             <li class="mr-1 mb-1 h-full rounded-t-lg bg-zinc-200 dark:bg-zinc-700" role="presentation">
@@ -60,10 +60,10 @@
 
         <div id="myTabContent">
             <div class="hidden py-4" id="prisoes" role="tabpanel" aria-labelledby="prisoes-tab">
-                <livewire:main.prison.prison-livewire :prisoner_id="$prisoner->id"/>
+                <livewire:main.prison.prison-livewire :prisoner_id="$prisoner_show->id"/>
             </div>
             <div class="hidden py-4" id="processos" role="tabpanel" aria-labelledby="processos-tab">
-                <livewire:main.process.process-livewire :prisoner_id="$prisoner->id"/>
+                <livewire:main.process.process-livewire :prisoner_id="$prisoner_show->id"/>
             </div>
             <div class="hidden py-4" id="fotos" role="tabpanel" aria-labelledby="fotos-tab">
                 <livewire:pages.photo.photo-livewire :$prisoner_id />
