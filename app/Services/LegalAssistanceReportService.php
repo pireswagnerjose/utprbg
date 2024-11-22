@@ -19,7 +19,6 @@ class LegalAssistanceReportService
            $assistance_with_lawyers = $assistance_with_lawyers->where('date_of_service', '>=', $start_date);
            $assistance_with_lawyers = $assistance_with_lawyers->where('date_of_service', '<=', $end_date);
        }
-       $assistance_with_lawyers = $assistance_with_lawyers->paginate(5);
        return $assistance_with_lawyers;
    }
 
@@ -32,7 +31,6 @@ class LegalAssistanceReportService
             $assistance_with_public_defenders = $assistance_with_public_defenders->where('date_of_service', '>=', $start_date);
             $assistance_with_public_defenders = $assistance_with_public_defenders->where('date_of_service', '<=', $end_date);
         }
-        $assistance_with_public_defenders = $assistance_with_public_defenders->paginate(5);
         return $assistance_with_public_defenders;
     }
 
@@ -45,7 +43,6 @@ class LegalAssistanceReportService
             $hearing_with_police_officers = $hearing_with_police_officers->where('date_of_service', '>=', $start_date);
             $hearing_with_police_officers = $hearing_with_police_officers->where('date_of_service', '<=', $end_date);
         }
-        $hearing_with_police_officers = $hearing_with_police_officers->paginate(5);
         return $hearing_with_police_officers;
     }
 
@@ -58,7 +55,6 @@ class LegalAssistanceReportService
             $restorative_justices = $restorative_justices->where('date_of_service', '>=', $start_date);
             $restorative_justices = $restorative_justices->where('date_of_service', '<=', $end_date);
         }
-        $restorative_justices = $restorative_justices->paginate(5);
         return $restorative_justices;
     }
 
@@ -71,7 +67,6 @@ class LegalAssistanceReportService
             $videoconference_hearings = $videoconference_hearings->where('date_of_service', '>=', $start_date);
             $videoconference_hearings = $videoconference_hearings->where('date_of_service', '<=', $end_date);
         }
-        $videoconference_hearings = $videoconference_hearings->paginate(5);
         return $videoconference_hearings;
     }
 }
