@@ -56,6 +56,7 @@ use App\Livewire\Main\Visitant\VisitantShowLivewire;
 use App\Livewire\Report\ExternalExit\ExternalExitReportLivewire;
 use App\Livewire\Report\InternalService\InternalServiceReport;
 use App\Livewire\Report\LegalAssistance\LegalAssistanceReport;
+use App\Livewire\Report\Prison\PrisonReportLivewire;
 use App\Livewire\Report\PrisonerList\PrisonerListReport;
 use App\Livewire\Report\Vcam\VcamReport;
 use App\Livewire\User\UserLivewire;
@@ -196,6 +197,7 @@ Route::middleware([
     Route::get('/infopen-certificate-of-sentence', CertificateOfSentence::class)->name('infopen.certificate-of-sentence')->middleware('can:admin');
     Route::get('/infopen-sentence', Sentence::class)->name('infopen.sentence')->middleware('can:admin');
     Route::get('/infopen-criminal-types', CriminalTypes::class)->name('infopen.criminal-types')->middleware('can:admin');
+    Route::get('/infopen-prisons', PrisonReportLivewire::class)->name('infopen.prisons')->middleware('can:admin');
 
     //Photo - Foto
     // Route::post('/photo-create', [PhotoCreateLivewire::class, 'photoCreate'])->name('photo.create');

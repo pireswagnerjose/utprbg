@@ -531,6 +531,10 @@
                             <a href="{{ route('infopen.criminal-types') }}" class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
                                 <span class="">Tipos Penais</span>
                             </a>
+                            {{-- Tipos Penais --}}
+                            <a href="{{ route('infopen.prisons') }}" class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
+                                <span class="">Histórico de Prisões</span>
+                            </a>
                         </div>
                     </div>
                 </div>
