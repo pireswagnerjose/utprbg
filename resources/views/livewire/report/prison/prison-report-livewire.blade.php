@@ -2,6 +2,9 @@
     <div class="mb-12">
         @include('livewire.report.prison.includes.fields')
     </div>
+    <div class="flex justify-center mb-12">
+        <x-blue-button wire:click='clearFieldes' class="ml-4 bg-red-600">{{ 'Limpar Filtros de Pesquisa' }} </x-blue-button>
+    </div>
     <div class="p-8">
         {{-- Formulário --}}
         <form action="{{ route('external-exits.pdf') }}" method="any" target="_blank">
