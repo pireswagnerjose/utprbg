@@ -5,6 +5,7 @@ use App\Http\Controllers\PrisonerPdfController;
 use App\Http\Controllers\Report\ExternalExitReportController;
 use App\Http\Controllers\Report\InternalServiceReportController;
 use App\Http\Controllers\Report\LegalAssistanceReportController;
+use App\Http\Controllers\Report\PrisonReportPdfController;
 use App\Http\Controllers\Report\VisitantReportController;
 use App\Http\Controllers\VcamController;
 use App\Livewire\Admin\Cell\CellLivewire;
@@ -198,9 +199,8 @@ Route::middleware([
     Route::get('/infopen-sentence', Sentence::class)->name('infopen.sentence')->middleware('can:admin');
     Route::get('/infopen-criminal-types', CriminalTypes::class)->name('infopen.criminal-types')->middleware('can:admin');
     Route::get('/infopen-prisons', PrisonReportLivewire::class)->name('infopen.prisons')->middleware('can:admin');
-
-    //Photo - Foto
-    // Route::post('/photo-create', [PhotoCreateLivewire::class, 'photoCreate'])->name('photo.create');
+    Route::any('/infopen-prisons-pdf', [PrisonReportPdfController::class, 'pdf'])->name('infopen.prisons.pdf')->middleware('can:admin');
+    Route::any('/infopen-prisons-csv', [PrisonReportPdfController::class, 'csv'])->name('infopen.prisons.csv')->middleware('can:admin');
 
     // VISITANT
     Route::get('/visitant', VisitantLivewire::class)->name('visitant.index');

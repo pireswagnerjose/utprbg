@@ -6,16 +6,31 @@
         <x-blue-button wire:click='clearFieldes' class="ml-4 bg-red-600">{{ 'Limpar Filtros de Pesquisa' }} </x-blue-button>
     </div>
     <div class="p-8">
-        {{-- Formulário --}}
-        <form action="{{ route('external-exits.pdf') }}" method="any" target="_blank">
+        {{-- Formulário para pdf --}}
+        <form action="{{ route('infopen.prisons.pdf') }}" method="any" target="_blank">
             @csrf
-            {{-- <input type="hidden" name="requesting_id" value="{{ $requesting_id }}">
+            <input type="hidden" name="operator" value="{{ $operator }}">
+            <input type="hidden" name="type_prison_id" value="{{ $type_prison_id }}">
+            <input type="hidden" name="type_prisons" value="{{ $type_prisons }}">
             <input type="hidden" name="start_date" value="{{ $start_date }}">
             <input type="hidden" name="end_date" value="{{ $end_date }}">
-            <input type="hidden" name="status" value="{{ $status }}"> --}}
             {{-- Gerar PDF --}}
             <div class="flex justify-end mb-6">
-                <x-blue-button class="ml-4 bg-green-600">{{ 'Gerar PDF' }} </x-blue-button>
+                <x-blue-button class="ml-4 bg-blue-600">{{ 'Gerar PDF' }} </x-blue-button>
+            </div>
+        </form>
+        
+        {{-- Formulário para csv --}}
+        <form action="{{ route('infopen.prisons.csv') }}" method="any" target="_blank">
+            @csrf
+            <input type="hidden" name="operator" value="{{ $operator }}">
+            <input type="hidden" name="type_prison_id" value="{{ $type_prison_id }}">
+            <input type="hidden" name="type_prisons" value="{{ $type_prisons }}">
+            <input type="hidden" name="start_date" value="{{ $start_date }}">
+            <input type="hidden" name="end_date" value="{{ $end_date }}">
+            {{-- Gerar PDF --}}
+            <div class="flex justify-end mb-6">
+                <x-blue-button class="ml-4 bg-green-600">{{ 'Gerar EXCCELL' }} </x-blue-button>
             </div>
         </form>
 

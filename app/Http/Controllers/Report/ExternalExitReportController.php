@@ -32,7 +32,7 @@ class ExternalExitReportController extends Controller
         $external_exits = $external_exits->get();
 
         $pdf = Pdf::loadView( 'reports.external-exit.external-exit-pdf',
-         compact( 'external_exits' ) );
+        compact( 'external_exits' ) );
         return $pdf->stream('Atendimentos Internos.pdf');
     }
 }
