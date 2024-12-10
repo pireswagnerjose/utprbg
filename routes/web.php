@@ -54,6 +54,7 @@ use App\Livewire\Main\Visit\VisitLivewire;
 use App\Livewire\Main\Visit\VisitSchedulingDate\VisitSchedulingDateLivewire;
 use App\Livewire\Main\Visitant\VisitantLivewire;
 use App\Livewire\Main\Visitant\VisitantShowLivewire;
+use App\Livewire\Report\EducationLevel\EducationLevelReportLivewire;
 use App\Livewire\Report\ExternalExit\ExternalExitReportLivewire;
 use App\Livewire\Report\InternalService\InternalServiceReport;
 use App\Livewire\Report\LegalAssistance\LegalAssistanceReport;
@@ -201,6 +202,7 @@ Route::middleware([
     Route::get('/infopen-prisons', PrisonReportLivewire::class)->name('infopen.prisons')->middleware('can:admin');
     Route::any('/infopen-prisons-pdf', [PrisonReportPdfController::class, 'pdf'])->name('infopen.prisons.pdf')->middleware('can:admin');
     Route::any('/infopen-prisons-csv', [PrisonReportPdfController::class, 'csv'])->name('infopen.prisons.csv')->middleware('can:admin');
+    Route::get('/infopen-education-level', EducationLevelReportLivewire::class)->name('infopen-education-level')->middleware('can:admin');
 
     // VISITANT
     Route::get('/visitant', VisitantLivewire::class)->name('visitant.index');
