@@ -14,17 +14,30 @@
         </div>
 
         @if (!empty($start_date) && !empty($end_date))
-        {{-- Formulário --}}
+        {{-- Formulário PDF --}}
         <form action="{{ route('vcam-list.pdf') }}" method="any" target="_blank">
             @csrf
             <input type="hidden" name="start_date" value="{{ $start_date }}">
             <input type="hidden" name="end_date" value="{{ $end_date }}">
 
             {{-- Gerar PDF --}}
-            <div class="flex justify-end mb-6">
-                <x-blue-button class="ml-4 bg-green-600">{{ 'Gerar PDF' }} </x-blue-button>
+            <div class="flex justify-end mb-2">
+                <x-blue-button class="ml-4 bg-blue-600">{{ 'Gerar PDF' }} </x-blue-button>
             </div>
         </form>
+
+        {{-- Formulário Excel --}}
+        <form action="{{ route('vcam-list.csv') }}" method="any" target="_blank">
+            @csrf
+            <input type="hidden" name="start_date" value="{{ $start_date }}">
+            <input type="hidden" name="end_date" value="{{ $end_date }}">
+
+            {{-- Gerar PDF --}}
+            <div class="flex justify-end mb-6">
+                <x-blue-button class="ml-4 bg-green-600">{{ 'Gerar EXCEL' }} </x-blue-button>
+            </div>
+        </form>
+        
         @include('livewire.report.vcam.includes.table')
     </div>
 

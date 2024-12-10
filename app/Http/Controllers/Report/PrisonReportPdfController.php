@@ -9,6 +9,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
+
 class PrisonReportPdfController extends Controller
 {
     public function getPrison($request)
@@ -41,8 +42,7 @@ class PrisonReportPdfController extends Controller
     public function pdf(Request $request)
     {
         $prisons = $this->getPrison($request);
-        $pdf = Pdf::loadView( 'reports.prison.prison-pdf',
-            compact( 'prisons' ) );
+        $pdf = Pdf::loadView( 'reports.prison.prison-pdf', compact( 'prisons' ) );
         return $pdf->stream('Relatório de Tipos Penais.pdf');
     }
 
@@ -72,7 +72,7 @@ class PrisonReportPdfController extends Controller
             }
             $prisonArr = [
                 'id'          => $key + 1,
-                'name'        => $prison->prisoner->name,
+                'name'        => mb_convert_encoding($prison->prisoner->name, 'ISO-8859-1', 'UTF-8'),
                 'cell'        => $cell,
                 'entry_date'  => $prison->entry_date,
                 'exit_date'   => $prison->exit_date,
@@ -83,6 +83,6 @@ class PrisonReportPdfController extends Controller
         // Fecha o arquivo
         fclose($csv_open);
         //Realiza o download do arquivo
-        return response()->download($csv, 'prisons' . Str::ulid() . '.csv');
+        return response()->download($csv, 'Presos por tipo de prisao.csv');
     }
 }
