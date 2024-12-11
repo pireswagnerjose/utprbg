@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\PrisonerListController;
 use App\Http\Controllers\PrisonerPdfController;
+use App\Http\Controllers\Report\EducationLevelReportController;
 use App\Http\Controllers\Report\ExternalExitReportController;
 use App\Http\Controllers\Report\InternalServiceReportController;
 use App\Http\Controllers\Report\LegalAssistanceReportController;
+use App\Http\Controllers\Report\PrisonerReportController;
 use App\Http\Controllers\Report\PrisonReportPdfController;
 use App\Http\Controllers\Report\VisitantReportController;
 use App\Http\Controllers\VcamController;
@@ -59,6 +61,7 @@ use App\Livewire\Report\ExternalExit\ExternalExitReportLivewire;
 use App\Livewire\Report\InternalService\InternalServiceReport;
 use App\Livewire\Report\LegalAssistance\LegalAssistanceReport;
 use App\Livewire\Report\Prison\PrisonReportLivewire;
+use App\Livewire\Report\Prisoner\PrisonerReportLivewire;
 use App\Livewire\Report\PrisonerList\PrisonerListReport;
 use App\Livewire\Report\Vcam\VcamReport;
 use App\Livewire\User\UserLivewire;
@@ -203,6 +206,9 @@ Route::middleware([
     Route::any('/infopen-prisons-pdf', [PrisonReportPdfController::class, 'pdf'])->name('infopen.prisons.pdf')->middleware('can:admin');
     Route::any('/infopen-prisons-csv', [PrisonReportPdfController::class, 'csv'])->name('infopen.prisons.csv')->middleware('can:admin');
     Route::get('/infopen-education-level', EducationLevelReportLivewire::class)->name('infopen-education-level')->middleware('can:admin');
+    Route::any('/infopen-education-level-pdf', [EducationLevelReportController::class, 'pdf'])->name('infopen-education-level-pdf')->middleware('can:admin');
+    Route::get('/infopen-prisoner', PrisonerReportLivewire::class)->name('infopen-prisoner')->middleware('can:admin');
+    Route::any('/infopen-prisoner-pdf', [PrisonerReportController::class, 'pdf'])->name('infopen-prisoner-pdf')->middleware('can:admin');
 
     // VISITANT
     Route::get('/visitant', VisitantLivewire::class)->name('visitant.index');

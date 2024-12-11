@@ -7,7 +7,7 @@
     </div>
     <div class="p-8">
         {{-- Formulário para pdf --}}
-        <form action="{{ route('infopen.prisons.pdf') }}" method="any" target="_blank">
+        <form action="{{ route('infopen-education-level-pdf') }}" method="any" target="_blank">
             @csrf
             <input type="hidden" name="education_level_id" value="{{ $education_level_id }}">
             <input type="hidden" name="start_date" value="{{ $start_date }}">

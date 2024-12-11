@@ -539,6 +539,10 @@
                             <a href="{{ route('infopen-education-level') }}" class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
                                 <span class="">Escolaridade</span>
                             </a>
+                            {{-- Escolaridade --}}
+                            <a href="{{ route('infopen-prisoner') }}" class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
+                                <span class="">Preso</span>
+                            </a>
                         </div>
                     </div>
                 </div>
