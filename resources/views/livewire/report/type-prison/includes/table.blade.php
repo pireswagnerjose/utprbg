@@ -5,7 +5,7 @@
             <th scope="col" class="p-2"> Nome do Preso </th>
             <th scope="col" class="p-2"> Cela </th>
             <th scope="col" class="p-2"> Data da Entrada </th>
-            <th scope="col" class="p-2"> Data da Saída </th>
+            <th scope="col" class="p-2"> Tipo de Prisão </th>
         </tr>
     </thead>
     <tbody>
@@ -23,7 +23,7 @@
                 @endif
             </td>
             <td class="p-2"> {{ \Carbon\Carbon::parse($prison->entry_date)->format('d/m/Y') }}</td>
-            <td class="p-2"> {{ $prison->exit_date ? \Carbon\Carbon::parse($prison->exit_date)->format('d/m/Y') : '' }} </td>
+            <td class="p-2"> {{ $prison->type_prison->type_prison }} </td>
         </tr>
         @empty
             <td class="p-2"> Não existe resultado para essa consulta. </td>

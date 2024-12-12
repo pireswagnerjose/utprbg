@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Prisões</title>
+    <title>Tipos de Prisão</title>
 
     <style>
         *, 
@@ -70,7 +70,7 @@
                             @endif
                         </td>
                         <td class="p-2"> {{ \Carbon\Carbon::parse($prison->entry_date)->format('d/m/Y') }}</td>
-                        <td class="p-2"> {{ $prison->exit_date ? \Carbon\Carbon::parse($prison->exit_date)->format('d/m/Y') : '' }} </td>
+                        <td class="p-2"> {{ $prison->type_prison->type_prison }} </td>
                     </tr>
                 @empty
                     <td> Sem dados cadastrados. </td>

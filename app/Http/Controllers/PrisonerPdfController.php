@@ -1,13 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
-
 use App\Models\Main\Prisoner;
 use Illuminate\Http\Request;
-
 use Barryvdh\DomPDF\Facade\Pdf;
-
 class PrisonerPdfController extends Controller
 {
     public function pdf(Request $request, $prisoner_id)

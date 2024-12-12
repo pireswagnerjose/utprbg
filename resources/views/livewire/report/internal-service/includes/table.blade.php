@@ -15,7 +15,7 @@
         @forelse ( $internal_services as $key=>$internal_service )
         <tr class="odd:bg-white odd:dark:bg-zinc-900 even:bg-zinc-50 even:dark:bg-zinc-800 border-b dark:border-zinc-700">
             <td class="p-2"> {{ $key+1 }} </td>
-            <td class="p-2"> {{ $internal_service->prisoner->name }} </td>
+            <td class="p-2"> <a class="text-blue-700" href="{{ route('prisoners.show',  $internal_service->prisoner->id ) }}"> {{  $internal_service->prisoner->name }} </a> </td>
             <td class="p-2 text-red-600">
                 @if (!empty( $internal_service->prisoner->unit_address))
                     @foreach ( $internal_service->prisoner->unit_address as $unit_address)
