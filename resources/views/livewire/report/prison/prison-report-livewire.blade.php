@@ -9,6 +9,7 @@
         {{-- Formulário para pdf --}}
         <form action="{{ route('infopen.prisons.pdf') }}" method="post" target="_blank">
             @csrf
+            <input type="hidden" name="type_search" value="{{ $type_search }}">
             <input type="hidden" name="prison_origin_id" value="{{ $prison_origin_id }}">
             <input type="hidden" name="output_type_id" value="{{ $output_type_id }}">
             <input type="hidden" name="start_date" value="{{ $start_date }}">
