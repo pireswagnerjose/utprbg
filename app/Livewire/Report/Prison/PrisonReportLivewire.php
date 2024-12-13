@@ -50,24 +50,32 @@ class PrisonReportLivewire extends Component
             ->whereIn('prisons.id', $array)
             ->orderBy('prisoners.name','asc');
         
-
         // entrada
-        if($this->start_date != null && $this->end_date != null) {
-            $data = $data->where('entry_date', '>=', $this->start_date)
-                ->where('entry_date', '<=', $this->end_date);
+        if($this->type_search == 'entry'){
+            if($this->start_date != null && $this->end_date != null) {
+                $data = $data->where('entry_date', '>=', $this->start_date)
+                    ->where('entry_date', '<=', $this->end_date);
+            }
+
+            // origem da prisão
+            if($this->prison_origin_id ) {
+                $data = $data->where('prison_origin_id', $this->prison_origin_id);
+            }
         }
 
-        // origem da prisão
-        if($this->prison_origin_id ) {
-            $data = $data->where('prison_origin_id', $this->prison_origin_id);
+        // saída
+        if($this->type_search == 'exit'){
+            if($this->start_date != null && $this->end_date != null) {
+                $data = $data->where('exit_date', '>=', $this->start_date)
+                    ->where('exit_date', '<=', $this->end_date);
+            }
+
+            // tipo da saída
+            if($this->output_type_id ) {
+                $data = $data->where('output_type_id', $this->output_type_id);
+            }
         }
 
-        // tipo da saída
-        if($this->output_type_id ) {
-            $data = $data->where('output_type_id', $this->output_type_id);
-        }
-
-        
         $data = $data->paginate(10);
         return $data;
     }

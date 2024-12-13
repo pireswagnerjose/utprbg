@@ -2,12 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Livewire\Main\Prisoner\PrisonerShowLivewire;
 use App\Models\Admin\Cell;
-use App\Models\Admin\PrisonUnit;
-use App\Models\Admin\Ward;
 use App\Models\Main\Prison;
-use App\Models\Main\Prisoner;
 use App\Models\Main\UnitAddress;
 use Illuminate\Http\Request;
 
@@ -34,7 +30,6 @@ class PrisonerListController extends Controller
 
         // retorna a listagem geral de presos
         if ($request->list_type == 'list') {
-
             // por ala
             if($request->ward_id){
                 $unit_adds = UnitAddress::with('cell', 'prisoner')
@@ -67,15 +62,15 @@ class PrisonerListController extends Controller
             // por ala
             if ($request->ward_id) {
                 $cells = Cell::where('ward_id', $request->ward_id)
-                        ->with('unit_addresses')
-                        ->whereHas('unit_addresses', function ($querey){
-                                $querey->where('status', 'ATIVO');
-                        });
+                    ->with('unit_addresses')
+                    ->whereHas('unit_addresses', function ($querey){
+                        $querey->where('status', 'ATIVO');
+                    });
             }else {
                 $cells = Cell::with('unit_addresses')
-                        ->whereHas('unit_addresses', function ($querey){
-                                $querey->where('status', 'ATIVO');
-                        });
+                    ->whereHas('unit_addresses', function ($querey){
+                        $querey->where('status', 'ATIVO');
+                    });
             }
             
             $cells = $cells->get();
