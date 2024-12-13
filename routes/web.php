@@ -12,6 +12,7 @@ use App\Http\Controllers\Report\TypePrisonPdfController;
 use App\Http\Controllers\Report\VisitantReportController;
 use App\Http\Controllers\VcamController;
 use App\Livewire\Admin\Cell\CellLivewire;
+use App\Livewire\Admin\CivilStatus\CivilStatusLivewire;
 use App\Livewire\Admin\Country\CountryLivewire;
 use App\Livewire\Admin\EducationLevel\EducationLevelLivewire;
 use App\Livewire\Admin\Ethnicity\EthnicityLivewire;
@@ -97,7 +98,7 @@ Route::middleware([
     // Education Levels - Escolaridade
     Route::get('/education-levels', EducationLevelLivewire::class)->name('education-levels.index')->middleware('can:admin');
     // Civil Status - Estado Civil
-    Route::get('/civil-statuses', EducationLevelLivewire::class)->name('civil-statuses.index')->middleware('can:admin');
+    Route::get('/civil-statuses', CivilStatusLivewire::class)->name('civil-statuses.index')->middleware('can:admin');
     // ethnicity - Etnia
     Route::get('/ethnicities', EthnicityLivewire::class)->name('ethnicities.index')->middleware('can:admin');
     // Sexual Orientations - Orientação Sexual

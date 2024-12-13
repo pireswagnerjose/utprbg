@@ -23,17 +23,29 @@ class PrisonReportPdfController extends Controller
             ->whereIn('prisons.id', $array)
             ->orderBy('prisoners.name','asc');
         // entrada
-        if($request->start_date != null && $request->end_date != null) {
-            $data = $data->where('entry_date', '>=', $request->start_date)
-                ->where('entry_date', '<=', $request->end_date);
+        if($request->type_search == 'entry'){
+            if($request->start_date != null && $request->end_date != null) {
+                $data = $data->where('entry_date', '>=', $request->start_date)
+                    ->where('entry_date', '<=', $request->end_date);
+            }
+
+            // origem da prisão
+            if($request->prison_origin_id ) {
+                $data = $data->where('prison_origin_id', $request->prison_origin_id);
+            }
         }
-        // origem da prisão
-        if($request->prison_origin_id ) {
-            $data = $data->where('prison_origin_id', $request->prison_origin_id);
-        }
-        // tipo da saída
-        if($request->output_type_id ) {
-            $data = $data->where('output_type_id', $request->output_type_id);
+
+        // saída
+        if($request->type_search == 'exit'){
+            if($request->start_date != null && $request->end_date != null) {
+                $data = $data->where('exit_date', '>=', $request->start_date)
+                    ->where('exit_date', '<=', $request->end_date);
+            }
+
+            // tipo da saída
+            if($request->output_type_id ) {
+                $data = $data->where('output_type_id', $request->output_type_id);
+            }
         }
         $data = $data->get();
         return $data;
