@@ -56,8 +56,8 @@ class Sentence extends Component
             $sentence_d = str_replace("D", "", $sentence_all_2);// pega o valor do dia
 
             $year = intval($sentence_a) * 365;
-            $mount = $sentence_m * 30;
-            $day = $sentence_d;
+            $mount = intval($sentence_m) * 30;
+            $day = intval($sentence_d);
 
             $sum = $year + $mount +  $day;
 
