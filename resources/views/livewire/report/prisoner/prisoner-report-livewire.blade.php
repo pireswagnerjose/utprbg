@@ -3,13 +3,15 @@
         @include('livewire.report.prisoner.includes.fields')
     </div>
     <div class="flex justify-center mb-12">
-        <x-blue-button wire:click='clearFieldes' class="ml-4 bg-red-600">{{ 'Limpar Filtros de Pesquisa' }} </x-blue-button>
+        <x-blue-button wire:click='clearFieldes' class="ml-4 bg-red-600">{{ 'Limpar Filtros de Pesquisa' }}
+        </x-blue-button>
     </div>
     <div class="p-8">
         <!-- Formulário Pdf -->
         <form action="{{ route('infopen-prisoner-pdf') }}" method="any" target="_blank">
             @csrf
-            <input type="hidden" name="faixa_etaria" value="{{ $faixa_etaria }}">
+            <input type="hidden" name="value_start" value="{{ $value_start }}">
+            <input type="hidden" name="value_end" value="{{ $value_end }}">
             <input type="hidden" name="cpf" value="{{ $cpf }}">
             <input type="hidden" name="rg" value="{{ $rg }}">
             <input type="hidden" name="title" value="{{ $title }}">

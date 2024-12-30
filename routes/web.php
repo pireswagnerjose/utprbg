@@ -8,6 +8,7 @@ use App\Http\Controllers\Report\InternalServiceReportController;
 use App\Http\Controllers\Report\LegalAssistanceReportController;
 use App\Http\Controllers\Report\PrisonerReportController;
 use App\Http\Controllers\Report\PrisonReportPdfController;
+use App\Http\Controllers\Report\ProcessReportPdfController;
 use App\Http\Controllers\Report\TypePrisonPdfController;
 use App\Http\Controllers\Report\VisitantReportController;
 use App\Http\Controllers\VcamController;
@@ -65,6 +66,7 @@ use App\Livewire\Report\LegalAssistance\LegalAssistanceReport;
 use App\Livewire\Report\Prison\PrisonReportLivewire;
 use App\Livewire\Report\Prisoner\PrisonerReportLivewire;
 use App\Livewire\Report\PrisonerList\PrisonerListReport;
+use App\Livewire\Report\Process\ProcessReportLivewire;
 use App\Livewire\Report\TypePrison\TypePrisonReportLivewire;
 use App\Livewire\Report\Vcam\VcamReport;
 use App\Livewire\User\UserLivewire;
@@ -214,6 +216,8 @@ Route::middleware([
     Route::get('/infopen-type-prisons', TypePrisonReportLivewire::class)->name('infopen.type-prisons')->middleware('can:admin');
     Route::any('/infopen-type-prisons-pdf', [TypePrisonPdfController::class, 'pdf'])->name('infopen.type-prisons.pdf')->middleware('can:admin');
     Route::any('/infopen-type-prisons-csv', [TypePrisonPdfController::class, 'csv'])->name('infopen.type-prisons.csv')->middleware('can:admin');
+    Route::get('/infopen-processes', ProcessReportLivewire::class)->name('infopen.processes')->middleware('can:admin');
+    Route::post('/infopen-processes-pdf', [ProcessReportPdfController::class, 'pdf'])->name('infopen.processes.pdf')->middleware('can:admin');
 
     // VISITANT
     Route::get('/visitant', VisitantLivewire::class)->name('visitant.index');

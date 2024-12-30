@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
@@ -26,37 +27,23 @@ class PrisonerReportController extends Controller
         if($request->civil_status_id ) {
             $data = $data->whereLike('civil_status_id', $request->civil_status_id);
         }
-        if( $request->faixa_etaria ) {
-            if ($request->faixa_etaria == '18-25') {
-                $presos = $data->get();
-                foreach ($presos as $preso) { $birty[] = [Carbon::parse($preso['date_birth'])->age, $preso['id']]; }
-                $array_fim = array_filter($birty, function ($b) { return $b[0] <= 25; });
-                foreach ($array_fim as $key) { $arr_id[] = $key[1]; }
-                $data = $data->whereIn('id', $arr_id);
-            }
-            if ($request->faixa_etaria == '26-30') {
-                $presos = $data->get();
-                foreach ($presos as $preso) { $birty[] = [Carbon::parse($preso['date_birth'])->age, $preso['id']]; }
-                $array_ini = array_filter($birty, function ($b) { return $b[0] >= 26; });
-                $array_fim = array_filter($array_ini, function ($b) { return $b[0] <= 30; });
-                foreach ($array_fim as $key) { $arr_id[] = $key[1]; }
-                $data = $data->whereIn('id', $arr_id);
-            }
-            if ($request->faixa_etaria == '31-40') {
-                $presos = $data->get();
-                foreach ($presos as $preso) { $birty[] = [Carbon::parse($preso['date_birth'])->age, $preso['id']]; }
-                $array_ini = array_filter($birty, function ($b) { return $b[0] >= 31; });
-                $array_fim = array_filter($array_ini, function ($b) { return $b[0] <= 40; });
-                foreach ($array_fim as $key) { $arr_id[] = $key[1]; }
-                $data = $data->whereIn('id', $arr_id);
-            }
-            if ($request->faixa_etaria == '41MAIS') {
-                $presos = $data->get();
-                foreach ($presos as $preso) { $birty[] = [Carbon::parse($preso['date_birth'])->age, $preso['id']]; }
-                $array_fim = array_filter($birty, function ($b) { return $b[0] >= 41; });
-                foreach ($array_fim as $key) { $arr_id[] = $key[1]; }
-                $data = $data->whereIn('id', $arr_id);
-            }
+        if( $request->value_start && $request->value_end ) {
+            global $value_start, $value_end;
+            $value_start = $request->value_start;
+            $value_end = $request->value_end;
+
+            $presos = $data->get();
+            foreach ($presos as $preso) { $birty[] = [Carbon::parse($preso['date_birth'])->age, $preso['id']]; }
+            $array_ini = array_filter($birty, function ($b) {
+                global $value_start;
+                return $b[0] >= $value_start;
+            });
+            $array_fim = array_filter($array_ini, function ($b) {
+                global $value_end;
+                return $b[0] <= $value_end;
+            });
+            foreach ($array_fim as $key) { $arr_id[] = $key[1]; }
+            $data = $data->whereIn('id', $arr_id);
         }
         if($request->cpf ) {
             if($request->cpf == 'sim'){ $data = $data->where('cpf', '!=', ''); }

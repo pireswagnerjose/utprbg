@@ -15,7 +15,8 @@ class PrisonerReportLivewire extends Component
 {
     use WithPagination;
 
-    public $faixa_etaria;
+    public $value_start;
+    public $value_end;
     public $cpf;
     public $rg;
     public $title;
@@ -32,6 +33,13 @@ class PrisonerReportLivewire extends Component
     public $education_levels;
     public $civil_statuses;
 
+    public $values = ['18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30',
+    '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46',
+    '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62',
+    '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78',
+    '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94',
+    '95', '96', '97', '98', '99', '100' ];
+
     public function mount()
     {
         $this->sexual_orientations = SexualOrientation::all();
@@ -44,7 +52,7 @@ class PrisonerReportLivewire extends Component
     {
         $this->reset('cpf', 'rg', 'title', 'birth_certificate', 'reservist',
         'sus_card', 'sexual_orientation_id', 'ethnicity_id', 'education_level_id', 'civil_status_id',
-        'faixa_etaria');
+        'value_start', 'value_end');
         $this->resetPage();
         $this->redirectRoute('infopen-prisoner', navigate: true);
     }
@@ -65,37 +73,13 @@ class PrisonerReportLivewire extends Component
         if($this->civil_status_id ) {
             $data = $data->whereLike('civil_status_id', $this->civil_status_id);
         }
-        if( $this->faixa_etaria ) {
-            if ($this->faixa_etaria == '18-25') {
-                $presos = $data->get();
-                foreach ($presos as $preso) { $birty[] = [Carbon::parse($preso['date_birth'])->age, $preso['id']]; }
-                $array_fim = array_filter($birty, function ($b) { return $b[0] <= 25; });
-                foreach ($array_fim as $key) { $arr_id[] = $key[1]; }
-                $data = $data->whereIn('id', $arr_id);
-            }
-            if ($this->faixa_etaria == '26-30') {
-                $presos = $data->get();
-                foreach ($presos as $preso) { $birty[] = [Carbon::parse($preso['date_birth'])->age, $preso['id']]; }
-                $array_ini = array_filter($birty, function ($b) { return $b[0] >= 26; });
-                $array_fim = array_filter($array_ini, function ($b) { return $b[0] <= 30; });
-                foreach ($array_fim as $key) { $arr_id[] = $key[1]; }
-                $data = $data->whereIn('id', $arr_id);
-            }
-            if ($this->faixa_etaria == '31-40') {
-                $presos = $data->get();
-                foreach ($presos as $preso) { $birty[] = [Carbon::parse($preso['date_birth'])->age, $preso['id']]; }
-                $array_ini = array_filter($birty, function ($b) { return $b[0] >= 31; });
-                $array_fim = array_filter($array_ini, function ($b) { return $b[0] <= 40; });
-                foreach ($array_fim as $key) { $arr_id[] = $key[1]; }
-                $data = $data->whereIn('id', $arr_id);
-            }
-            if ($this->faixa_etaria == '41MAIS') {
-                $presos = $data->get();
-                foreach ($presos as $preso) { $birty[] = [Carbon::parse($preso['date_birth'])->age, $preso['id']]; }
-                $array_fim = array_filter($birty, function ($b) { return $b[0] >= 41; });
-                foreach ($array_fim as $key) { $arr_id[] = $key[1]; }
-                $data = $data->whereIn('id', $arr_id);
-            }
+        if( $this->value_start && $this->value_end ) {            
+            $presos = $data->get();
+            foreach ($presos as $preso) { $birty[] = [Carbon::parse($preso['date_birth'])->age, $preso['id']]; }
+            $array_ini = array_filter($birty, function ($b) { return $b[0] >= $this->value_start; });
+            $array_fim = array_filter($array_ini, function ($b) { return $b[0] <= $this->value_end; });
+            foreach ($array_fim as $key) { $arr_id[] = $key[1]; }
+            $data = $data->whereIn('id', $arr_id);
         }
         if($this->cpf ) {
             if($this->cpf == 'sim'){ $data = $data->where('cpf', '!=', ''); }
