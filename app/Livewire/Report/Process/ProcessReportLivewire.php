@@ -35,6 +35,7 @@ class ProcessReportLivewire extends Component
     {
         $data = Process::select('processes.*', 'prisoners.*')
             ->join('prisoners','processes.prisoner_id','=','prisoners.id')
+            ->where('prisoners.status_prison_id', 1)
             ->orderBy('prisoners.name','asc');
 
         // origem do processo
