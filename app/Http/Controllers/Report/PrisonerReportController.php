@@ -42,6 +42,7 @@ class PrisonerReportController extends Controller
                 global $value_end;
                 return $b[0] <= $value_end;
             });
+            $arr_id = [];
             foreach ($array_fim as $key) { $arr_id[] = $key[1]; }
             $data = $data->whereIn('id', $arr_id);
         }

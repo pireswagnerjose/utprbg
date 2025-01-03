@@ -19,17 +19,31 @@ class Sentence extends Component
 
     public $option = [];
 
+    public function clearFieldes()
+    {
+        $this->reset('sentence', 'option');
+        $this->resetPage();
+        $this->redirectRoute('infopen.sentence', navigate: true);
+    }
+
     public function sentence_fun()
     {
-        $prisoners = Prisoner::orderBy('name', 'asc');
-        $prisoners = $prisoners->where('status_prison_id', '1');
-        $prisoners = $prisoners->where('prison_unit_id', Auth::user()->prison_unit_id);
-        $prisoners = $prisoners->whereRelation('prisons', 'exit_date', '!=', NULL)->get();
+        $prisoners = Prisoner::where('status_prison_id', 1)
+            ->orderBy('name', 'asc')
+            ->get('id');
+        
+        $data_arr = [];
+        foreach ($prisoners as $prisoner) {
+            $data_arr [] = Prison::where('prisoner_id', $prisoner->id)
+            ->where('prison_unit_id', Auth::user()->prison_unit_id)
+            ->orderBy('entry_date', 'desc')
+            ->first('id');
+        }
+        $array = implode(",",  $data_arr);
+        $array = explode(",",  $array);
+        $array = preg_replace(array('/"/', '/id:/', '/{/', '/}/'), array('', '', '', ''), $array);
 
-        $prisons = Prison::whereRelation('prisoner', 'status_prison_id', 1);
-        $prisons = $prisons->where('exit_date', NULL)
-            ->where('sentence', '!=', NULL)
-            ->get();
+        $prisons = Prison::whereIn('prisons.id', $array)->get();
 
         foreach ($prisons as $prison) {
             $sentence_all = explode('A', $prison['sentence']);
@@ -149,14 +163,17 @@ class Sentence extends Component
 
     public function render()
     {
-        $prisons = [];
+        $prisons_arr = [];
         foreach ( $this->option as $key) {
-            $prisons[] = $key->prisoner_id;
+            $prisons_arr [] = $key->id;
         }
-        $prisoners = Prisoner::orderBy('name', 'asc');
-        $prisoners = $prisoners->whereIn('id', $prisons);
-        $prisoners = $prisoners->paginate(9);
+        $data = Prison::whereIn('prisons.id', $prisons_arr);
+        $data = $data->select('prisons.*', 'prisoners.*')
+            ->join('prisoners','prisons.prisoner_id','=','prisoners.id')
+            ->orderBy('prisoners.name','asc');
+
+        $prisons = $data->paginate(12);
         
-        return view('livewire.infopen.sentence.sentence', compact('prisoners'));
+        return view('livewire.infopen.sentence.sentence', compact('prisons'));
     }
 }

@@ -78,6 +78,7 @@ class PrisonerReportLivewire extends Component
             foreach ($presos as $preso) { $birty[] = [Carbon::parse($preso['date_birth'])->age, $preso['id']]; }
             $array_ini = array_filter($birty, function ($b) { return $b[0] >= $this->value_start; });
             $array_fim = array_filter($array_ini, function ($b) { return $b[0] <= $this->value_end; });
+            $arr_id = [];
             foreach ($array_fim as $key) { $arr_id[] = $key[1]; }
             $data = $data->whereIn('id', $arr_id);
         }
