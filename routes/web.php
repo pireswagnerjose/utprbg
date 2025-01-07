@@ -4,6 +4,7 @@ use App\Http\Controllers\PrisonerListController;
 use App\Http\Controllers\PrisonerPdfController;
 use App\Http\Controllers\Report\EducationLevelReportController;
 use App\Http\Controllers\Report\ExternalExitReportController;
+use App\Http\Controllers\Report\IdentificationCardPdfController;
 use App\Http\Controllers\Report\InternalServiceReportController;
 use App\Http\Controllers\Report\LegalAssistanceReportController;
 use App\Http\Controllers\Report\PrisonerReportController;
@@ -227,6 +228,7 @@ Route::middleware([
     // IDENTIFICATION CARD
     Route::get('/identification-card', IdentificationCardLivewire::class)->name('identification-card.index');
     Route::any('/identification-card-show/{identification_card_id}', IdentificationCardShowLivewire::class)->name('identification-card.show');
+    Route::get('/identification-card-pdf/{identification_card_id}', [IdentificationCardPdfController::class, 'pdf'])->name('identification-card.pdf');
 
     // Periodo de Agendamento das visitas
     Route::get('/visit-scheduling-date', VisitSchedulingDateLivewire::class)->name('visit-scheduling-date.index');    
