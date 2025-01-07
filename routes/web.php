@@ -222,6 +222,7 @@ Route::middleware([
 
     // VISITANT
     Route::get('/visitant', VisitantLivewire::class)->name('visitant.index');
+    Route::post('/visitant-list-pdf', [VisitantReportController::class, 'pdf'])->name('visitant-list.pdf');
     Route::get('/visitant-show/{visitant_id}', VisitantShowLivewire::class)->name('visitant.show');
     Route::post('/visitant-report/{visitant_id}', [VisitantReportController::class, 'report'])->name('visitant.report');
 
