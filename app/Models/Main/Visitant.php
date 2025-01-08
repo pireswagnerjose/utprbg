@@ -40,6 +40,7 @@ class Visitant extends Model
     {
         return $this->hasMany(IdentificationCard::class);
     }
+    
     public function visitant_documents()
     {
         return $this->hasMany(VisitantDocument::class);

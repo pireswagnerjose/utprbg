@@ -162,4 +162,13 @@ class Prisoner extends Model
     {
         return $this->hasMany(VisitScheduling::class);
     }
+
+    /**
+     * faz o relacionamento com a tabela cartão de identificação
+     * @return void
+     */
+    public function identification_cards()
+    {
+        return $this->hasMany(IdentificationCard::class);
+    }
 }
