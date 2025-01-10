@@ -22,8 +22,8 @@ class IdentificationCardLivewire extends Component
         $this->identificationCardForm->prison_unit_id       = Auth::user()->prison_unit_id;
         $this->identificationCardForm->user_create          = Auth::user()->id;
         $this->identificationCardForm->user_update          = Auth::user()->id;
-        $this->identificationCardForm->prisoners            = Prisoner::all();
-        $this->identificationCardForm->visitants            = Visitant::all();
+        $this->identificationCardForm->prisoners            = Prisoner::orderBy('name', 'asc')->get();
+        $this->identificationCardForm->visitants            = Visitant::orderBy('name', 'asc')->get();
         $this->identificationCardForm->degree_of_kinships   = DegreeOfKinship::all();
     }
     public function render()

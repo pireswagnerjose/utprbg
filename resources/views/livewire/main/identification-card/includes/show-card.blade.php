@@ -79,7 +79,7 @@
          <ul class="text-sm mt-4">
             <li>Esta carteira é de uso pessoal do titular e intransferível;</li>
             <li>É obrigatório a apresentação da identidade junto com esta carteira;</li>
-            <li>A perda, furto ou extravio desta carteira deverá ser imediatamente comunicado ä UTPRBG;</li>
+            <li>A perda, furto ou extravio desta carteira deverá ser imediatamente comunicado à UTPRBG;</li>
             <li>O uso indevido por terceiros implicará na suspensão do direito de visita;</li>
             <li>É obrigatório a apresentação desta plastificada.</li>
          </ul>
