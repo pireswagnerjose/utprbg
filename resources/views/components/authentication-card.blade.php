@@ -1,9 +1,9 @@
-<div class="min-h-screen flex flex-row sm:justify-center items-center pt-6 sm:pt-0 bg-zinc-100 dark:bg-zinc-900">
-    <div class="flex items-center h-72 mt-6 px-6 py-4 mr-1 bg-white dark:bg-zinc-800 shadow-md overflow-hidden sm:rounded-s-lg -lg">
+<div class="min-h-screen p-16 sm:p-0 flex flex-col gap-4 justify-center items-center bg-zinc-100 dark:bg-zinc-900">
+    <div class="flex items-center">
         {{ $logo }}
     </div>
 
-    <div class="w-1/5 h-72 mt-6 px-6 py-4 bg-white dark:bg-zinc-800 shadow-md overflow-hidden sm:rounded-e-lg">
+    <div class="w-full sm:w-[500px] p-8 bg-white dark:bg-zinc-800 shadow-md rounded-lg">
         {{ $slot }}
     </div>
 </div>
