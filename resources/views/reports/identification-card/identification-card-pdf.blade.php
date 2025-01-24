@@ -69,12 +69,28 @@
       </div>
       <div style="clear: both;"></div>
       <div class="margin-bottom: 8px;">
-         <span style="font-size: 10px; display: block;">VISITANTE: <strong style="font-size: 13px;">{{
-               $identification_card->visitant->name
-               }}</strong></span>
-         <span style="font-size: 10px; margin-top: 5px; display: block;">REEDUCANDO: <strong style="font-size: 13px;">{{
-               $identification_card->prisoner->name
-               }}</strong></span>
+         <div style="width: 100%;">
+            <div style="max-width: 341px; font-size: 10px;
+                  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            ">
+               VISITANTE:
+               <strong style="font-size: 13px;">
+                  {{ $identification_card->visitant->name }}
+               </strong>
+            </div>
+
+            <div style="max-width: 341px; font-size: 10px; margin-top: 5px;
+                  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            ">
+               <div style="display: inline-block">
+                  REEDUCANDO:
+                  <strong style="font-size: 13px;">
+                     {{ $identification_card->prisoner->name }}
+                  </strong>
+               </div>
+            </div>
+         </div>
+
          <div style="font-size: 10px; margin-top: 5px; display: block;">
             <span>
                PARENTESCO:
