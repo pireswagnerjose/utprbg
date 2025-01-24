@@ -73,10 +73,12 @@
             <div style="max-width: 341px; font-size: 10px;
                   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
             ">
-               VISITANTE:
-               <strong style="font-size: 13px;">
-                  {{ $identification_card->visitant->name }}
-               </strong>
+               <div style="display: inline-block">
+                  VISITANTE:
+                  <strong style="font-size: 13px; letter-spacing: -0.07rem;">
+                     {{ $identification_card->visitant->name }}
+                  </strong>
+               </div>
             </div>
 
             <div style="max-width: 341px; font-size: 10px; margin-top: 5px;
@@ -84,7 +86,7 @@
             ">
                <div style="display: inline-block">
                   REEDUCANDO:
-                  <strong style="font-size: 13px;">
+                  <strong style="font-size: 13px; letter-spacing: -0.07rem;">
                      {{ $identification_card->prisoner->name }}
                   </strong>
                </div>
