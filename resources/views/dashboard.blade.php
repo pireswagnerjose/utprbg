@@ -1,15 +1,6 @@
 <x-app-layout class="">
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-zinc-800 dark:text-zinc-200 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
-
-    <div>
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="overflow-hidden">
-                <x-welcome />
-            </div>
-        </div>
+    <div class="flex flex-col justify-center items-center h-[calc(100vh-15.75rem)]">
+        <img src="{{ asset('storage/site/policia_penal_logo.svg') }}" alt="Logo da Polícia Penal" class='w-48'>
+        <p class="text-zinc-600 dark:text-zinc-300 text-center text-lg mt-4">{{ Auth::user()->email }}</p>
     </div>
 </x-app-layout>
