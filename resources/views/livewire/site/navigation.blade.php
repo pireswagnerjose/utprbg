@@ -1,5 +1,5 @@
 <nav>
-   <ul class="flex flex-row sm:flex-row gap-4 justify-center bg-zinc-500 dark:bg-zinc-700">
+   <ul class="flex flex-row sm:flex-row px-8 gap-4 justify-center items-center bg-zinc-500 dark:bg-zinc-700">
       {{-- presos --}}
       @can('admin-saude-guest')
       <li>
@@ -140,7 +140,7 @@
                <div class="hidden sm:flex">
                   <i data-lucide="grid-2x2-plus" class="w-4 h-4 hidden sm:flex text-zinc-100 dark:text-zinc-400"></i>
                </div>
-               <span class="py-2">Tabelas Acessórias</span>
+               <span class="py-2">Acessórios</span>
             </button>
             <div x-ref="panel" x-show="open" x-transition.origin.top.left x-on:click.outside="close($refs.button)"
                :id="$id('dropdown-button')" style="display: none;"
