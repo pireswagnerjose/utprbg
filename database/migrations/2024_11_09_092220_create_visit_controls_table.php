@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->date('date');//Data do Agendamento
             $table->string('number_visit');//Quantidade de Visitante
-            $table->string('visist_type');//Tipo da Visita - social ou íntima
+            $table->string('visit_type');//Tipo da Visita - social ou íntima
 
             $table->string('user_create', 100)->nullable();//usuário que criou o documento
             $table->string('user_update', 100)->nullable();//usuário que modificou o documento

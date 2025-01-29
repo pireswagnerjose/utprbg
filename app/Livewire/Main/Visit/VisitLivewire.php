@@ -47,48 +47,95 @@ class VisitLivewire extends Component
 
     public function visit()
     {
-        $this->validate(['type'=>'required', 'code' => 'required', 'cpf' => 'required|max:14|min:14']);
-        $this->identification_card = IdentificationCard::with('visitant', 'prisoner')
-            ->where('id', $this->code)->get()->first();
-        if ($this->identification_card) {
-            $visitant = Visitant::where('id', $this->identification_card['visitant_id'])->get()->first();
-        }
-        if (!$this->identification_card) {
-            return redirect()->back()->with('error', 'Código da Carteirinha ou CPF inválido!');
-        }elseif ($this->cpf != $visitant['cpf']) {
-            redirect('visita')->with('error', 'Código da Carteirinha ou CPF inválido!');
-        }else {
-            $prisoner = Prisoner::where('id', $this->identification_card['prisoner_id'])
-                ->with('unit_address')->get()->first();
-            $unid_address = UnitAddress::where('prisoner_id', $prisoner['id'])->get()->first();
-            $ward = Ward::where('id', $unid_address->ward_id)->get()->first();
-            $this->visit_controls = VisitControl::where('ward_id', $ward['id'])
-                ->where('visist_type', $this->type)->get();
+      // type - code - cpf
+      // verifica se o código e cpf do visitante foram digitados corretamente
+      $this->validate(['type'=>'required', 'code' => 'required', 'cpf' => 'required|max:14|min:14']);
 
-            $this->render();
-            $this->visibleForm = false;
+      // busca os dados da carteirinha conforme os dados digitados
+      $this->identification_card = IdentificationCard::with('visitant', 'prisoner')
+          ->where('id', $this->code)->get()->first();
+      
+      // verifica se existe carteirinha conforme o código digitado
+      if (!$this->identification_card) {
+        return redirect()->back()->with('error', 'Código da Carteirinha ou CPF inválido!');
+      }
+      
+      // se encontrou alguma carteirinha conforme o código digitado
+      if ($this->identification_card) {
+          $visitant = Visitant::where('id', $this->identification_card['visitant_id'])->get()->first();
+      }
+      
+      // verifica se o cpf digitado pertence a mesma carterinha conforme o código digitado
+      if ($visitant->cpf != $this->cpf) {
+        return redirect('/visita')->with('error', 'Código da Carteirinha ou CPF inválido!');
+      }
+      
+      // verifica se já foi realizado o agendamento da visita social
+      if($this->type == 'SOCIAL'){
+        $visit_scheduling_date = VisitSchedulingDate::orderBy('start_date', 'desc')->first();
+        $visit_schedulings = VisitScheduling::where('type', $this->type)
+          ->where('date', '>', $visit_scheduling_date->start_date)
+          ->get();
+        foreach($visit_schedulings as $visit_scheduling){
+          if($visit_scheduling->visitant_id == $visitant->id){
+            return redirect('/visita')->with('error', 'Visita social já agendada!');
+          }
         }
+      }
+      // verifica se já foi realizado o agendamento da visita íntima
+      if($this->type == 'ÍNTIMA'){
+        // verifica se o visitante pode receber a visita íntima
+        if($this->identification_card['type'] != 'ÍNTIMA / SOCIAL')
+        {
+          return redirect('/visita')->with('error', 'Você não está habilitado(a) para receber visita íntima!');
+        }
+        $visit_scheduling_date = VisitSchedulingDate::orderBy('start_date', 'desc')->first();
+        $visit_schedulings = VisitScheduling::where('type', $this->type)
+          ->where('date', '>', $visit_scheduling_date->start_date)
+          ->get();
+        foreach($visit_schedulings as $visit_scheduling){
+          if($visit_scheduling->visitant_id == $visitant->id){
+            return redirect('/visita')->with('error', 'Visita íntima já agendada!');
+          }
+        }
+      }
+      
+      
+      // busca os dados do preso conforme a carteirinha
+      $prisoner = Prisoner::where('id', $this->identification_card['prisoner_id'])
+          ->with('unit_address')->get()->first();
+      // busca os dados da unidade prisional conforme os dados da carteirinha
+      $unid_address = UnitAddress::where('prisoner_id', $prisoner['id'])->get()->first();
+      // busca os dados do pavilhão conforme os dados da carteirinha
+      $ward = Ward::where('id', $unid_address->ward_id)->get()->first();
+      // busca os dados do controle de visita conforme os dados do pavilhão
+      $this->visit_controls = VisitControl::where('ward_id', $ward['id'])
+          ->where('visist_type', $this->type)->get();
+
+      $this->render();
+      $this->visibleForm = false;
+      
     }
 
     public function schedule_visit()
     {
-        $this->identification_card_id = $this->identification_card['id'];
-        $this->user_create = $this->identification_card['visitant_id'];
-        $this->prison_unit_id = $this->identification_card['prison_unit_id'];
-        $this->prisoner_id = $this->identification_card['prisoner_id'];
-        $this->visitant_id = $this->identification_card['visitant_id'];
+      $this->identification_card_id = $this->identification_card['id'];
+      $this->user_create = $this->identification_card['visitant_id'];
+      $this->prison_unit_id = $this->identification_card['prison_unit_id'];
+      $this->prisoner_id = $this->identification_card['prisoner_id'];
+      $this->visitant_id = $this->identification_card['visitant_id'];
 
-        $data = $this->validate([
-            'date'                      => 'required|max:10|min:10',
-            'type'                      => 'required|max:255',
-            'identification_card_id'    => 'required|max:10',
-            'prisoner_id'               => 'required|max:255',
-            'visitant_id'               => 'required|max:255',
-            'user_create'               => 'required|max:10',
-            'prison_unit_id'            => 'required|max:10',
-        ]);
-        $visit_scheduling = VisitScheduling::create($data);
-        $this->redirectRoute('visit-completed.index', ['visit_completed_id' => $visit_scheduling->id]);
+      $data = $this->validate([
+          'date'                      => 'required|max:10|min:10',
+          'type'                      => 'required|max:255',
+          'identification_card_id'    => 'required|max:10',
+          'prisoner_id'               => 'required|max:255',
+          'visitant_id'               => 'required|max:255',
+          'user_create'               => 'required|max:10',
+          'prison_unit_id'            => 'required|max:10',
+      ]);
+      $visit_scheduling = VisitScheduling::create($data);
+      $this->redirectRoute('visit-completed.index', ['visit_completed_id' => $visit_scheduling->id]);
     }
 
     public function render()

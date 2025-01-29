@@ -13,7 +13,7 @@ class VisitControl extends Model
     protected $fillable = [
         'date',
         'number_visit',
-        'visist_type',
+        'visit_type',
         'user_create',
         'user_update',
         'prison_unit_id',
