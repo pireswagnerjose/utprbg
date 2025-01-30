@@ -11,7 +11,7 @@ class VisitControlLivewire extends Component
 {
     public $date;
     public $number_visit;
-    public $visist_type;
+    public $visit_type;
     public $ward_id;
     public $user_create;
     public $user_update;
@@ -36,7 +36,7 @@ class VisitControlLivewire extends Component
      */
     public function clearFields()
     {
-        $this->reset( 'date', 'number_visit', 'visist_type', 'ward_id' );
+        $this->reset( 'date', 'number_visit', 'visit_type', 'ward_id' );
     }
 
     /**
@@ -61,7 +61,7 @@ class VisitControlLivewire extends Component
     }
 
     /**
-     * Cadastra um novo controle de visista
+     * Cadastra um novo controle de visita
      * @return void
      */
     public function create()
@@ -69,7 +69,7 @@ class VisitControlLivewire extends Component
         $data = $this->validate([
             'date'              => 'required|max:10|min:10',
             'number_visit'      => 'required|max:255',
-            'visist_type'       => 'required|max:255',
+            'visit_type'       => 'required|max:255',
             'ward_id'           => 'required|max:10',
             'user_create'       => 'required|max:10',
             'prison_unit_id'    => 'required|max:10',
@@ -89,7 +89,7 @@ class VisitControlLivewire extends Component
     {
         $this->date             = $visit_control->date;
         $this->number_visit     = $visit_control->number_visit;
-        $this->visist_type      = $visit_control->visist_type;
+        $this->visit_type      = $visit_control->visit_type;
         $this->ward_id          = $visit_control->ward_id;
         $this->openModalUpdate  = $visit_control->id;
     }
@@ -104,7 +104,7 @@ class VisitControlLivewire extends Component
         $data = $this->validate([
             'date'              => 'required|max:10|min:10',
             'number_visit'      => 'required|max:255',
-            'visist_type'       => 'required|max:255',
+            'visit_type'       => 'required|max:255',
             'ward_id'           => 'required|max:10',
             'user_update'       => 'required|max:10',
             'prison_unit_id'    => 'required|max:10',
