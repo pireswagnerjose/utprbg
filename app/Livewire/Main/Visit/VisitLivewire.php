@@ -110,7 +110,7 @@ class VisitLivewire extends Component
       $ward = Ward::where('id', $unid_address->ward_id)->get()->first();
       // busca os dados do controle de visita conforme os dados do pavilhão
       $this->visit_controls = VisitControl::where('ward_id', $ward['id'])
-          ->where('visist_type', $this->type)->get();
+          ->where('visit_type', $this->type)->get();
 
       $this->render();
       $this->visibleForm = false;
