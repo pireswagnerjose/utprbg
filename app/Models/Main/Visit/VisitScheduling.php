@@ -13,7 +13,7 @@ class VisitScheduling extends Model
     use HasFactory;
     protected $table = 'visit_schedulings';
     protected $fillable = [
-        'date',
+        'date_visit',
         'type',
         'status',
         'remark',

@@ -21,6 +21,7 @@ class VisitLivewire extends Component
     public $code;
     public $cpf;
     public $date;
+    public $date_visit;
     public $type;
     public $identification_card_id;
     public $prisoner_id;
@@ -74,7 +75,7 @@ class VisitLivewire extends Component
       if($this->type == 'SOCIAL'){
         $visit_scheduling_date = VisitSchedulingDate::orderBy('start_date', 'desc')->first();
         $visit_schedulings = VisitScheduling::where('type', $this->type)
-          ->where('date', '>', $visit_scheduling_date->start_date)
+          ->where('date_visit', '>', $visit_scheduling_date->start_date)
           ->get();
         foreach($visit_schedulings as $visit_scheduling){
           if($visit_scheduling->visitant_id == $visitant->id){
@@ -100,17 +101,23 @@ class VisitLivewire extends Component
         }
       }
       
-      
       // busca os dados do preso conforme a carteirinha
       $prisoner = Prisoner::where('id', $this->identification_card['prisoner_id'])
-          ->with('unit_address')->get()->first();
+        ->with('unit_address')
+        ->get()->first();
+      
       // busca os dados da unidade prisional conforme os dados da carteirinha
-      $unid_address = UnitAddress::where('prisoner_id', $prisoner['id'])->get()->first();
+      $unid_address = UnitAddress::orderBy('id', 'desc')->where('prisoner_id', $prisoner['id'])
+        ->get()->first();
+      
       // busca os dados do pavilhão conforme os dados da carteirinha
       $ward = Ward::where('id', $unid_address->ward_id)->get()->first();
+      
       // busca os dados do controle de visita conforme os dados do pavilhão
-      $this->visit_controls = VisitControl::where('ward_id', $ward['id'])
-          ->where('visit_type', $this->type)->get();
+      $this->visit_controls = VisitControl::where('ward_id', $ward->id)
+        ->where('visit_type', $this->type)
+        ->where('date', '>', $visit_scheduling_date->start_date)
+        ->get();
 
       $this->render();
       $this->visibleForm = false;
@@ -119,6 +126,7 @@ class VisitLivewire extends Component
 
     public function schedule_visit()
     {
+      
       $this->identification_card_id = $this->identification_card['id'];
       $this->user_create = $this->identification_card['visitant_id'];
       $this->prison_unit_id = $this->identification_card['prison_unit_id'];
@@ -126,7 +134,7 @@ class VisitLivewire extends Component
       $this->visitant_id = $this->identification_card['visitant_id'];
 
       $data = $this->validate([
-          'date'                      => 'required|max:10|min:10',
+          'date_visit'                => 'required|max:10|min:10',
           'type'                      => 'required|max:255',
           'identification_card_id'    => 'required|max:10',
           'prisoner_id'               => 'required|max:255',
@@ -134,6 +142,7 @@ class VisitLivewire extends Component
           'user_create'               => 'required|max:10',
           'prison_unit_id'            => 'required|max:10',
       ]);
+
       $visit_scheduling = VisitScheduling::create($data);
       $this->redirectRoute('visit-completed.index', ['visit_completed_id' => $visit_scheduling->id]);
     }

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('visit_schedulings', function (Blueprint $table) {
             $table->id();
-            $table->date('date');//Data do Agendamento
+            $table->date('date_visit');//Data do Agendamento
             $table->string('type', 10);//Tipo da visita (íntima ou social)
             $table->string('status', 60)->nullable();//Mantida ou cancelada
             $table->longText('remark')->nullable();//Observações sobre o agendamento
