@@ -74,9 +74,16 @@ class VisitLivewire extends Component
       // verifica se já foi realizado o agendamento da visita social
       if($this->type == 'SOCIAL'){
         $visit_scheduling_date = VisitSchedulingDate::orderBy('start_date', 'desc')->first();
+        
         $visit_schedulings = VisitScheduling::where('type', $this->type)
           ->where('date_visit', '>', $visit_scheduling_date->start_date)
           ->get();
+
+        // verifica se o presso já teve 3 agendamentos
+        if($visit_schedulings->count() >= 3){
+          return redirect('/visita')->with('error', 'O interno já possui 3 visitas agendadas!');
+        }
+        
         foreach($visit_schedulings as $visit_scheduling){
           if($visit_scheduling->visitant_id == $visitant->id){
             return redirect('/visita')->with('error', 'Visita social já agendada!');
@@ -92,7 +99,7 @@ class VisitLivewire extends Component
         }
         $visit_scheduling_date = VisitSchedulingDate::orderBy('start_date', 'desc')->first();
         $visit_schedulings = VisitScheduling::where('type', $this->type)
-          ->where('date', '>', $visit_scheduling_date->start_date)
+          ->where('date_visit', '>', $visit_scheduling_date->start_date)
           ->get();
         foreach($visit_schedulings as $visit_scheduling){
           if($visit_scheduling->visitant_id == $visitant->id){
@@ -118,7 +125,7 @@ class VisitLivewire extends Component
         ->where('visit_type', $this->type)
         ->where('date', '>', $visit_scheduling_date->start_date)
         ->get();
-
+        
       $this->render();
       $this->visibleForm = false;
       
