@@ -15,12 +15,18 @@
                         <option class="bg-zinc-100 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 text-xs" selected
                             value="">Escolha a Data da Visita
                         </option>
-                        @foreach ($this->visit_controls as $visit_control)
+                        @if (!empty($visit_date1))
                         <option class="bg-zinc-100 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 text-base"
-                            value="{{ $visit_control->date }}">{{
-                            \Carbon\Carbon::parse($visit_control->date)->format('d/m/Y') }}
+                            value="{{ $visit_date1->date }}">{{
+                            \Carbon\Carbon::parse($visit_date1->date)->format('d/m/Y') }}
                         </option>
-                        @endforeach
+                        @endif
+                        @if (!empty($visit_date2))
+                        <option class="bg-zinc-100 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 text-base"
+                            value="{{ $visit_date2->date }}">{{
+                            \Carbon\Carbon::parse($visit_date2->date)->format('d/m/Y') }}
+                        </option>
+                        @endif
                     </select>
                     <x-input-error for="date_visit" class="mt-2">{{ $message ?? '' }}</x-input-error>
                 </div>
