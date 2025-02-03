@@ -137,6 +137,7 @@ class VisitLivewire extends Component
       $visit_schedulings = VisitScheduling::where('type', $this->type)
         ->where('date_visit', '>', $visit_scheduling_date->start_date)
         ->get();
+
       foreach($visit_schedulings as $visit_scheduling){
         if($visit_scheduling->visitant_id == $visitant->id){
           return redirect('/visita')->with('error', 'Visita íntima já agendada!');
@@ -162,13 +163,14 @@ class VisitLivewire extends Component
       $date2 = $this->visit_controls[1];
     }
 
-    //quando preencher todas as vagas de visita nos 2 dias retorna essa mensagem
+    // quando preencher todas as vagas de visita nos 2 dias retorna essa mensagem
     if(isset($this->visit_controls[1])){
       $total_visit = $date1->number_visit + $date2->number_visit;
     } else {$total_visit = $date1->number_visit;}
 
-    if($visit_schedulings_count->count() == $total_visit){
-      return redirect('/visita')->with('error', 'Todas as vagas disponíveis para visita já foram preenchidas para este mês!');
+    // quando o total de visitas agendadas for maior que o total de visitas disponibilizadas
+    if($visit_schedulings_count->count() > $total_visit){
+      return redirect('/visita')->with('error', 'Todas as vagas disponíveis para visitas já foram preenchidas para este mês!');
     }
 
     // restringe o número de visitas do primeiro dia
