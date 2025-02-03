@@ -81,6 +81,7 @@
                     <th scope="col"> Nome do Preso </th>
                     <th scope="col"> Cela </th>
                     <th scope="col"> Data da Visita </th>
+                    <th scope="col"> Data do Agendamento </th>
                     <th scope="col"> Tipo da Visita </th>
                 </tr>
             </thead>
@@ -100,6 +101,7 @@
                         @endif
                     </td>
                     <td> {{ \Carbon\Carbon::parse($visit->date_visit)->format('d/m/Y') }}</td>
+                    <td> {{ \Carbon\Carbon::parse($visit->created_at)->format('d/m/Y - H:i:s') }}</td>
                     <td> {{ $visit->type }} </td>
                 </tr>
                 @empty
