@@ -50,7 +50,18 @@ class VisitLivewire extends Component
   {
     // type - code - cpf
     // verifica se o código e cpf do visitante foram digitados corretamente
-    $this->validate(['type'=>'required', 'code' => 'required', 'cpf' => 'required|max:14|min:14']);
+    $this->validate(
+      [
+        'type'=>'required',
+        'code' => 'required',
+        'cpf' => 'required|max:14|min:14'],
+      [
+        'type.required' => 'O campo tipo de visita é obrigatório',
+        'code.required' => 'O campo código do visitante é obrigatório',
+        'cpf.required' => 'O campo CPF é obrigatório',
+        'cpf.min' => 'O campo CPF deve ter 14 números',
+        ]
+    );
 
     // busca os dados da carteirinha conforme os dados digitados
     $this->identification_card = IdentificationCard::with('visitant', 'prisoner')
@@ -73,7 +84,8 @@ class VisitLivewire extends Component
 
     // verifica se o cpf digitado pertence a mesma carterinha conforme o código digitado
     if ($this->identification_card['status'] == 'INATIVO') {
-      return redirect('/visita')->with('error', 'Sua carteirinha está suspensa, favor entrar em contato com a unidade para maiores esclarecimentos!');
+      return redirect('/visita')
+        ->with('error', 'Sua carteirinha está suspensa, favor entrar em contato com a UTPRBG (Unidadde de Tratamento Penal Regional Barra da Grota) para maiores esclarecimentos!');
     }
   
     // verifica se a carteirinha está vencida
@@ -156,7 +168,7 @@ class VisitLivewire extends Component
     } else {$total_visit = $date1->number_visit;}
 
     if($visit_schedulings_count->count() == $total_visit){
-      return redirect('/visita')->with('error', 'Todas as vagas de visita já foram prenechidas para este mês!');
+      return redirect('/visita')->with('error', 'Todas as vagas disponíveis para visita já foram preenchidas para este mês!');
     }
 
     // restringe o número de visitas do primeiro dia
