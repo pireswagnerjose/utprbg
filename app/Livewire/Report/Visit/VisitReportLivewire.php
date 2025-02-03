@@ -23,7 +23,8 @@ class VisitReportLivewire extends Component
 
     public function search()
     {
-        $data = VisitScheduling::with('prisoner', 'visitant');
+        $data = VisitScheduling::with('prisoner', 'visitant')
+            ->orderBy('date_visit', 'desc');
 
         if($this->type ) {
             $data = $data->whereLike('type', $this->type);

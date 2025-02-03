@@ -11,7 +11,8 @@ class VisitReportPdfController extends Controller
 {
     public function search($request)
     {
-        $data = VisitScheduling::with('prisoner', 'visitant');
+        $data = VisitScheduling::with('prisoner', 'visitant')
+            ->orderBy('date_visit', 'desc');
 
         if($request->type ) {
             $data = $data->whereLike('type', $request->type);
