@@ -77,6 +77,7 @@
             <thead>
                 <tr>
                     <th scope="col"> Cód </th>
+                    <th scope="col"> Cód. do Agendamento </th>
                     <th scope="col"> Nome do Visitante </th>
                     <th scope="col"> Nome do Preso </th>
                     <th scope="col"> Cela </th>
@@ -89,6 +90,7 @@
                 @forelse ( $visit_schedulings as $key=>$visit )
                 <tr>
                     <td> {{ $key+1 }} </td>
+                    <td> {{ $visit->id }} </td>
                     <td> {{ $visit->visitant->name }} </td>
                     <td> {{ $visit->prisoner->name }} </td>
                     <td>
