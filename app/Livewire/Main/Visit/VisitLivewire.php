@@ -151,9 +151,10 @@ class VisitLivewire extends Component
       ->where('date', '>', $visit_scheduling_date->start_date)
       ->get();
 
-    $visit_schedulings_count = VisitScheduling::where('type', $this->type)
-    ->where('date_visit', '>', $visit_scheduling_date->start_date)
-    ->get();
+    // $visit_schedulings_count = VisitScheduling::where('type', $this->type)
+    // ->where('date_visit', '>', $visit_scheduling_date->start_date)
+    // ->where('date_visit', $this->date_visit)
+    // ->get();
     
     // primeiro dia de agendamento
     $date1 = $this->visit_controls[0];
@@ -169,16 +170,16 @@ class VisitLivewire extends Component
     } else {$total_visit = $date1->number_visit;}
 
     // quando o total de visitas agendadas for maior que o total de visitas disponibilizadas
-    if($visit_schedulings_count->count() >= intval($total_visit)){
-      return redirect('/visita')->with('error', 'Todas as vagas disponíveis para visitas já foram preenchidas para este mês!');
-    }
+    // if($visit_schedulings_count->count() >= intval($total_visit)){
+    //   return redirect('/visita')->with('error', 'Todas as vagas disponíveis para visitas já foram preenchidas para este mês!');
+    // }
 
     // restringe o número de visitas do primeiro dia
     $day1 = VisitScheduling::where('type', $this->type)
     ->where('date_visit', $date1->date)
     ->get();
 
-    if($day1->count() > intval($date1->number_visit)){
+    if($day1->count() >= intval($date1->number_visit)){
       $this->visit_date1 = '';
     }else{
       $this->visit_date1 = $date1;
@@ -189,13 +190,18 @@ class VisitLivewire extends Component
       $day2 = VisitScheduling::where('type', $this->type)
         ->where('date_visit', $date2->date)
         ->get();
-      if($day2->count() > intval($date2->number_visit)){
+      if($day2->count() >= intval($date2->number_visit)){
         $this->visit_date2 = '';
       }
       else{
         $this->visit_date2 = $date2;
       }
     }else{$this->visit_date2 = '';}
+
+    // quando o total de visitas agendadas for maior que o total de visitas disponibilizadas
+    if($this->visit_date1 == '' && $this->visit_date2 == ''){
+      return redirect('/visita')->with('error', 'Todas as vagas disponíveis para visitas já foram preenchidas para este mês!');
+    }
 
     $this->render();
     $this->visibleForm = false;
