@@ -12,6 +12,7 @@ use App\Http\Controllers\Report\PrisonReportPdfController;
 use App\Http\Controllers\Report\ProcessReportPdfController;
 use App\Http\Controllers\Report\TypePrisonPdfController;
 use App\Http\Controllers\Report\VisitantReportController;
+use App\Http\Controllers\Report\VisitReportPdfController;
 use App\Http\Controllers\VcamController;
 use App\Livewire\Admin\Cell\CellLivewire;
 use App\Livewire\Admin\CivilStatus\CivilStatusLivewire;
@@ -70,6 +71,7 @@ use App\Livewire\Report\PrisonerList\PrisonerListReport;
 use App\Livewire\Report\Process\ProcessReportLivewire;
 use App\Livewire\Report\TypePrison\TypePrisonReportLivewire;
 use App\Livewire\Report\Vcam\VcamReport;
+use App\Livewire\Report\Visit\VisitReportLivewire;
 use App\Livewire\User\UserLivewire;
 use Illuminate\Support\Facades\Route;
 
@@ -233,7 +235,11 @@ Route::middleware([
 
     // Periodo de Agendamento das visitas
     Route::get('/visit-scheduling-date', VisitSchedulingDateLivewire::class)->name('visit-scheduling-date.index');    
-    Route::get('/visit-control', VisitControlLivewire::class)->name('visit-control.index');    
+    Route::get('/visit-control', VisitControlLivewire::class)->name('visit-control.index');
+    
+    // Visitas agendadas
+    Route::get('/visit-report', VisitReportLivewire::class)->name('visit-report.index');    
+    Route::get('/visit-pdf', [VisitReportPdfController::class, 'pdf'])->name('visit.pdf');    
 });
 
 // VISIT

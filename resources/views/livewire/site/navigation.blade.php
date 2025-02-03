@@ -109,6 +109,14 @@
                 Controle de Visitas
               </a>
               @endcan
+
+              {{-- Visitas Agendadas --}}
+              @can('admin-recepcao')
+              <a href="{{ route('visit-report.index') }}" wire:navigate
+                class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
+                Visitas Agendadas
+              </a>
+              @endcan
             </div>
           </div>
         </div>
