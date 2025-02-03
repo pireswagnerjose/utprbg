@@ -163,13 +163,13 @@ class VisitLivewire extends Component
       $date2 = $this->visit_controls[1];
     }
 
-    // quando preencher todas as vagas de visita nos 2 dias retorna essa mensagem
+    // retorna o total de visitas disponíveis
     if(isset($this->visit_controls[1])){
       $total_visit = $date1->number_visit + $date2->number_visit;
     } else {$total_visit = $date1->number_visit;}
 
     // quando o total de visitas agendadas for maior que o total de visitas disponibilizadas
-    if($visit_schedulings_count->count() > $total_visit){
+    if($visit_schedulings_count->count() >= intval($total_visit)){
       return redirect('/visita')->with('error', 'Todas as vagas disponíveis para visitas já foram preenchidas para este mês!');
     }
 
@@ -178,7 +178,7 @@ class VisitLivewire extends Component
     ->where('date_visit', $date1->date)
     ->get();
 
-    if($day1->count() == $date1->number_visit){
+    if($day1->count() >= intval($date1->number_visit)){
       $this->visit_date1 = '';
     }else{
       $this->visit_date1 = $date1;
@@ -189,7 +189,7 @@ class VisitLivewire extends Component
       $day2 = VisitScheduling::where('type', $this->type)
         ->where('date_visit', $date2->date)
         ->get();
-      if($day2->count() == $date2->number_visit){
+      if($day2->count() >= intval($date2->number_visit)){
         $this->visit_date2 = '';
       }
       else{
