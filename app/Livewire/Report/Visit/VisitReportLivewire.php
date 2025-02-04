@@ -39,6 +39,12 @@ class VisitReportLivewire extends Component
         return $data;
     }
 
+    public function delete(VisitScheduling $visit_scheduling)
+    {
+        $visit_scheduling->delete();
+        $this->redirectRoute('visit-report.index');
+    }
+
     public function render()
     {
         $visit_schedulings = $this->search();

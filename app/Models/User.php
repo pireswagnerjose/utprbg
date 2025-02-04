@@ -59,4 +59,15 @@ class User extends Authenticatable
     {
         return $this->belongsTo(\App\Models\Admin\LevelAccess::class);
     }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class)
+            ->withPivot(['role_id', 'user_id']);
+    }
+
+    public function abilities()
+    {
+       return $this->roles->map->abilities->flatten()->pluck('name');
+    }
 }

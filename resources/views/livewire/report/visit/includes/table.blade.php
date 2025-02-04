@@ -9,6 +9,7 @@
             <th scope="col" class="p-2"> Data da Visita </th>
             <th scope="col" class="p-2"> Data do Agendamento </th>
             <th scope="col" class="p-2"> Tipo da Visita </th>
+            <th scope="col" class="p-2"> Ação </th>
         </tr>
     </thead>
     <tbody>
@@ -33,6 +34,18 @@
             <td class="p-2"> {{ \Carbon\Carbon::parse($visit->date_visit)->format('d/m/Y') }}</td>
             <td class="p-2"> {{ \Carbon\Carbon::parse($visit->created_at)->format('d/m/Y - H:i:s') }}</td>
             <td class="p-2"> {{ $visit->type }} </td>
+            <td class="p-2">
+                <div class="group grid justify-items-center w-12">
+                    <button type="button" wire:click="delete({{ $visit->id }})"
+                        class="w-6 h-6 bg-red-600 dark:bg-red-500 rounded-full p-2">
+                        <svg class="w-3 h-3 text-red-50 dark:text-red-50 hover:text-red-400 hover:dark:text-red-400"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 8h6m-9-3.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0ZM5 11h3a4 4 0 0 1 4 4v2H1v-2a4 4 0 0 1 4-4Z" />
+                        </svg>
+                    </button>
+                </div>
+            </td>
         </tr>
         @empty
         <td class="p-2"> Não existe resultado para essa consulta. </td>
