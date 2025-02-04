@@ -40,11 +40,11 @@ class AuthServiceProvider extends ServiceProvider
 
         
         // somente administrador pode acessar
-        Gate::define('admin', function (User $user) {
-            if($user->level_access_id == 1){
-                return true;
-            }
-        });
+        // Gate::define('admin', function (User $user) {
+        //     if($user->level_access_id == 1){
+        //         return true;
+        //     }
+        // });
 
         // somente administrador e chefe de cartório pode acessar
         Gate::define('admin-cartorio_admin', function (User $user) {
