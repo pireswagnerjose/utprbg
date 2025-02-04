@@ -32,19 +32,19 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::before(function ($user, $ability) {
-            if ($user->abilities()->contains($ability)) {
-                return true;
-            }
-        });
-
-        
-        // somente administrador pode acessar
-        // Gate::define('admin', function (User $user) {
-        //     if($user->level_access_id == 1){
+        // Gate::before(function ($user, $ability) {
+        //     if ($user->abilities()->contains($ability)) {
         //         return true;
         //     }
         // });
+
+        
+        // somente administrador pode acessar
+        Gate::define('admin', function (User $user) {
+            if($user->level_access_id == 1){
+                return true;
+            }
+        });
 
         // somente administrador e chefe de cartório pode acessar
         Gate::define('admin-cartorio_admin', function (User $user) {

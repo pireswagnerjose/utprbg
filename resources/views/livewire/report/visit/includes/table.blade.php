@@ -36,7 +36,8 @@
             <td class="p-2"> {{ $visit->type }} </td>
             <td class="p-2">
                 <div class="group grid justify-items-center w-12">
-                    <button type="button" wire:click="delete({{ $visit->id }})"
+                    <button type="button" wire:confirm="Você tem certeza que desena excluir esse agendamento?"
+                        wire:click="delete({{ $visit->id }})"
                         class="w-6 h-6 bg-red-600 dark:bg-red-500 rounded-full p-2">
                         <svg class="w-3 h-3 text-red-50 dark:text-red-50 hover:text-red-400 hover:dark:text-red-400"
                             aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
