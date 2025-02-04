@@ -1,14 +1,15 @@
-<div class="max-w-sm bg-white border border-zinc-200 rounded-lg shadow dark:bg-zinc-800 dark:border-zinc-700">
+<div class="w-full sm:w-[35%]">
     <form>
-        <div class="flex flex-col items-center p-8">
-            <img class="w-24 h-24 mb-3 rounded-full shadow-lg"
-                src='{{ asset("storage/".$identification_card->visitant->photo) }}' alt="Bonnie image" />
+        <div class="flex flex-col items-center">
+            <img class="w-36 h-36 mb-3 rounded-full shadow-lg"
+                src='{{ asset("storage/".$identification_card->visitant->photo) }}' alt="Bonnie image" width="144px"
+                height="144px" />
             <h5 class="mb-1 text-xl font-medium text-zinc-900 dark:text-white">{{ $identification_card->visitant->name
                 }}</h5>
             <span class="text-sm text-zinc-500 dark:text-zinc-400 text-center mt-4">Reeducando:<br> {{
                 $identification_card->prisoner->name }}</span>
 
-            <div class="grid mt-4 md:mt-6">
+            <div class="mt-4 md:mt-6">
                 <div class="col-span-1 z-0 w-full group mt-6">
                     <select wire:model="date_visit"
                         class="uppercase block p-1 w-full text-sm text-zinc-500 dark:text-zinc-400 bg-transparent border-0 border-b border-zinc-400 dark:border-zinc-600 dark:focus:border-blue-500 focus:border-blue-600 appearance-none focus:outline-none focus:ring-0 peer">
