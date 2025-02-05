@@ -32,7 +32,7 @@ class VisitReportPdfController extends Controller
         $start_date = $request->start_date;
         $end_date = $request->end_date;
         $visit_schedulings = $this->search($request);
-        $visit_schedulings = $visit_schedulings->paginate(2);
+        $visit_schedulings = $visit_schedulings->paginate(12);
         return view('livewire.report.visit.visit-report-livewire', 
         compact('visit_schedulings', 'visit_types', 'type', 'start_date', 'end_date'));
     }
