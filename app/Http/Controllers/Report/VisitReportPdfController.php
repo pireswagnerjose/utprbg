@@ -12,7 +12,11 @@ class VisitReportPdfController extends Controller
 {
     public function search($request)
     {
-        $data = VisitScheduling::select('visit_schedulings.*', 'visit_schedulings.created_at as visit_scheduling_created_at', 'prisoners.*', 'prisoners.created_at as prisoner_created_at')
+        $data = VisitScheduling::select('visit_schedulings.*',
+                    'visit_schedulings.id as visit_scheduling_id',
+                    'visit_schedulings.created_at as visit_scheduling_created_at',
+                    'prisoners.*', 'prisoners.created_at as prisoner_created_at',
+                    'prisoners.id as prisoner_join_id')
                     ->join('prisoners','visit_schedulings.prisoner_id','=','prisoners.id')
                     ->orderBy('date_visit', 'desc');
 
