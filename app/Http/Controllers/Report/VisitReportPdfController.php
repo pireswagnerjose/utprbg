@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
+use App\Models\Main\Prisoner;
 use App\Models\Main\Visit\VisitScheduling;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -31,6 +32,7 @@ class VisitReportPdfController extends Controller
 
     public function index(Request $request)
     {
+        $prisoners = Prisoner::all();
         $visit_types = ['SOCIAL','ÍNTIMA'];
         $type = $request->type;
         $start_date = $request->start_date;
@@ -38,7 +40,7 @@ class VisitReportPdfController extends Controller
         $visit_schedulings = $this->search($request);
         $visit_schedulings = $visit_schedulings->paginate(12);
         return view('livewire.report.visit.visit-report-livewire', 
-        compact('visit_schedulings', 'visit_types', 'type', 'start_date', 'end_date'));
+        compact('visit_schedulings', 'visit_types', 'type', 'start_date', 'end_date', 'prisoners'));
     }
 
     public function pdf(Request $request)
