@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
+use App\Models\Main\Prisoner;
 use App\Models\Main\Visit\VisitScheduling;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -11,22 +12,29 @@ class VisitReportPdfController extends Controller
 {
     public function search($request)
     {
-        $data = VisitScheduling::with('prisoner', 'visitant')
-            ->orderBy('date_visit', 'desc');
+        $data = VisitScheduling::select('visit_schedulings.*', 'prisoners.*')
+                    ->join('prisoners','visit_schedulings.prisoner_id','=','prisoners.id')
+                    ->where('prisoners.status_prison_id', 1)
+                    ->orderBy('date_visit', 'desc');
 
         if($request->type ) {
             $data = $data->whereLike('type', $request->type);
         }
+
+        if($request->prisoner_id ) {
+            $data = $data->where('prisoner_id', $request->prisoner_id);
+        }
     
         if($request->start_date != null && $request->end_date != null) {
-            $data = $data->where('date_visit', '>=', $request->start_date)
-                ->where('date_visit', '<=', $request->end_date);
+            $data = $data->whereDate('date_visit', '>=', $request->start_date)
+                ->whereDate('date_visit', '<=', $request->end_date);
         }
         return $data;
     }
 
     public function index(Request $request)
     {
+        $prisoners = Prisoner::all();
         $visit_types = ['SOCIAL','ÍNTIMA'];
         $type = $request->type;
         $start_date = $request->start_date;
@@ -34,7 +42,7 @@ class VisitReportPdfController extends Controller
         $visit_schedulings = $this->search($request);
         $visit_schedulings = $visit_schedulings->paginate(12);
         return view('livewire.report.visit.visit-report-livewire', 
-        compact('visit_schedulings', 'visit_types', 'type', 'start_date', 'end_date'));
+        compact('visit_schedulings', 'visit_types', 'type', 'start_date', 'end_date', 'prisoners'));
     }
 
     public function pdf(Request $request)

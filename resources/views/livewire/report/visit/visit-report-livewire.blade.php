@@ -12,9 +12,9 @@
             @csrf
             @include('livewire.report.visit.includes.fields')
             <div class="flex justify-center mt-12">
-                <x-blue-button wire:click='clearFieldes' class="ml-4 bg-green-600">{{ 'Pesquisar' }}
+                <x-blue-button class="ml-4 bg-green-600">{{ 'Pesquisar' }}
                 </x-blue-button>
-                <x-blue-button wire:click='clearFieldes' class="ml-4 bg-red-600">{{ 'Limpar Pesquisa' }}
+                <x-blue-button class="ml-4 bg-red-600">{{ 'Limpar Pesquisa' }}
                 </x-blue-button>
             </div>
         </form>
