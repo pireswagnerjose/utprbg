@@ -14,8 +14,7 @@ class VisitReportPdfController extends Controller
     {
         $data = VisitScheduling::select('visit_schedulings.*', 'prisoners.*', 'prisoners.created_at as prisoner_created_at')
                     ->join('prisoners','visit_schedulings.prisoner_id','=','prisoners.id')
-                    ->orderBy('date_visit', 'desc')->get();
-                    dd( $data);
+                    ->orderBy('date_visit', 'desc');
 
         // $data = VisitScheduling::with('prisoner', 'visitant')
         //     ->orderBy('date_visit', 'desc');
