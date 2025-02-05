@@ -6,6 +6,7 @@
                 <th scope="col" class="p-2 w-[5%]"> # </th>
                 <th scope="col" class="p-2 w-[15%]"> Data da Vista </th>
                 <th scope="col" class="p-2 w-[15%]"> Número de Visitas </th>
+                <th scope="col" class="p-2 w-[15%]"> Qtd. Agendadas </th>
                 <th scope="col" class="p-2 w-[25%]"> Tipo da Visita </th>
                 <th scope="col" class="p-2 w-[25%]"> Ala - Pavilhão </th>
                 <th scope="col" class="p-2 w-[15%]"> Edit </th>
@@ -19,6 +20,11 @@
                 <td class="p-2"> {{ $key+1 }} </td>
                 <td class="p-2"> {{ \Carbon\Carbon::parse($visit_control->date)->format('d/m/Y') }} </td>
                 <td class="p-2"> {{ $visit_control->number_visit }} </td>
+                @php
+                $visit_schedulin_count = App\Models\Main\Visit\VisitScheduling::where('date_visit',
+                $visit_control->date)->count();
+                @endphp
+                <td class="p-2"> {{ $visit_schedulin_count }} </td>
                 <td class="p-2"> {{ $visit_control->visit_type }} </td>
                 <td class="p-2"> {{ $visit_control->ward->ward }} </td>
                 <td class="p-2">

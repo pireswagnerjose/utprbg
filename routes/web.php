@@ -238,8 +238,10 @@ Route::middleware([
     Route::get('/visit-control', VisitControlLivewire::class)->name('visit-control.index');
     
     // Visitas agendadas
-    Route::get('/visit-report', VisitReportLivewire::class)->name('visit-report.index');    
+    // Route::get('/visit-report', VisitReportLivewire::class)->name('visit-report.index');    
+    Route::get('/visit-report', [VisitReportPdfController::class, 'index'])->name('visit-report.index');    
     Route::get('/visit-pdf', [VisitReportPdfController::class, 'pdf'])->name('visit.pdf');    
+    Route::delete('/visit/destroy/{id}', [VisitReportPdfController::class, 'destroy'])->name('visit.destroy');    
 });
 
 // VISIT
