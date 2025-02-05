@@ -12,15 +12,13 @@ class VisitReportPdfController extends Controller
 {
     public function search($request)
     {
-        $data = VisitScheduling::select('visit_schedulings.*', 'prisoners.*')
-                    ->join('prisoners','visit_schedulings.prisoner_id','=','prisoners.id')
-                    ->where('prisoners.status_prison_id', 1)
-                    ->orderBy('date_visit', 'desc');
+        $data = VisitScheduling::with('prisoner', 'visitant')
+            ->orderBy('date_visit', 'desc');
 
         if($request->type ) {
             $data = $data->whereLike('type', $request->type);
         }
-
+    
         if($request->prisoner_id ) {
             $data = $data->where('prisoner_id', $request->prisoner_id);
         }
