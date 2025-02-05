@@ -36,6 +36,13 @@
 
     {{-- paginação --}}
     <div class="pl-2 py-4 mt-4 text-zinc-50 dark:text-zinc-400 border-t border-blue-300 dark:border-blue-500 pb-3">
-        {{ $visit_schedulings->links(data: ['scrollTo' => false]) }}
+        {{ $visit_schedulings
+        ->appends([
+        'start_date'=>request()->get('start_date'),
+        'end_date'=>request()->get('end_date'),
+        'type'=>request()->get('type')
+        ])
+        ->links(data: ['scrollTo' => false])
+        }}
     </div>
 </x-app-layout>
