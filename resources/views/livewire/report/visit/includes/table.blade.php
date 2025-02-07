@@ -9,7 +9,9 @@
             <th scope="col" class="p-2"> Data Visita </th>
             <th scope="col" class="p-2"> Data Agendamento </th>
             <th scope="col" class="p-2"> Tipo Visita </th>
+            @can('delete_visit_scheduling')
             <th scope="col" class="p-2"> Ação </th>
+            @endcan
         </tr>
     </thead>
     <tbody>
@@ -35,6 +37,7 @@
             <td class="p-2"> {{ \Carbon\Carbon::parse($visit->visit_scheduling_created_at )->format('d/m/Y - H:i:s') }}
             </td>
             <td class="p-2"> {{ $visit->type }} </td>
+            @can('delete_visit_scheduling')
             <td class="p-2">
                 <div class="group grid justify-items-center w-12">
                     <form action="{{ route('visit.destroy', $visit->visit_scheduling_id) }}" method="POST">
@@ -48,6 +51,7 @@
                     </form>
                 </div>
             </td>
+            @endcan
         </tr>
         @empty
         <td class="p-2"> Não existe resultado para essa consulta. </td>
