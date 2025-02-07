@@ -118,8 +118,6 @@ class UserLivewire extends Component
         $this->userPhone            = $user->phone;
         $this->userEmail            = $user->email;
         $this->userPrisonUnitId     = $user->prison_unit_id;
-        $this->roleId               = $user->level_access_id;
-
         $this->confirmingUserUpdate = $user->id;
     }
 
@@ -135,7 +133,6 @@ class UserLivewire extends Component
                 'phone'             => $this->userPhone,
                 'email'             => $this->userEmail,
                 'prison_unit_id'    => $this->userPrisonUnitId,
-                'level_access_id'   => $this->roleId,
                 'user_update'       => $this->userUpdate
             ],
             // Validation rules to apply...
@@ -158,6 +155,7 @@ class UserLivewire extends Component
         // Transforma os caracteres em maiusculos
         $dataValidated['first_name'] = mb_strtoupper ($dataValidated['first_name'],'utf-8');
         $dataValidated['last_name'] = mb_strtoupper ($dataValidated['last_name'],'utf-8');
+        
         $user->update($dataValidated);//atualiza os dados no banco
         
         $user_update = User::with('roles')->find($user->id);
