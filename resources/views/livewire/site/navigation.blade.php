@@ -1,9 +1,8 @@
 <div>
-
   <nav>
     <ul class="flex flex-row sm:flex-row px-8 gap-4 justify-center items-center bg-zinc-500 dark:bg-zinc-700">
       {{-- presos --}}
-      @can('admin-saude-guest')
+      @can('show_menu_prisoner')
       <li>
         <div x-data="{
                         open: false,
@@ -37,10 +36,12 @@
               class="p-4 pb-0 space-y-2 text-zinc-900 md:pb-4 dark:text-white">
 
               {{-- pesquisa de preso --}}
+              @can('show_prisoners')
               <a href="{{ route('prisoners.search') }}" wire:navigate
                 class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
                 Pesquisar
               </a>
+              @endcan
             </div>
           </div>
         </div>
@@ -48,7 +49,7 @@
       @endcan
 
       {{-- Visitantes --}}
-      @can('admin-recepcao-guest')
+      @can('show_menu_visitants')
       <li>
         <div x-data="{
                         open: false,
@@ -81,13 +82,15 @@
               :id="$id('dropdown-button')" style="display: none;"
               class="p-4 pb-0 space-y-1 text-zinc-900 md:pb-4 dark:text-white">
               {{-- Página de Gerenciamento do Visitante --}}
+              @can('show_visitant')
               <a href="{{ route('visitant.index') }}"
                 class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
                 <span class="">Visitante</span>
               </a>
+              @endcan
 
-              {{-- Página de Gerenciamento da Carteirinha do Visitante --}}
-              @can('admin-recepcao')
+              {{-- Gerenciamento da Carteirinha do Visitante --}}
+              @can('show_identification_card')
               <a href="{{ route('identification-card.index') }}" wire:navigate
                 class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
                 Carteirinha
@@ -95,7 +98,7 @@
               @endcan
 
               {{-- Periodo de Agendamento das Visitas --}}
-              @can('admin-recepcao')
+              @can('show_visit_scheduling_date')
               <a href="{{ route('visit-scheduling-date.index') }}" wire:navigate
                 class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
                 Periodo de Agendamento das Visitas
@@ -103,7 +106,7 @@
               @endcan
 
               {{-- Controle de Visitas --}}
-              @can('admin-recepcao')
+              @can('show_visit_control')
               <a href="{{ route('visit-control.index') }}" wire:navigate
                 class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
                 Controle de Visitas
@@ -111,7 +114,7 @@
               @endcan
 
               {{-- Visitas Agendadas --}}
-              @can('admin-recepcao')
+              @can('show_visit_scheduling')
               <a href="{{ route('visit-report.index') }}" wire:navigate
                 class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
                 Visitas Agendadas
@@ -124,7 +127,7 @@
       @endcan
 
       {{-- tabelas acessórias --}}
-      @can('admin')
+      @can('show_menu_acessories')
       <li>
         <div x-data="{
                         open: false,
@@ -370,7 +373,7 @@
       @endcan
 
       {{-- Usuários --}}
-      @can('admin')
+      @can('show_menu_users')
       <li>
         <div x-data="{
                         open: false,
@@ -404,13 +407,30 @@
               class="p-4 pb-0 space-y-1 text-zinc-900 md:pb-4 dark:text-white">
               {{-- Listar Usuário --}}
               <a href="{{ route('users-show.index') }}"
-                class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
+                class="flex gap-1 items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
+                <i data-lucide="layout-list" class="w-3 h-3 text-zinc-400 dark:text-zinc-500"></i>
                 <span class="">Listar Usuário</span>
               </a>
+
               {{-- Nível de Acesso --}}
-              <a href="{{ route('level-accesses.index') }}"
-                class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
+              <a href="{{ route('role.index') }}"
+                class="flex gap-1 items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
+                <i data-lucide="circle-arrow-out-up-left" class="w-3 h-3 text-zinc-400 dark:text-zinc-500"></i>
                 <span class="">Nível de Acesso</span>
+              </a>
+
+              {{-- Nível de Acesso --}}
+              <a href="{{ route('feature.index') }}"
+                class="flex gap-1 items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
+                <i data-lucide="radar" class="w-3 h-3 text-zinc-400 dark:text-zinc-500"></i>
+                <span class="">Funcionalidade</span>
+              </a>
+
+              {{-- Nível de Acesso --}}
+              <a href="{{ route('ability.index') }}"
+                class="flex gap-1 items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
+                <i data-lucide="case-upper" class="w-3 h-3 text-zinc-400 dark:text-zinc-500"></i>
+                <span class="">Permissões do Usuário</span>
               </a>
             </div>
           </div>
@@ -419,7 +439,7 @@
       @endcan
 
       {{-- Relatórios --}}
-      @can('guest')
+      @can('show_menu_report')
       <li>
         <div x-data="{
                         open: false,
@@ -452,13 +472,15 @@
               :id="$id('dropdown-button')" style="display: none;"
               class="p-4 pb-0 space-y-1 text-zinc-900 md:pb-4 dark:text-white">
               {{-- Listagem de Presos --}}
+              @can('prisoners_listing')
               <a href="{{ route('prisoners-list.index') }}"
                 class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
                 <span class="">Listagem de Presos</span>
               </a>
+              @endcan
 
               {{-- VCAM --}}
-              @can('admin')
+              @can('vcam')
               <a href="{{ route('vcam-list.index') }}"
                 class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
                 <span class="">VCAM</span>
@@ -466,7 +488,7 @@
               @endcan
 
               {{-- Atendimentos Internos --}}
-              @can('guest')
+              @can('internal_services')
               <a href="{{ route('internal-services.index') }}"
                 class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
                 <span class="">Atendimentos Internos</span>
@@ -474,7 +496,7 @@
               @endcan
 
               {{-- Atendimentos Jurídicos --}}
-              @can('guest')
+              @can('legal_assistances')
               <a href="{{ route('legal-assistances.index') }}"
                 class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
                 <span class="">Atendimentos Jurídicos</span>
@@ -482,7 +504,7 @@
               @endcan
 
               {{-- Saídas Externas --}}
-              @can('guest')
+              @can('external_exits')
               <a href="{{ route('external-exits.index') }}"
                 class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
                 <span class="">Saídas Externas</span>
@@ -495,7 +517,7 @@
       @endcan
 
       {{-- Inforpen --}}
-      @can('admin')
+      @can('show_menu_infopen')
       <li>
         <div x-data="{
                         open: false,
@@ -528,45 +550,68 @@
               :id="$id('dropdown-button')" style="display: none;"
               class="p-4 pb-0 space-y-1 text-zinc-900 md:pb-4 dark:text-white">
               {{-- Atestado de Pena --}}
+              @can('infopen_certificate_of_sentence')
               <a href="{{ route('infopen.certificate-of-sentence') }}"
                 class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
                 <span class="">Atestado de Pena</span>
               </a>
+              @endcan
+
               {{-- Pena --}}
+              @can('infopen_sentence')
               <a href="{{ route('infopen.sentence') }}"
                 class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
                 <span class="">Pena (Anos, Meses e Dias)</span>
               </a>
+              @endcan
+
               {{-- Tipos Penais --}}
+              @can('infopen_criminal_types')
               <a href="{{ route('infopen.criminal-types') }}"
                 class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
                 <span class="">Tipos Penais</span>
               </a>
+              @endcan
+
               {{-- Prisons --}}
+              @can('infopen_prisons')
               <a href="{{ route('infopen.prisons') }}"
                 class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
                 <span class="">Histórico de Prisões</span>
               </a>
+              @endcan
+
               {{-- Processos --}}
+              @can('infopen_processes')
               <a href="{{ route('infopen.processes') }}"
                 class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
                 <span class="">Processos</span>
               </a>
+              @endcan
+
               {{-- Tipos Penais --}}
+              @can('infopen_type_prisons')
               <a href="{{ route('infopen.type-prisons') }}"
                 class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
-                <span class="">Tipo de Prisões</span>
+                <span class="">Tipos de Prisões</span>
               </a>
+              @endcan
+
               {{-- Escolaridade --}}
+              @can('infopen_education_level')
               <a href="{{ route('infopen-education-level') }}"
                 class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
                 <span class="">Escolaridade</span>
               </a>
+              @endcan
+
               {{-- Prisoner --}}
+              @can('infopen_prisoner')
               <a href="{{ route('infopen-prisoner') }}"
                 class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
-                <span class="">Preso</span>
+                <span class="">Presos</span>
               </a>
+              @endcan
             </div>
           </div>
         </div>

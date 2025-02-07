@@ -18,10 +18,7 @@ class VisitReportPdfController extends Controller
                     'prisoners.*', 'prisoners.created_at as prisoner_created_at',
                     'prisoners.id as prisoner_join_id')
                     ->join('prisoners','visit_schedulings.prisoner_id','=','prisoners.id')
-                    ->orderBy('date_visit', 'desc');
-
-        // $data = VisitScheduling::with('prisoner', 'visitant')
-        //     ->orderBy('date_visit', 'desc');
+                    ->orderBy('date_visit', direction: 'desc');
 
         if($request->type ) {
             $data = $data->whereLike('type', $request->type);

@@ -7,7 +7,7 @@
             {{-- botões --}}
             <div class="flex justify-end gap-2 px-2">
                 {{-- chama o modal para exclusão do item --}}
-                @can('admin')
+                @can('delete_identification_card')
                 <div class="group grid justify-items-center w-16 border-b border-zinc-200 dark:border-zinc-600">
                     <button type="button" wire:click="modalDelete({{ $identification_card->id }})"
                         class="w-8 h-8 bg-red-600 dark:bg-red-500 rounded-full p-2">
@@ -23,7 +23,7 @@
 
 
                 {{-- Editar --}}
-                @can('admin-recepcao')
+                @can('update_identification_card')
                 <div class="group grid justify-items-center w-16 border-b border-zinc-200 dark:border-zinc-600">
                     <button wire:click="modalUpdate({{ $identification_card->id }})"
                         class="w-8 h-8 bg-blue-600 dark:bg-blue-500 rounded-full p-2">
@@ -38,6 +38,7 @@
                 @endcan
 
                 {{-- Relatório PDF --}}
+                @can('create_pdf_identification_card')
                 <div class="group grid justify-items-center w-16 border-b border-zinc-200 dark:border-zinc-600">
                     <a href="{{ route('identification-card.pdf', ['identification_card_id' => $identification_card->id]) }}"
                         class="w-8 h-8 bg-green-600 dark:bg-green-500 rounded-full p-2" target="_blank">
@@ -49,6 +50,7 @@
                     </a>
                     <span class="text-xs text-zinc-600 dark:text-zinc-400 mt-1">Gerar PDF</span>
                 </div>
+                @endcan
             </div>
         </div>
 

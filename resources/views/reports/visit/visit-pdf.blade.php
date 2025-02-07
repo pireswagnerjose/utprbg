@@ -76,21 +76,21 @@
         <table>
             <thead>
                 <tr>
-                    <th scope="col"> Cód </th>
-                    <th scope="col"> Cód. do Agendamento </th>
-                    <th scope="col"> Nome do Visitante </th>
-                    <th scope="col"> Nome do Preso </th>
+                    <th scope="col"> Nº </th>
+                    <th scope="col"> Cód. </th>
+                    <th scope="col"> Visitante </th>
+                    <th scope="col"> Preso </th>
                     <th scope="col"> Cela </th>
-                    <th scope="col"> Data da Visita </th>
-                    <th scope="col"> Data do Agendamento </th>
-                    <th scope="col"> Tipo da Visita </th>
+                    <th scope="col"> Data Visita </th>
+                    <th scope="col"> Data Agendamento </th>
+                    <th scope="col"> Tipo Visita </th>
                 </tr>
             </thead>
             <tbody>
                 @forelse ( $visit_schedulings as $key=>$visit )
                 <tr>
                     <td> {{ $key+1 }} </td>
-                    <td> {{ $visit->id }} </td>
+                    <td> {{ $visit->visit_scheduling_id }} </td>
                     <td> {{ $visit->visitant->name }} </td>
                     <td> {{ $visit->prisoner->name }} </td>
                     <td>
@@ -103,7 +103,7 @@
                         @endif
                     </td>
                     <td> {{ \Carbon\Carbon::parse($visit->date_visit)->format('d/m/Y') }}</td>
-                    <td> {{ \Carbon\Carbon::parse($visit->created_at)->format('d/m/Y - H:i:s') }}</td>
+                    <td> {{ \Carbon\Carbon::parse($visit->visit_scheduling_created_at )->format('d/m/Y - H:i:s') }}</td>
                     <td> {{ $visit->type }} </td>
                 </tr>
                 @empty

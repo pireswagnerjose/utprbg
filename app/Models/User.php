@@ -66,8 +66,8 @@ class User extends Authenticatable
             ->withPivot(['role_id', 'user_id']);
     }
 
-    // public function abilities()
-    // {
-    //    return $this->roles->map->abilities->flatten()->pluck('name');
-    // }
+    public function abilities()
+    {
+       return $this->roles->map->abilities->flatten()->pluck('nickname');
+    }
 }

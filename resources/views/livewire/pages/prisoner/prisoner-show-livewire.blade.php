@@ -4,7 +4,8 @@
         @include('livewire.pages.prisoner.includes.alerts')
     </div>
 
-    <div class="mx-auto bg-white dark:bg-zinc-800 overflow-hidden shadow-sm sm:rounded-lg text-zinc-900 dark:text-zinc-100">
+    <div
+        class="mx-auto bg-white dark:bg-zinc-800 overflow-hidden shadow-sm sm:rounded-lg text-zinc-900 dark:text-zinc-100">
         {{-- Título --}}
         <x-title-page>Dados do Preso</x-title-page>
         {{-- Conteúdo --}}
@@ -12,8 +13,8 @@
     </div>
     {{-- tabs --}}
     <div class="mt-1">
-        @can('guest')
-            @include('livewire.pages.prisoner.includes.tabs')
+        @can('show_prisoners_data')
+        @include('livewire.pages.prisoner.includes.tabs')
         @endcan
     </div>
 
@@ -24,6 +25,6 @@
     <form wire:submit="profilePhoto({{ $prisoner_show->id }})">
         @include('livewire.pages.prisoner.includes.modal-profile-photo')
     </form>
-    
+
     @include('livewire.pages.prisoner.includes.report-modal-select')
 </div>

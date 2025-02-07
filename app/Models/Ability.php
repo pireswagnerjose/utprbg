@@ -8,7 +8,14 @@ class Ability extends Model
 {
     protected $fillable = [
         'name',
+        'nickname',
+        'feature_id',
     ];
+
+    public function feature()
+    {
+        return $this->belongsTo(Feature::class);
+    }
 
     public function roles()
     {

@@ -31,13 +31,13 @@
                 @endforeach
                 @endif
             </td>
-            <td class="p-2"> {{ \Carbon\Carbon::parse($visit->date_visit)->format('d/m/Y') }}</td>
-            <td class="p-2"> {{ \Carbon\Carbon::parse($visit->visit_scheduling_created_at)->format('d/m/Y - H:i:s') }}
+            <td class="p-2"> {{ \Carbon\Carbon::parse($visit->date_visit )->format('d/m/Y') }}</td>
+            <td class="p-2"> {{ \Carbon\Carbon::parse($visit->visit_scheduling_created_at )->format('d/m/Y - H:i:s') }}
             </td>
             <td class="p-2"> {{ $visit->type }} </td>
             <td class="p-2">
                 <div class="group grid justify-items-center w-12">
-                    <form action="{{ route('visit.destroy', $visit->id) }}" method="POST">
+                    <form action="{{ route('visit.destroy', $visit->visit_scheduling_id) }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <button type="submit"

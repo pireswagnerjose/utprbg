@@ -8,7 +8,7 @@
          {{-- botões --}}
          <div class="flex justify-end gap-2 px-2">
             {{-- chama o modal para exclusão do item --}}
-            @can('admin')
+            @can('delete_visitant')
             <div class="group grid justify-items-center w-16 border-b border-zinc-200 dark:border-zinc-600">
                <button type="button" wire:click="modalDelete({{ $visitant->id }})"
                   class="w-8 h-8 bg-red-600 dark:bg-red-500 rounded-full p-2">
@@ -23,7 +23,7 @@
             @endcan
 
             {{-- Editar --}}
-            @can('admin-recepcao')
+            @can('update_visitant')
             <div class="group grid justify-items-center w-16 border-b border-zinc-200 dark:border-zinc-600">
                <button wire:click="modalUpdate({{ $visitant->id }})"
                   class="w-8 h-8 bg-blue-600 dark:bg-blue-500 rounded-full p-2">

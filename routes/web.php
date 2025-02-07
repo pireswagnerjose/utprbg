@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Acl\AbilityController;
+use App\Http\Controllers\Acl\FeatureController;
+use App\Http\Controllers\Acl\PermissionController;
+use App\Http\Controllers\Acl\RoleController;
 use App\Http\Controllers\PrisonerListController;
 use App\Http\Controllers\PrisonerPdfController;
 use App\Http\Controllers\Report\EducationLevelReportController;
@@ -71,7 +75,6 @@ use App\Livewire\Report\PrisonerList\PrisonerListReport;
 use App\Livewire\Report\Process\ProcessReportLivewire;
 use App\Livewire\Report\TypePrison\TypePrisonReportLivewire;
 use App\Livewire\Report\Vcam\VcamReport;
-use App\Livewire\Report\Visit\VisitReportLivewire;
 use App\Livewire\User\UserLivewire;
 use Illuminate\Support\Facades\Route;
 
@@ -91,7 +94,7 @@ Route::middleware([
     // Level Access - Nível de Acesso
     Route::get('/level-accesses', LevelAccessLivewire::class)->name('level-accesses.index')->middleware('can:admin');
     // Users - Usuários
-    Route::get('/users-show', UserLivewire::class)->name('users-show.index')->middleware('can:admin');
+    Route::get('/users-show', UserLivewire::class)->name('users-show.index');
     // Prison Unit - Unidades Prisionais
     Route::get('/prison-units', PrisonUnitLivewire::class)->name('prison-units.index')->middleware('can:admin');
     // Country - País
@@ -238,10 +241,39 @@ Route::middleware([
     Route::get('/visit-control', VisitControlLivewire::class)->name('visit-control.index');
     
     // Visitas agendadas
-    // Route::get('/visit-report', VisitReportLivewire::class)->name('visit-report.index');    
     Route::get('/visit-report', [VisitReportPdfController::class, 'index'])->name('visit-report.index');    
     Route::get('/visit-pdf', [VisitReportPdfController::class, 'pdf'])->name('visit.pdf');    
-    Route::delete('/visit/destroy/{id}', [VisitReportPdfController::class, 'destroy'])->name('visit.destroy');    
+    Route::delete('/visit/destroy/{id}', [VisitReportPdfController::class, 'destroy'])->name('visit.destroy');
+    
+    // ACL
+    /* rotas referente a tablela de Abilidades */
+    Route::get('/ability', [AbilityController::class, 'index'])->name('ability.index');
+    Route::get('/ability/create', [AbilityController::class, 'create'])->name('ability.create');
+    Route::post('/ability/store', [AbilityController::class, 'store'])->name('ability.store');
+    Route::get('/ability/edit/{id}', [AbilityController::class, 'edit'])->name('ability.edit');
+    Route::put('/ability/update/{id}', [AbilityController::class, 'update'])->name('ability.update');
+    Route::delete('/ability/destroy/{id}', [AbilityController::class, 'destroy'])->name('ability.destroy');
+
+    /* rotas referente a tablela de níveis de acesso */
+    Route::get('/role', [RoleController::class, 'index'])->name('role.index');
+    Route::get('/role/create', [RoleController::class, 'create'])->name('role.create');
+    Route::post('/role/store', [RoleController::class, 'store'])->name('role.store');
+    Route::get('/role/edit/{id}', [RoleController::class, 'edit'])->name('role.edit');
+    Route::put('/role/update/{id}', [RoleController::class, 'update'])->name('role.update');
+    Route::delete('/role/destroy/{id}', [RoleController::class, 'destroy'])->name('role.destroy');
+
+    /* rotas referente a tablela de Abilidades */
+    Route::get('/feature', [FeatureController::class, 'index'])->name('feature.index');
+    Route::get('/feature/create', [FeatureController::class, 'create'])->name('feature.create');
+    Route::post('/feature/store', [FeatureController::class, 'store'])->name('feature.store');
+    Route::get('/feature/edit/{id}', [FeatureController::class, 'edit'])->name('feature.edit');
+    Route::put('/feature/update/{id}', [FeatureController::class, 'update'])->name('feature.update');
+    Route::delete('/feature/destroy/{id}', [FeatureController::class, 'destroy'])->name('feature.destroy');
+
+    /* rotas referente a tablela de permissões */
+    Route::get('/permission/edit/{id}', [PermissionController::class, 'edit'])->name('permission.edit');
+    Route::get('/permission/create/{ability_id}/{role_id}', [PermissionController::class, 'create'])->name('permission.create');
+    Route::delete('/permission/destroy/{id}', [PermissionController::class, 'destroy'])->name('permission.destroy');
 });
 
 // VISIT

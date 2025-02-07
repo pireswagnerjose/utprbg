@@ -2,8 +2,8 @@
 
 namespace App\Livewire\User;
 
-use App\Models\Admin\LevelAccess;
 use App\Models\Admin\PrisonUnit;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -21,13 +21,13 @@ class UserLivewire extends Component
 
     // CLASS ACESSORIES
     public $prison_units;
-    public $level_accesses;
+    public $roles;
     public $userCreate;
     public $userUpdate;
     public function mount()
     {
         $this->prison_units = PrisonUnit::all();
-        $this->level_accesses =LevelAccess::all();
+        $this->roles = Role::all();
         $this->userCreate = Auth::user()->id;
         $this->userUpdate = Auth::user()->id;
     }
@@ -47,7 +47,7 @@ class UserLivewire extends Component
     public function clearFields()
     {
         $this->reset('userFirstName', 'userLastName', 'userRegistry', 'userPhone', 'userEmail',
-            'userPrisonUnitId', 'userLevelAccessId', 'user_update', 'userPassword');
+            'userPrisonUnitId', '$roleId', 'user_update', 'userPassword');
         $this->confirmingUserUpdate = false;
     }
     
@@ -58,7 +58,7 @@ class UserLivewire extends Component
     public $userPhone;
     public $userEmail;
     public $userPrisonUnitId;
-    public $userLevelAccessId;
+    public $roleId;
     public $userPassword;
 
     // CREATE NEW - CRIAR NOVO
@@ -74,7 +74,7 @@ class UserLivewire extends Component
                 'phone'             => $this->userPhone,
                 'email'             => $this->userEmail,
                 'prison_unit_id'    => $this->userPrisonUnitId,
-                'level_access_id'   => $this->userLevelAccessId,
+                'level_access_id'   => $this->roleId,
                 'user_create'       => $this->userCreate,
                 'password'          => $this->userPassword
             ],
@@ -99,9 +99,11 @@ class UserLivewire extends Component
         $dataValidated['first_name'] = mb_strtoupper ($dataValidated['first_name'],'utf-8');
         $dataValidated['last_name'] = mb_strtoupper ($dataValidated['last_name'],'utf-8');
         $dataValidated ['password'] = Hash::make($dataValidated['password']);
-        User::create($dataValidated);
+        
+        $user = User::create($dataValidated);
+        $user->roles()->attach($this->roleId);
         $this->reset('userFirstName', 'userLastName', 'userRegistry', 'userPhone', 'userEmail',
-            'userPrisonUnitId', 'userLevelAccessId', 'userPassword');
+            'userPrisonUnitId', 'roleId', 'userPassword');
         session()->flash('success', 'Created.');
         $this->resetPage();
     }
@@ -109,14 +111,14 @@ class UserLivewire extends Component
     // MODAL UPDATE
     public $confirmingUserUpdate = false;
     public function confirmgUserUpdate(User $user)
-    {         
+    {    
         $this->userFirstName        = $user->first_name;
         $this->userLastName         = $user->last_name;
         $this->userRegistry         = $user->registry;
         $this->userPhone            = $user->phone;
         $this->userEmail            = $user->email;
         $this->userPrisonUnitId     = $user->prison_unit_id;
-        $this->userLevelAccessId    = $user->level_access_id;
+        $this->roleId               = $user->level_access_id;
 
         $this->confirmingUserUpdate = $user->id;
     }
@@ -133,7 +135,7 @@ class UserLivewire extends Component
                 'phone'             => $this->userPhone,
                 'email'             => $this->userEmail,
                 'prison_unit_id'    => $this->userPrisonUnitId,
-                'level_access_id'   => $this->userLevelAccessId,
+                'level_access_id'   => $this->roleId,
                 'user_update'       => $this->userUpdate
             ],
             // Validation rules to apply...
@@ -157,8 +159,17 @@ class UserLivewire extends Component
         $dataValidated['first_name'] = mb_strtoupper ($dataValidated['first_name'],'utf-8');
         $dataValidated['last_name'] = mb_strtoupper ($dataValidated['last_name'],'utf-8');
         $user->update($dataValidated);//atualiza os dados no banco
+        
+        $user_update = User::with('roles')->find($user->id);
+        foreach ( $user_update->roles as $role) {
+            $user_id = $role;
+        }
+        if(!empty($user_id) && $user_id != '') {
+            $user->roles()->detach($user_id);
+        }
+        $user->roles()->attach($this->roleId);
         $this->reset('userFirstName', 'userLastName', 'userRegistry', 'userPhone', 'userEmail',
-            'userPrisonUnitId', 'userLevelAccessId', 'userPassword');
+            'userPrisonUnitId', 'roleId', 'userPassword');
         $this->confirmingUserUpdate = false;
     }
     
@@ -171,7 +182,12 @@ class UserLivewire extends Component
     // USER DELETE
     public function deleteUser(User $user)
     {
+        $user = User::with('roles')->find($user->id);
+        foreach ( $user->roles as $role) {
+            $user_id = $role;
+        }
         $user->delete();
+        $user->roles()->detach($user_id);
         $this->confirmingUserDeletion = false;
     }
 

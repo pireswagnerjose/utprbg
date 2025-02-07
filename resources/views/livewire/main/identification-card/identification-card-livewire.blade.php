@@ -1,7 +1,7 @@
 <div>
    {{-- add new --}}
    <div class="flex items-center border-b border-blue-400 dark:border-blue-600 mb-4">
-      @can('admin-recepcao')
+      @can('create_identification_card')
       <div>
          <button wire:click="modalCreate" type="button"
             class="mb-4 text-white bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
