@@ -32,7 +32,7 @@
 
     {{-- imagens --}}
     <div class="h-52 w-52 shadow-xl">
-      <img src='{{ asset("storage/$photo->photo") }}' data-te-img='{{ asset(" storage/$photo->photo") }}'
+      <img src='{{ asset("storage/$photo->photo") }}' data-te-img='{{ asset("storage/$photo->photo") }}'
         alt="{{ $photo->description }}"
         class="h-52 w-52 cursor-zoom-in rounded shadow-sm data-[te-lightbox-disabled]:cursor-auto" />
     </div>
