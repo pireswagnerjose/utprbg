@@ -160,27 +160,23 @@
           <x-item-topic> Visitas Vinculadas </x-item-topic>
 
           <!-- Visitantes -->
-          <div class="flex py-3 w-full">
+          <div class="grid grid-cols-3 gap-4 p-4">
             @foreach ($identification_cards as $identification_card)
-            <div class="px-4 w-full">
-              <a href="{{ route('visitant.show', ['visitant_id' => $identification_card->visitant_id]) }}"
-                class="flex w-full justify-between font-semibold text-blue-700 dark:text-blue-500 hover:underline">
-                <span class="flex w-full md:w-1/3 flex-row items-center gap-2 ">
 
-                  <div
-                    class="flex items-center justify-center rounded-full shadow-lg w-16 h-16 overflow-hidden object-cover">
-                    <img class="w-16" src='{{ asset("storage/" . $identification_card->visitant->photo ) }}'
-                      alt="{{ $identification_card->visitant->name }}">
-                  </div>
+            <a href="{{ route('visitant.show', ['visitant_id' => $identification_card->visitant_id]) }}"
+              class="hover:opacity-50 duration-500">
+              <div class="flex gap-2 items-center font-semibold text-blue-700 dark:text-blue-500">
+                <img class="w-16 h-16 rounded-full"
+                  src='{{ asset("storage/" . $identification_card->visitant->photo ) }}'
+                  alt="{{ $identification_card->visitant->name }}">
 
-                  <div class="flex flex-col">
-                    <h1>{{ $identification_card->visitant->name }}</h1>
-                    <span class="text-xs">Contato: {{ $identification_card->visitant->phone }}</span>
-                  </div>
+                <div class="flex flex-col">
+                  <h1>{{ $identification_card->visitant->name }}</h1>
+                  <span class="text-xs">Contato: {{ $identification_card->visitant->phone }}</span>
+                </div>
+              </div>
+            </a>
 
-                </span>
-              </a>
-            </div>
             @endforeach
           </div>
 
