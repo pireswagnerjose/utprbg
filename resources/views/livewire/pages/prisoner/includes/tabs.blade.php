@@ -160,12 +160,12 @@
           <x-item-topic> Visitas Vinculadas </x-item-topic>
 
           <!-- Visitantes -->
-          <div class="flex py-3">
+          <div class="flex py-3 w-full">
             @foreach ($identification_cards as $identification_card)
-            <div class="px-4 ">
+            <div class="px-4 w-full">
               <a href="{{ route('visitant.show', ['visitant_id' => $identification_card->visitant_id]) }}"
-                class="font-semibold text-blue-700 dark:text-blue-500 hover:underline">
-                <span class="flex flex-row items-center gap-2 ">
+                class="flex w-full justify-between font-semibold text-blue-700 dark:text-blue-500 hover:underline">
+                <span class="flex w-full md:w-1/3 flex-row items-center gap-2 ">
 
                   <div
                     class="flex items-center justify-center rounded-full shadow-lg w-16 h-16 overflow-hidden object-cover">
