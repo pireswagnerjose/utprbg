@@ -159,23 +159,67 @@
         <div class="border-b pb-2 border-blue-600">
           <x-item-topic> Visitas Vinculadas </x-item-topic>
 
+          <!-- Visitantes -->
           <div class="flex py-3">
             @foreach ($identification_cards as $identification_card)
             <div class="px-4 ">
               <a href="{{ route('visitant.show', ['visitant_id' => $identification_card->visitant_id]) }}"
                 class="font-semibold text-blue-700 dark:text-blue-500 hover:underline">
-                <span class="flex flex-row items-center gap-2 object-cover">
-                  <img class="w-16 h-16 bg-zinc-500 rounded-full shadow-lg"
-                    src='{{ asset("storage/" . $identification_card->visitant->photo ) }}'
-                    alt="{{ $identification_card->visitant->name }}">
+                <span class="flex flex-row items-center gap-2 ">
+
+                  <div
+                    class="flex items-center justify-center rounded-full shadow-lg w-16 h-16 overflow-hidden object-cover">
+                    <img class="w-16" src='{{ asset("storage/" . $identification_card->visitant->photo ) }}'
+                      alt="{{ $identification_card->visitant->name }}">
+                  </div>
+
                   <div class="flex flex-col">
                     <h1>{{ $identification_card->visitant->name }}</h1>
                     <span class="text-xs">Contato: {{ $identification_card->visitant->phone }}</span>
                   </div>
+
                 </span>
               </a>
             </div>
             @endforeach
+          </div>
+
+          <!-- Visitas agendadas -->
+          <div class="border-t space-y-2 pt-2 border-zinc-600">
+
+            <x-item-topic> Visitas Agendadas para o Preso </x-item-topic>
+
+            <table class="w-full text-sm text-left rtl:text-right text-zinc-500 dark:text-zinc-400">
+              <thead class="text-xs text-zinc-700 uppercase bg-zinc-50 dark:bg-zinc-700 dark:text-zinc-400">
+                <tr>
+                  <th scope="col" class="p-2"> Nº </th>
+                  <th scope="col" class="p-2"> Cód. </th>
+                  <th scope="col" class="p-2"> Visitante </th>
+                  <th scope="col" class="p-2"> Data Visita </th>
+                  <th scope="col" class="p-2"> Data Agendamento </th>
+                  <th scope="col" class="p-2"> Tipo Visita </th>
+                </tr>
+              </thead>
+              <tbody>
+                @forelse ($visit_schedulings as $key=>$visit_scheduling)
+                <tr
+                  class="odd:bg-white odd:dark:bg-zinc-900 even:bg-zinc-50 even:dark:bg-zinc-800 border-b dark:border-zinc-700">
+                  <td class="p-2"> {{ $key+1 }} </td>
+                  <td class="p-2"> {{ $visit_scheduling->id }} </td>
+                  <td class="p-2"> <a class="text-blue-700"
+                      href="{{ route('visitant.show', $visit_scheduling->visitant_id ) }}"> {{
+                      $visit_scheduling->visitant->name }} </a> </td>
+                  <td class="p-2"> {{ \Carbon\Carbon::parse($visit_scheduling->date_visit )->format('d/m/Y') }}</td>
+                  <td class="p-2"> {{ \Carbon\Carbon::parse($visit_scheduling->created_at )->format('d/m/Y - H:i:s') }}
+                  </td>
+                  <td class="p-2"> {{ $visit_scheduling->type }} </td>
+                </tr>
+                @empty
+                <td class="p-2"> Não existe resultado para essa consulta. </td>
+                @endforelse
+              </tbody>
+            </table>
+
           </div>
 
         </div>

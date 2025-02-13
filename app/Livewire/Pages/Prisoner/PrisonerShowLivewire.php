@@ -14,6 +14,7 @@ use App\Models\Admin\SexualOrientation;
 use App\Models\Admin\State;
 use App\Models\Main\IdentificationCard;
 use App\Models\Main\Prisoner;
+use App\Models\Main\Visit\VisitScheduling;
 use App\Services\Main\Prisoner\PrisonerService;
 use App\Traits\Main\PrisonerMessageTrait;
 use App\Traits\Main\PrisonerPropertyTrait;
@@ -201,10 +202,11 @@ class PrisonerShowLivewire extends Component
     public function render()
     {
         $identification_cards = IdentificationCard::where('prisoner_id', $this->prisoner_id)->get();
+        $visit_schedulings = VisitScheduling::where('prisoner_id', $this->prisoner_id)->get();
         $prisoner_show = Prisoner::where('id', $this->prisoner_id)
         ->with('status_prison', 'education_level', 'civil_status', 'sex', 'sexual_orientation',
         'ethnicity', 'country', 'municipality', 'state')
         ->first();
-        return view('livewire.pages.prisoner.prisoner-show-livewire', compact('prisoner_show', 'identification_cards'));
+        return view('livewire.pages.prisoner.prisoner-show-livewire', compact('prisoner_show', 'identification_cards', 'visit_schedulings' ));
     }
 }
