@@ -8,24 +8,16 @@
       {{-- Editar --}}
       @can('update_photo')
       <button wire:click="modal({{ $photo->id }})"
-        class="w-5 h-5 p-1 bg-blue-600 dark:bg-blue-500 rounded-full shadow-lg">
-        <svg class=" w-3 h-3 text-blue-50 dark:text-blue-50 hover:text-blue-400 hover:dark:text-blue-400"
-          aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M4.109 17H1v-2a4 4 0 0 1 4-4h.87M10 4.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm7.95 2.55a2 2 0 0 1 0 2.829l-6.364 6.364-3.536.707.707-3.536 6.364-6.364a2 2 0 0 1 2.829 0Z" />
-        </svg>
+        class="p-1 bg-yellow-400 dark:bg-yellow-300/50 hover:opacity-50 transition duration-500 rounded-full">
+        <x-lucide-pencil class="w-3 h-3 text-zinc-100 dark:text-zinc-200"></x-lucide-pencil>
       </button>
       @endcan
 
       {{-- Excluir --}}
       @can('delete_photo')
       <button type="button" wire:confirm="Tem certeza que deseja excluir a Foto" wire:click="delete({{ $photo->id }})"
-        class="w-5 h-5 p-1 bg-red-600 dark:bg-red-500 rounded-full shadow-lg">
-        <svg class="w-3 h-3 text-red-50 dark:text-red-50 hover:text-red-400 hover:dark:text-red-400" aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M13 8h6m-9-3.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0ZM5 11h3a4 4 0 0 1 4 4v2H1v-2a4 4 0 0 1 4-4Z" />
-        </svg>
+        class="p-1 bg-red-700 dark:bg-red-600/50 hover:opacity-50 transition duration-500 rounded-full">
+        <x-lucide-x class="w-3 h-3 text-zinc-100 dark:text-zinc-200"></x-lucide-x>
       </button>
       @endcan
     </div>

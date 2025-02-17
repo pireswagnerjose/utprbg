@@ -25,7 +25,7 @@
             type="button"
             class="flex items-center gap-1 text-sm font-medium text-zinc-100 dark:text-zinc-200 hover:text-blue-500 dark:hover:text-blue-500">
             <div class="hidden sm:flex">
-              <i data-lucide="user" class="w-4 h-4 hidden sm:flex text-zinc-100 dark:text-zinc-400"></i>
+              <x-lucide-user class="w-4 h-4 hidden sm:flex text-zinc-100 dark:text-zinc-400"></x-lucide-user>
             </div>
             <span class="py-2">Presos</span>
           </button>
@@ -72,7 +72,7 @@
             type="button"
             class="flex items-center gap-1 text-sm font-medium text-zinc-100 dark:text-zinc-200 hover:text-blue-500 dark:hover:text-blue-500">
             <div class="hidden sm:flex">
-              <i data-lucide="baby" class="w-4 h-4 hidden sm:flex text-zinc-100 dark:text-zinc-400"></i>
+              <x-lucide-baby class="w-4 h-4 hidden sm:flex text-zinc-100 dark:text-zinc-400"></x-lucide-baby>
             </div>
             <span class="py-2">Visitas</span>
           </button>
@@ -151,7 +151,7 @@
             type="button"
             class="flex items-center gap-1 text-sm font-medium text-zinc-100 dark:text-zinc-200 hover:text-blue-500 dark:hover:text-blue-500">
             <div class="hidden sm:flex">
-              <i data-lucide="grid-2x2-plus" class="w-4 h-4 hidden sm:flex text-zinc-100 dark:text-zinc-400"></i>
+              <x-lucide-grid-2x2 class="w-4 h-4 hidden sm:flex text-zinc-100 dark:text-zinc-400"></x-lucide-grid-2x2>
             </div>
             <span class="py-2">Acessórios</span>
           </button>
@@ -396,7 +396,8 @@
             type="button"
             class="flex items-center gap-1 text-sm font-medium text-zinc-100 dark:text-zinc-200 hover:text-blue-500 dark:hover:text-blue-500">
             <div class="hidden sm:flex">
-              <i data-lucide="circle-user" class="w-4 h-4 hidden sm:flex text-zinc-100 dark:text-zinc-400"></i>
+              <x-lucide-circle-user class="w-4 h-4 hidden sm:flex text-zinc-100 dark:text-zinc-400">
+              </x-lucide-circle-user>
             </div>
             <span class="py-2">Usuários</span>
           </button>
@@ -408,28 +409,29 @@
               {{-- Listar Usuário --}}
               <a href="{{ route('users-show.index') }}"
                 class="flex gap-1 items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
-                <i data-lucide="layout-list" class="w-3 h-3 text-zinc-400 dark:text-zinc-500"></i>
+                <x-lucide-layout-list class="w-3 h-3 text-zinc-400 dark:text-zinc-500"></x-lucide-layout-list>
                 <span class="">Listar Usuário</span>
               </a>
 
               {{-- Nível de Acesso --}}
               <a href="{{ route('role.index') }}"
                 class="flex gap-1 items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
-                <i data-lucide="circle-arrow-out-up-left" class="w-3 h-3 text-zinc-400 dark:text-zinc-500"></i>
+                <x-lucide-circle-arrow-out-up-left class="w-3 h-3 text-zinc-400 dark:text-zinc-500">
+                </x-lucide-circle-arrow-out-up-left>
                 <span class="">Nível de Acesso</span>
               </a>
 
               {{-- Nível de Acesso --}}
               <a href="{{ route('feature.index') }}"
                 class="flex gap-1 items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
-                <i data-lucide="radar" class="w-3 h-3 text-zinc-400 dark:text-zinc-500"></i>
+                <x-lucide-radar class="w-3 h-3 text-zinc-400 dark:text-zinc-500"></x-lucide-radar>
                 <span class="">Funcionalidade</span>
               </a>
 
               {{-- Nível de Acesso --}}
               <a href="{{ route('ability.index') }}"
                 class="flex gap-1 items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
-                <i data-lucide="case-upper" class="w-3 h-3 text-zinc-400 dark:text-zinc-500"></i>
+                <x-lucide-case-upper class="w-3 h-3 text-zinc-400 dark:text-zinc-500"></x-lucide-case-upper>
                 <span class="">Permissões do Usuário</span>
               </a>
             </div>
@@ -462,7 +464,7 @@
             type="button"
             class="flex items-center gap-1 text-sm font-medium text-zinc-100 dark:text-zinc-200 hover:text-blue-500 dark:hover:text-blue-500">
             <div class="hidden sm:flex">
-              <i data-lucide="newspaper" class="w-4 h-4 hidden sm:flex text-zinc-100 dark:text-zinc-400"></i>
+              <x-lucide-newspaper class="w-4 h-4 hidden sm:flex text-zinc-100 dark:text-zinc-400"></x-lucide-newspaper>
             </div>
             <span class="py-2">Relatórios</span>
           </button>
@@ -540,7 +542,8 @@
             type="button"
             class="flex items-center gap-1 text-sm font-medium text-zinc-100 dark:text-zinc-200 hover:text-blue-500 dark:hover:text-blue-500">
             <div class="hidden sm:flex">
-              <i data-lucide="badge-info" class="w-4 h-4 hidden sm:flex text-zinc-100 dark:text-zinc-400"></i>
+              <x-lucide-badge-info class="w-4 h-4 hidden sm:flex text-zinc-100 dark:text-zinc-400">
+              </x-lucide-badge-info>
             </div>
             <span class="py-2">Infopen</span>
           </button>
@@ -619,241 +622,4 @@
       @endcan
     </ul>
   </nav>
-
-
-  {{-- <nav class="bg-white border-zinc-200 dark:bg-zinc-900 dark:border-zinc-700">
-    <div class="max-w-screen-xl flex flex-wrap items-center justify-center mx-auto p-4">
-      <!-- Botão do Menu -->
-      <button data-collapse-toggle="navbar-multi-level" type="button"
-        class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-zinc-500 rounded-lg md:hidden hover:bg-zinc-100 focus:outline-none focus:ring-2 focus:ring-zinc-200 dark:text-zinc-400 dark:hover:bg-zinc-700 dark:focus:ring-zinc-600"
-        aria-controls="navbar-multi-level" aria-expanded="false">
-        <span class="sr-only">Menu</span>
-        <i data-lucide="align-justify" class="w-7 h-7 text-zinc-100 dark:text-zinc-400"></i>
-      </button>
-
-      <!-- Menu -->
-      <div class="hidden w-full md:block md:w-auto" id="navbar-multi-level">
-        <ul
-          class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-zinc-100 rounded-lg bg-zinc-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-zinc-800 md:dark:bg-zinc-900 dark:border-zinc-700">
-
-          <!-- Presos -->
-          @can('admin-saude-guest')
-          <li>
-            <button id="prisonerLink" data-dropdown-toggle="prisoner"
-              class="flex items-center justify-between w-full py-2 px-3 text-zinc-900 hover:bg-zinc-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:hover:bg-zinc-700 md:dark:hover:bg-transparent">
-              <i data-lucide="circle-user" class="w-5 h-5 ms-2.5 mr-1 text-zinc-100 dark:text-zinc-400"></i>
-              Presos
-              <i data-lucide="chevron-down" class="w-4 h-4 ms-2.5 text-zinc-100 dark:text-zinc-400"></i>
-            </button>
-            <!-- Dropdown menu -->
-            <div id="prisoner"
-              class="z-10 hidden font-normal bg-white divide-y divide-zinc-100 rounded-lg shadow-sm w-44 dark:bg-zinc-700 dark:divide-zinc-600">
-              <ul class="py-2 text-sm text-zinc-700 dark:text-zinc-200" aria-labelledby="dropdownLargeButton">
-                <li class="block py-2 hover:bg-zinc-100 dark:hover:bg-zinc-600 dark:hover:text-white">
-                  <a class="flex items-center" href="{{ route('prisoners.search') }}" wire:navigate>
-                    <i data-lucide="search-x" class="w-4 h-4 ms-2.5 mr-1 text-zinc-100 dark:text-zinc-400"></i>
-                    Pesquisar
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </li>
-          @endcan
-
-          <!-- Visitas -->
-          @can('admin-recepcao-guest')
-          <li>
-            <button id="visitsLink" data-dropdown-toggle="visits"
-              class="flex items-center justify-between w-full py-2 px-3 text-zinc-900 hover:bg-zinc-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:hover:bg-zinc-700 md:dark:hover:bg-transparent">
-              <i data-lucide="baby" class="w-5 h-5 ms-2.5 mr-1 text-zinc-100 dark:text-zinc-400"></i>
-              Visitas
-              <i data-lucide="chevron-down" class="w-4 h-4 ms-2.5 text-zinc-100 dark:text-zinc-400"></i>
-            </button>
-            <!-- Dropdown menu -->
-            <div id="visits"
-              class="z-10 hidden font-normal bg-white divide-y divide-zinc-100 rounded-lg shadow-sm w-72 dark:bg-zinc-700 dark:divide-zinc-600">
-              <ul class="py-2 text-sm text-zinc-700 dark:text-zinc-200" aria-labelledby="dropdownLargeButton">
-                <li class="block py-2 hover:bg-zinc-100 dark:hover:bg-zinc-600 dark:hover:text-white">
-                  <a class="flex items-center" href="{{ route('visitant.index') }}" wire:navigate>
-                    <i data-lucide="users" class="w-4 h-4 ms-2.5 mr-1 text-zinc-100 dark:text-zinc-400"></i>
-                    Visitante
-                  </a>
-                </li>
-                <li class="block py-2 hover:bg-zinc-100 dark:hover:bg-zinc-600 dark:hover:text-white">
-                  <a class="flex items-center" href="{{ route('identification-card.index') }}" wire:navigate>
-                    <i data-lucide="id-card" class="w-4 h-4 ms-2.5 mr-1 text-zinc-100 dark:text-zinc-400"></i>
-                    Carteirinha
-                  </a>
-                </li>
-                <li class="block py-2 hover:bg-zinc-100 dark:hover:bg-zinc-600 dark:hover:text-white">
-                  <a class="flex items-center" href="{{ route('visit-scheduling-date.index') }}" wire:navigate>
-                    <i data-lucide="calendar-clock" class="w-4 h-4 ms-2.5 mr-1 text-zinc-100 dark:text-zinc-400"></i>
-                    Periodo de Agendamento das Visitas
-                  </a>
-                </li>
-                <li class="block py-2 hover:bg-zinc-100 dark:hover:bg-zinc-600 dark:hover:text-white">
-                  <a class="flex items-center" href="{{ route('visit-control.index') }}" wire:navigate>
-                    <i data-lucide="file-sliders" class="w-4 h-4 ms-2.5 mr-1 text-zinc-100 dark:text-zinc-400"></i>
-                    Controle de Visitas
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </li>
-          @endcan
-
-          <!-- Acessórios -->
-          @can('admin')
-          <li>
-            <button id="acessoryLink" data-dropdown-toggle="acessory"
-              class="flex items-center justify-between w-full py-2 px-3 text-zinc-900 hover:bg-zinc-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:hover:bg-zinc-700 md:dark:hover:bg-transparent">
-              <i data-lucide="grid-2x2-plus" class="w-5 h-5 ms-2.5 mr-1 text-zinc-100 dark:text-zinc-400"></i>
-              Acessórios
-              <i data-lucide="chevron-down" class="w-4 h-4 ms-2.5 text-zinc-100 dark:text-zinc-400"></i>
-            </button>
-            <!-- Dropdown menu -->
-            <div id="acessory"
-              class="z-10 hidden font-normal bg-white divide-y divide-zinc-100 rounded-lg shadow-sm w-66 dark:bg-zinc-700 dark:divide-zinc-600">
-              <ul class="py-2 text-sm text-zinc-700 dark:text-zinc-200" aria-labelledby="dropdownLargeButton">
-                <!-- Cadastros Gerais -->
-                <li aria-labelledby="acessoryLink">
-                  <button id="generalRegistrationDropdownButton" data-dropdown-toggle="generalRegistrationDropdown"
-                    data-dropdown-placement="right-start" type="button"
-                    class="flex items-center justify-between w-full px-4 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-600 dark:hover:text-white">
-                    <div class="flex items-center">
-                      <i data-lucide="notebook-pen" class="w-4 h-4 ms-2.5 mr-1 text-zinc-100 dark:text-zinc-400"></i>
-                      Cadastros Gerais
-                    </div>
-                    <i data-lucide="chevron-right" class="w-4 h-4 ms-2.5 text-zinc-100 dark:text-zinc-400"></i>
-                  </button>
-                  <div id="generalRegistrationDropdown"
-                    class="z-10 hidden bg-white divide-y divide-zinc-100 rounded-lg shadow-sm w-44 dark:bg-zinc-700">
-                    <ul class="py-2 text-sm text-zinc-700 dark:text-zinc-200"
-                      aria-labelledby="generalRegistrationDropdownButton">
-                      <li class="block py-2 hover:bg-zinc-100 dark:hover:bg-zinc-600 dark:hover:text-white">
-                        <a class="flex items-center" href="{{ route('countries.index') }}" wire:navigate>
-                          <i data-lucide="earth" class="w-4 h-4 ms-2.5 mr-1 text-zinc-100 dark:text-zinc-400"></i>
-                          País
-                        </a>
-                      </li>
-                      <li class="block py-2 hover:bg-zinc-100 dark:hover:bg-zinc-600 dark:hover:text-white">
-                        <a class="flex items-center" href="{{ route('states.index') }}" wire:navigate>
-                          <i data-lucide="map-pin-house"
-                            class="w-4 h-4 ms-2.5 mr-1 text-zinc-100 dark:text-zinc-400"></i>
-                          Estado
-                        </a>
-                      </li>
-                      <li class="block py-2 hover:bg-zinc-100 dark:hover:bg-zinc-600 dark:hover:text-white">
-                        <a class="flex items-center" href="{{ route('municipalities.index') }}" wire:navigate>
-                          <i data-lucide="webcam" class="w-4 h-4 ms-2.5 mr-1 text-zinc-100 dark:text-zinc-400"></i>
-                          Município
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                </li>
-
-                <!-- Cadastros da Unidade -->
-                <li aria-labelledby="acessoryLink">
-                  <button id="doubleDropdownButton" data-dropdown-toggle="doubleDropdown"
-                    data-dropdown-placement="right-start" type="button"
-                    class="flex items-center justify-between w-full px-4 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-600 dark:hover:text-white">
-                    <i data-lucide="clipboard-list" class="w-4 h-4 ms-2.5 mr-1 text-zinc-100 dark:text-zinc-400"></i>
-                    Cadastros da Unidade
-                    <i data-lucide="chevron-right" class="w-4 h-4 ms-2.5 text-zinc-100 dark:text-zinc-400"></i>
-                  </button>
-                  <div id="doubleDropdown"
-                    class="z-10 hidden bg-white divide-y divide-zinc-100 rounded-lg shadow-sm w-44 dark:bg-zinc-700">
-                    <ul class="py-2 text-sm text-zinc-700 dark:text-zinc-200" aria-labelledby="doubleDropdownButton">
-                      <li class="block py-2 hover:bg-zinc-100 dark:hover:bg-zinc-600 dark:hover:text-white">
-                        <a class="flex items-center" href="{{ route('countries.index') }}" wire:navigate>
-                          <i data-lucide="earth" class="w-4 h-4 ms-2.5 mr-1 text-zinc-100 dark:text-zinc-400"></i>
-                          País
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                </li>
-
-              </ul>
-            </div>
-          </li>
-          @endcan
-
-          <!-- Users -->
-          @can('admin')
-          <li>
-            <button id="userLink" data-dropdown-toggle="user"
-              class="flex items-center justify-between w-full py-2 px-3 text-zinc-900 hover:bg-zinc-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:hover:bg-zinc-700 md:dark:hover:bg-transparent">
-              <i data-lucide="circle-user" class="w-5 h-5 ms-2.5 mr-1 text-zinc-100 dark:text-zinc-400"></i>
-              Usuários
-              <i data-lucide="chevron-down" class="w-4 h-4 ms-2.5 text-zinc-100 dark:text-zinc-400"></i>
-            </button>
-            <!-- Dropdown menu -->
-            <div id="user"
-              class="z-10 hidden font-normal bg-white divide-y divide-zinc-100 rounded-lg shadow-sm w-44 dark:bg-zinc-700 dark:divide-zinc-600">
-              <ul class="py-2 text-sm text-zinc-700 dark:text-zinc-200" aria-labelledby="dropdownLargeButton">
-                <li class="block py-2 hover:bg-zinc-100 dark:hover:bg-zinc-600 dark:hover:text-white">
-                  <a class="flex items-center" href="{{ route('prisoners.search') }}" wire:navigate>
-                    <i data-lucide="search-x" class="w-4 h-4 ms-2.5 mr-1 text-zinc-100 dark:text-zinc-400"></i>
-                    Pesquisar
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </li>
-          @endcan
-
-          <!-- Reports -->
-          @can('guest')
-          <li>
-            <button id="reportLink" data-dropdown-toggle="report"
-              class="flex items-center justify-between w-full py-2 px-3 text-zinc-900 hover:bg-zinc-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:hover:bg-zinc-700 md:dark:hover:bg-transparent">
-              <i data-lucide="newspaper" class="w-5 h-5 ms-2.5 mr-1 text-zinc-100 dark:text-zinc-400"></i>
-              Relatórios
-              <i data-lucide="chevron-down" class="w-4 h-4 ms-2.5 text-zinc-100 dark:text-zinc-400"></i>
-            </button>
-            <!-- Dropdown menu -->
-            <div id="report"
-              class="z-10 hidden font-normal bg-white divide-y divide-zinc-100 rounded-lg shadow-sm w-44 dark:bg-zinc-700 dark:divide-zinc-600">
-              <ul class="py-2 text-sm text-zinc-700 dark:text-zinc-200" aria-labelledby="dropdownLargeButton">
-                <li class="block py-2 hover:bg-zinc-100 dark:hover:bg-zinc-600 dark:hover:text-white">
-                  <a class="flex items-center" href="{{ route('prisoners.search') }}" wire:navigate>
-                    <i data-lucide="search-x" class="w-4 h-4 ms-2.5 mr-1 text-zinc-100 dark:text-zinc-400"></i>
-                    Pesquisar
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </li>
-          @endcan
-
-          <!-- Infopen -->
-          @can('admin')
-          <li>
-            <button id="infopenLink" data-dropdown-toggle="infopen"
-              class="flex items-center justify-between w-full py-2 px-3 text-zinc-900 hover:bg-zinc-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:hover:bg-zinc-700 md:dark:hover:bg-transparent">
-              <i data-lucide="badge-info" class="w-5 h-5 ms-2.5 mr-1 text-zinc-100 dark:text-zinc-400"></i>
-              Infopen
-              <i data-lucide="chevron-down" class="w-4 h-4 ms-2.5 text-zinc-100 dark:text-zinc-400"></i>
-            </button>
-            <!-- Dropdown menu -->
-            <div id="infopen"
-              class="z-10 hidden font-normal bg-white divide-y divide-zinc-100 rounded-lg shadow-sm w-44 dark:bg-zinc-700 dark:divide-zinc-600">
-              <ul class="py-2 text-sm text-zinc-700 dark:text-zinc-200" aria-labelledby="dropdownLargeButton">
-                <li class="block py-2 hover:bg-zinc-100 dark:hover:bg-zinc-600 dark:hover:text-white">
-                  <a class="flex items-center" href="{{ route('prisoners.search') }}" wire:navigate>
-                    <i data-lucide="search-x" class="w-4 h-4 ms-2.5 mr-1 text-zinc-100 dark:text-zinc-400"></i>
-                    Pesquisar
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </li>
-          @endcan
-
-        </ul>
-      </div>
-    </div>
-  </nav> --}}
 </div>

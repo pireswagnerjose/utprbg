@@ -9,46 +9,31 @@
       <div class="flex justify-end gap-2 px-2">
         {{-- chama o modal para exclusão do item --}}
         @can('delete_visitant')
-        <div class="group grid justify-items-center w-16 border-b border-zinc-200 dark:border-zinc-600">
+        <div class="group grid justify-items-center w-12">
           <button type="button" wire:click="modalDelete({{ $visitant->id }})"
-            class="w-8 h-8 bg-red-600 dark:bg-red-500 rounded-full p-2">
-            <svg class="w-4 h-4 text-red-50 dark:text-red-50 hover:text-red-400 hover:dark:text-red-400"
-              aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M13 8h6m-9-3.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0ZM5 11h3a4 4 0 0 1 4 4v2H1v-2a4 4 0 0 1 4-4Z" />
-            </svg>
+            class="p-2 bg-red-700 dark:bg-red-600/50 hover:opacity-50 transition duration-500 rounded-full">
+            <x-lucide-x class="w-3 h-3 text-zinc-100 dark:text-zinc-200"></x-lucide-x>
           </button>
-          <span class="text-xs text-zinc-600 dark:text-zinc-400">Excluir</span>
         </div>
         @endcan
 
         {{-- Editar --}}
         @can('update_visitant')
-        <div class="group grid justify-items-center w-16 border-b border-zinc-200 dark:border-zinc-600">
+        <div class="group grid justify-items-center w-12">
           <button wire:click="modalUpdate({{ $visitant->id }})"
-            class="w-8 h-8 bg-blue-600 dark:bg-blue-500 rounded-full p-2">
-            <svg class=" w-4 h-4 text-blue-50 dark:text-blue-50 hover:text-blue-400 hover:dark:text-blue-400"
-              aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M4.109 17H1v-2a4 4 0 0 1 4-4h.87M10 4.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm7.95 2.55a2 2 0 0 1 0 2.829l-6.364 6.364-3.536.707.707-3.536 6.364-6.364a2 2 0 0 1 2.829 0Z" />
-            </svg>
+            class="p-2 bg-yellow-400 dark:bg-yellow-300/50 hover:opacity-50 transition duration-500 rounded-full">
+            <x-lucide-pencil class="w-3 h-3 text-zinc-100 dark:text-zinc-200"></x-lucide-pencil>
           </button>
-          <span class="text-xs text-zinc-600 dark:text-zinc-400">Editar</span>
         </div>
         @endcan
 
         {{-- Relatório PDF --}}
         <form action="{{ route('visitant.report', ['visitant_id' => $visitant->id]) }}" method="POST" target="_blank">
           @csrf
-          <div class="group grid justify-items-center w-16 border-b border-zinc-200 dark:border-zinc-600">
-            <button class="w-8 h-8 bg-green-600 dark:bg-green-500 rounded-full p-2">
-              <svg class="w-4 h-4 text-green-50 dark:text-green-50 hover:text-green-400 hover:dark:text-green-400"
-                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 20">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M1 18a.969.969 0 0 0 .933 1h12.134A.97.97 0 0 0 15 18M1 7V5.828a2 2 0 0 1 .586-1.414l2.828-2.828A2 2 0 0 1 5.828 1h8.239A.97.97 0 0 1 15 2v5M6 1v4a1 1 0 0 1-1 1H1m0 9v-5h1.5a1.5 1.5 0 1 1 0 3H1m12 2v-5h2m-2 3h2m-8-3v5h1.375A1.626 1.626 0 0 0 10 13.375v-1.75A1.626 1.626 0 0 0 8.375 10H7Z" />
-              </svg>
+          <div class="group grid justify-items-center w-12">
+            <button class="p-2 bg-green-500 dark:bg-green-400/50 hover:opacity-50 transition duration-500 rounded-full">
+              <x-lucide-file-text class="w-3 h-3 text-zinc-100 dark:text-zinc-200"></x-lucide-file-text>
             </button>
-            <span class="text-xs text-zinc-600 dark:text-zinc-400 mt-1 py-1">Gerar PDF</span>
           </div>
         </form>
       </div>

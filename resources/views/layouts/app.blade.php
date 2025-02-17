@@ -51,11 +51,6 @@
     <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
     @livewireScripts
 
-    <!-- Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script>
-        lucide.createIcons();
-    </script>
 </body>
 
 </html>

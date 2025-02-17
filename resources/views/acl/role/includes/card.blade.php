@@ -13,7 +13,8 @@
           <p class="mb-2">Permitir</p>
           <a class="flex items-center justify-center w-7 h-7 bg-blue-700 hover:bg-blue-800 dark:bg-blue-600/50 dark:hover:bg-blue-700/50 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full dark:focus:ring-blue-800"
             href="{{ route('permission.edit', $role->id) }}">
-            <i data-lucide="arrow-right-left" class="w-5 h-5 text-zinc-100 dark:text-zinc-200"></i>
+            <x-lucide-arrow-right-left class="w-5 h-5 text-zinc-100/50 dark:text-zinc-200/50">
+            </x-lucide-arrow-right-left>
           </a>
           <p class="mb-2">Revogar</p>
         </div>
@@ -28,16 +29,16 @@
       <form action="{{ route('role.edit', $role->id ) }}" method="ANY">
         @csrf
         <button type="submit"
-          class="p-2 bg-green-700 hover:bg-green-800 dark:bg-green-600/50 dark:hover:bg-green-700/50 focus:ring-4 focus:outline-none focus:ring-green-300 rounded-full dark:focus:ring-green-800">
-          <i data-lucide="pencil" class="w-4 h-4 text-zinc-100 dark:text-zinc-200"></i>
+          class="p-2 bg-yellow-400 dark:bg-yellow-300/50 hover:opacity-50 transition duration-500 rounded-full">
+          <x-lucide-pencil class="w-3 h-3 text-zinc-100 dark:text-zinc-200"></x-lucide-pencil>
         </button>
       </form>
       <form action="{{ route('role.destroy', $role->id ) }}" method="POST">
         @csrf
         @method('DELETE')
         <button type="submit"
-          class="p-2 bg-red-700 hover:bg-red-800 dark:bg-red-600/50 dark:hover:bg-red-700/50 focus:ring-4 focus:outline-none focus:ring-red-300 rounded-full dark:focus:ring-red-800">
-          <i data-lucide="X" class="w-4 h-4 text-zinc-100 dark:text-zinc-200"></i>
+          class="p-2 bg-red-700 dark:bg-red-600/50 hover:opacity-50 transition duration-500 rounded-full">
+          <x-lucide-x class="w-3 h-3 text-zinc-100 dark:text-zinc-200"></x-lucide-x>
         </button>
       </form>
     </div>

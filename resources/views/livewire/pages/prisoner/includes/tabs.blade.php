@@ -187,6 +187,7 @@
 
             <table class="w-full text-sm text-left rtl:text-right text-zinc-500 dark:text-zinc-400">
               <thead class="text-xs text-zinc-700 uppercase bg-zinc-50 dark:bg-zinc-700 dark:text-zinc-400">
+                @if(!empty($visit_schedulings) && $visit_schedulings->count() > 0)
                 <tr>
                   <th scope="col" class="p-2"> Nº </th>
                   <th scope="col" class="p-2"> Cód. </th>
@@ -195,6 +196,7 @@
                   <th scope="col" class="p-2"> Data Agendamento </th>
                   <th scope="col" class="p-2"> Tipo Visita </th>
                 </tr>
+                @endif
               </thead>
               <tbody>
                 @forelse ($visit_schedulings as $key=>$visit_scheduling)
@@ -215,9 +217,7 @@
                 @endforelse
               </tbody>
             </table>
-
           </div>
-
         </div>
       </div>
     </div>

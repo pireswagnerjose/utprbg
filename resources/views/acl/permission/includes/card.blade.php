@@ -13,16 +13,16 @@
         @method('DELETE')
         <p class="mb-2">Revogar</p>
         <button type="submit"
-          class="flex items-center justify-center w-7 h-7 bg-red-700 hover:bg-red-800 dark:bg-red-600/50 dark:hover:bg-red-700/50 focus:ring-4 focus:outline-none focus:ring-red-300 rounded-full dark:focus:ring-red-800">
-          <i data-lucide="x" class="w-5 h-5 text-zinc-100 dark:text-zinc-200"></i>
+          class="p-2 bg-red-700 dark:bg-red-600/50 hover:opacity-50 transition duration-500 rounded-full">
+          <x-lucide-x class="w-3 h-3 text-zinc-100 dark:text-zinc-200"></x-lucide-x>
         </button>
       </form>
       @else
       <div class="flex items-center justify-center gap-2 text-xs font-light text-zinc-400 dark:text-zinc-600">
         <p class="mb-2">Permitir</p>
-        <a class="flex items-center justify-center w-7 h-7 bg-blue-700 hover:bg-blue-800 dark:bg-blue-600/50 dark:hover:bg-blue-700/50 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full dark:focus:ring-blue-800"
-          href="{{ route('permission.create', ['ability_id' => $ability->id, 'role_id' => $role->id]) }}">
-          <i data-lucide="plus" class="w-5 h-5 text-zinc-100 dark:text-zinc-200"></i>
+        <a href="{{ route('permission.create', ['ability_id' => $ability->id, 'role_id' => $role->id]) }}"
+          class="p-2 bg-blue-600 dark:bg-blue-500/50 hover:opacity-50 transition duration-500 rounded-full">
+          <x-lucide-plus class="w-3 h-3 text-zinc-100 dark:text-zinc-200"></x-lucide-plus>
         </a>
       </div>
       @endif

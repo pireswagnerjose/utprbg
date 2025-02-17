@@ -15,8 +15,8 @@
             <form action="{{ route('ability.create') }}" method="GET">
                 @csrf
                 <button type="submit"
-                    class="rounded-full p-2 bg-blue-700 hover:bg-blue-800 dark:bg-blue-600/50 dark:hover:bg-blue-700/50 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
-                    <i data-lucide="plus" class="w-7 h-7 text-zinc-100 dark:text-zinc-200"></i>
+                    class="p-2.5 mb-4 bg-blue-600 dark:bg-blue-500/50 hover:opacity-50 transition duration-500 rounded-full">
+                    <x-lucide-plus class="w-4 h-4 text-zinc-100 dark:text-zinc-200"></x-lucide-plus>
                 </button>
             </form>
         </div>
@@ -28,7 +28,8 @@
         @foreach ($features as $key => $feature )
         <div
             class="w-[80%] mx-auto flex items-center gap-2 mt-6 border-b border-zinc-300 dark:border-zinc-600 font-bold text-base text-blue-600">
-            <i data-lucide="arrow-big-right-dash" class="w-4 h-4 text-gray-300 dark:text-gray-600"></i>
+            <x-lucide-arrow-big-right-dash class="w-4 h-4 text-gray-300 dark:text-gray-600">
+            </x-lucide-arrow-big-right-dash>
             <h1>{{ $key + 1 }}</h1>
             <h1>{{ $feature->title }}</h1>
         </div>

@@ -44,9 +44,8 @@
                         @csrf
                         @method('DELETE')
                         <button type="submit"
-                            class="flex items-center justify-center w-6 h-6 bg-red-600 dark:bg-red-600/50 rounded-full">
-                            <i data-lucide="x"
-                                class="w-[0.9rem] h-[0.9rem] text-red-50 dark:text-red-50 hover:text-red-400 hover:dark:text-red-400"></i>
+                            class="p-2 bg-red-700 dark:bg-red-600/50 hover:opacity-50 transition duration-500 rounded-full">
+                            <x-lucide-x class="w-3 h-3 text-zinc-100 dark:text-zinc-200"></x-lucide-x>
                         </button>
                     </form>
                 </div>

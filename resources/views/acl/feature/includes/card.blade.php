@@ -19,16 +19,16 @@
             <form action="{{ route('feature.edit', $feature->id ) }}" method="ANY">
                 @csrf
                 <button type="submit"
-                    class="p-2 bg-green-700 hover:bg-green-800 dark:bg-green-600/50 dark:hover:bg-green-700/50 focus:ring-4 focus:outline-none focus:ring-green-300 rounded-full dark:focus:ring-green-800">
-                    <i data-lucide="pencil" class="w-3 h-3 text-zinc-100 dark:text-zinc-200"></i>
+                    class="p-2 bg-yellow-400 dark:bg-yellow-300/50 hover:opacity-50 transition duration-500 rounded-full">
+                    <x-lucide-pencil class="w-3 h-3 text-zinc-100 dark:text-zinc-200"></x-lucide-pencil>
                 </button>
             </form>
             <form action="{{ route('feature.destroy', $feature->id ) }}" method="POST">
                 @csrf
                 @method('DELETE')
                 <button type="submit"
-                    class="p-2 bg-red-700 hover:bg-red-800 dark:bg-red-600/50 dark:hover:bg-red-700/50 focus:ring-4 focus:outline-none focus:ring-red-300 rounded-full dark:focus:ring-red-800">
-                    <i data-lucide="X" class="w-3 h-3 text-zinc-100 dark:text-zinc-200"></i>
+                    class="p-2 bg-red-700 dark:bg-red-600/50 hover:opacity-50 transition duration-500 rounded-full">
+                    <x-lucide-x class="w-3 h-3 text-zinc-100 dark:text-zinc-200"></x-lucide-x>
                 </button>
             </form>
         </div>
