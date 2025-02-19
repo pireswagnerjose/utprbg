@@ -4,6 +4,7 @@ namespace App\Models\Admin;
 
 use App\Models\Main\UnitAddress;
 use App\Models\Main\Visit\VisitControl;
+use App\Models\Main\Visit\VisitSchedulingDate;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,6 +22,11 @@ class Ward extends Model
     public function unit_addresse_ward()
     {
         return $this->hasMany(UnitAddress::class);
+    }
+
+    public function visit_scheduling_dates()
+    {
+        return $this->hasMany(VisitSchedulingDate::class);
     }
 
     public function cells()

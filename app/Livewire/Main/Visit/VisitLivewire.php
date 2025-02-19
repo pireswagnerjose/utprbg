@@ -28,22 +28,30 @@ class VisitLivewire extends Component
   public $visitant_id;
   public $user_create; 
   public $prison_unit_id;
-  public $start_date;
-  public $end_date;
-  public $social_visit_date;
-  public $intimate_visit_date;
+  public $visit_scheduling_start_date;
+  public $visit_scheduling_end_date;
   public $identification_card = [];
-  public $visit_scheduling_date = [];
-  public $visit_controls = [];
+  public $visit_scheduling_date;
+  public $visit_controls;
   public $visit_types = ['SOCIAL','ÍNTIMA'];
   public $visibleForm = true;
 
   public function mount()
   {
-      $this->visit_scheduling_date = VisitSchedulingDate::orderBy('start_date', 'desc')->first();
-      $this->date = date("Y-m-d");
-      $this->start_date = $this->visit_scheduling_date['start_date'];
-      $this->end_date = $this->visit_scheduling_date['end_date'];
+    $this->date = date("Y-m-d");
+    $this->visit_scheduling_start_date = VisitSchedulingDate::where('start_date', '>=', $this->date)
+        ->orderBy('start_date', 'asc')->first();
+    $this->visit_scheduling_end_date = VisitSchedulingDate::where('start_date', '>=', $this->date)
+        ->orderBy('start_date', 'desc')->first();
+  }
+
+  // reset fields
+  public function clearFields()
+  {
+      $this->reset(
+          'code', 'cpf', 'type', 'identification_card_id', 'date_visit', 'prisoner_id', 'visitant_id', 'user_create',
+          'prison_unit_id', 'identification_card', 'visit_scheduling_date', 'visit_controls'
+      );
   }
 
   public function visit()
@@ -105,16 +113,24 @@ class VisitLivewire extends Component
     
     // busca os dados do pavilhão conforme os dados da carteirinha
     $ward = Ward::where('id', $unid_address->ward_id)->get()->first();
-    
+
+    // verifica se está no dia do agendamento da visita
+    $visit_date = VisitSchedulingDate::where('ward_id', $ward->id)
+        ->where('start_date', '>=', $this->date)
+        ->orderBy('start_date', 'asc')->first();
+
+    if ($visit_date->start_date != $this->date) {
+      return redirect('/visita')
+      ->with('error', 'Fora da data de agendamento para o seu pavilhão');
+    }
+
     // verifica se já foi realizado o agendamento da visita social
     if($this->type == 'SOCIAL'){
-      $visit_scheduling_date = VisitSchedulingDate::orderBy('start_date', 'desc')->first();
-      
       $visit_schedulings = VisitScheduling::where('type', $this->type)
-        ->where('date_visit', '>', $visit_scheduling_date->start_date)
+        ->where('created_at', '>', $this->date)
         ->where('prisoner_id', $prisoner['id'])
         ->get();
-
+      
       // verifica se o presso já teve 3 agendamentos
       if($visit_schedulings->count() >= 3){
         return redirect('/visita')->with('error', 'O interno já possui 3 visitas agendadas!');
@@ -129,14 +145,9 @@ class VisitLivewire extends Component
     // verifica se já foi realizado o agendamento da visita íntima
     if($this->type == 'ÍNTIMA'){
       // verifica se o visitante pode receber a visita íntima
-      if($this->identification_card['type'] != 'ÍNTIMA / SOCIAL')
-      {
+      if($this->identification_card['type'] != 'ÍNTIMA / SOCIAL'){
         return redirect('/visita')->with('error', 'Você não está habilitado(a) para receber visita íntima!');
       }
-      $visit_scheduling_date = VisitSchedulingDate::orderBy('start_date', 'desc')->first();
-      $visit_schedulings = VisitScheduling::where('type', $this->type)
-        ->where('date_visit', '>', $visit_scheduling_date->start_date)
-        ->get();
 
       foreach($visit_schedulings as $visit_scheduling){
         if($visit_scheduling->visitant_id == $visitant->id){
@@ -144,63 +155,50 @@ class VisitLivewire extends Component
         }
       }
     }
-    
-    // busca os dados do controle de visita conforme os dados do pavilhão
-    $this->visit_controls = VisitControl::where('ward_id', $ward->id)
-      ->where('visit_type', $this->type)
-      ->where('date', '>', $visit_scheduling_date->start_date)
+
+    $this->visit_controls = VisitControl::where('created_at', '>', $this->date )
+      ->where('ward_id', $ward->id)
+      ->get();
+    if ($this->visit_controls->count() > 0) {
+      // primeiro dia de agendamento
+      $date1 = $this->visit_controls[0];
+
+      // se existir o segundo dia de agendamento
+      if(isset($this->visit_controls[1])){
+        $date2 = $this->visit_controls[1];
+      }
+
+      // restringe o número de visitas do primeiro dia
+      $day1 = VisitScheduling::where('type', $this->type)
+      ->where('date_visit', $date1->date)
       ->get();
 
-    // $visit_schedulings_count = VisitScheduling::where('type', $this->type)
-    // ->where('date_visit', '>', $visit_scheduling_date->start_date)
-    // ->where('date_visit', $this->date_visit)
-    // ->get();
-    
-    // primeiro dia de agendamento
-    $date1 = $this->visit_controls[0];
-
-    // se existir o segundo dia de agendamento
-    if(isset($this->visit_controls[1])){
-      $date2 = $this->visit_controls[1];
-    }
-
-    // retorna o total de visitas disponíveis
-    // if(isset($this->visit_controls[1])){
-    //   $total_visit = $date1->number_visit + $date2->number_visit;
-    // } else {$total_visit = $date1->number_visit;}
-
-    // quando o total de visitas agendadas for maior que o total de visitas disponibilizadas
-    // if($visit_schedulings_count->count() >= intval($total_visit)){
-    //   return redirect('/visita')->with('error', 'Todas as vagas disponíveis para visitas já foram preenchidas para este mês!');
-    // }
-
-    // restringe o número de visitas do primeiro dia
-    $day1 = VisitScheduling::where('type', $this->type)
-    ->where('date_visit', $date1->date)
-    ->get();
-
-    if($day1->count() >= intval($date1->number_visit)){
-      $this->visit_date1 = '';
-    }else{
-      $this->visit_date1 = $date1;
-    }
-
-    // restringe o número de visitas do segundo dia
-    if(isset($this->visit_controls[1])){
-      $day2 = VisitScheduling::where('type', $this->type)
-        ->where('date_visit', $date2->date)
-        ->get();
-      if($day2->count() >= intval($date2->number_visit)){
-        $this->visit_date2 = '';
+      if($day1->count() >= intval($date1->number_visit)){
+        $this->visit_date1 = '';
+      }else{
+        $this->visit_date1 = $date1;
       }
-      else{
-        $this->visit_date2 = $date2;
-      }
-    }else{$this->visit_date2 = '';}
 
-    // quando o total de visitas agendadas for maior que o total de visitas disponibilizadas
-    if($this->visit_date1 == '' && $this->visit_date2 == ''){
-      return redirect('/visita')->with('error', 'Todas as vagas disponíveis para visitas já foram preenchidas para este mês!');
+      // restringe o número de visitas do segundo dia
+      if(isset($this->visit_controls[1])){
+        $day2 = VisitScheduling::where('type', $this->type)
+          ->where('date_visit', $date2->date)
+          ->get();
+        if($day2->count() >= intval($date2->number_visit)){
+          $this->visit_date2 = '';
+        }
+        else{
+          $this->visit_date2 = $date2;
+        }
+      }else{$this->visit_date2 = '';}
+
+      // quando o total de visitas agendadas for maior que o total de visitas disponibilizadas
+      if($this->visit_date1 == '' && $this->visit_date2 == ''){
+        return redirect('/visita')->with('error', 'Todas as vagas disponíveis para visitas já foram preenchidas para este mês!');
+      }
+
+    } else {
+      return redirect('/visita')->with('error', 'Não existe disponibilidade de datas para agendamentos de visita!');
     }
 
     $this->render();
@@ -229,6 +227,7 @@ class VisitLivewire extends Component
     ]);
 
     $visit_scheduling = VisitScheduling::create($data);
+    $this->clearFields();
     $this->redirectRoute('visit-completed.index', ['visit_completed_id' => $visit_scheduling->id]);
   }
 

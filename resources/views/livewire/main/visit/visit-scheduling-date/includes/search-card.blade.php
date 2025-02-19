@@ -4,8 +4,9 @@
         <thead class="text-xs text-zinc-700 uppercase bg-zinc-50 dark:bg-zinc-700 dark:text-zinc-400">
             <tr class="text-center">
                 <th scope="col" class="p-2 w-[5%]"> Cód </th>
-                <th scope="col" class="p-2 w-[40%]"> Data Inicial </th>
-                <th scope="col" class="p-2 w-[40%]"> Data Final </th>
+                <th scope="col" class="p-2 w-[25%]"> Data Inicial </th>
+                <th scope="col" class="p-2 w-[25%]"> Data Final </th>
+                <th scope="col" class="p-2 w-[30%]"> Ala - Pavilhão </th>
                 <th scope="col" class="p-2 w-[15%]"> Edit/Delete </th>
             </tr>
         </thead>
@@ -16,6 +17,7 @@
                 <td class="p-2"> {{ $key+1 }} </td>
                 <td class="p-2"> {{ \Carbon\Carbon::parse($visit_scheduling_date->start_date)->format('d/m/Y') }} </td>
                 <td class="p-2"> {{ \Carbon\Carbon::parse($visit_scheduling_date->end_date)->format('d/m/Y') }} </td>
+                <td class="p-2"> {{ $visit_scheduling_date->ward->ward }} </td>
                 <td class="p-2">
                     <div class="flex w-full space-x-8 justify-center gap-8 ">
                         @can('update_visit_scheduling_date')
@@ -35,7 +37,7 @@
                 </td>
             </tr>
             @empty
-            <td class="p-2"> Não existe agendamentos feitos. </td>
+            <td colspan="5" class="p-2 text-center text-red-600"> Não existe agendamentos feitos. </td>
             @endforelse
         </tbody>
     </table>

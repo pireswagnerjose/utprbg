@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Main\Visit\VisitSchedulingDate;
 
+use App\Models\Admin\Ward;
 use App\Models\Main\Visit\VisitSchedulingDate;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -15,12 +16,16 @@ class VisitSchedulingDateLivewire extends Component
     public $user_create;
     public $user_update;
     public $prison_unit_id;
+    public $ward_id;
     public $openModalCreate = false;
     public $openModalUpdate = false;
     public $openModalDelete = false;
 
+    public $wards = [];
+
     public function mount()
     {
+        $this->wards = Ward::all();
         $this->user_create = Auth::user()->id;
         $this->user_update = Auth::user()->id;
         $this->prison_unit_id = Auth::user()->prison_unit_id;
@@ -32,7 +37,7 @@ class VisitSchedulingDateLivewire extends Component
      */
     public function clearFields()
     {
-        $this->reset( 'start_date', 'end_date' );
+        $this->reset( 'start_date', 'end_date', 'ward_id' );
     }
 
     /**
@@ -67,7 +72,9 @@ class VisitSchedulingDateLivewire extends Component
             'end_date'          => 'required|max:10|min:10',
             'user_create'       => 'required|max:10',
             'prison_unit_id'    => 'required|max:10',
+            'ward_id'           => 'required|max:10',
         ]);
+
         VisitSchedulingDate::create($data);
         $this->closeModal();
         $this->redirectRoute('visit-scheduling-date.index');
@@ -78,6 +85,7 @@ class VisitSchedulingDateLivewire extends Component
     {
         $this->start_date = $visit_scheduling_date->start_date;
         $this->end_date   = $visit_scheduling_date->end_date;
+        $this->ward_id    = $visit_scheduling_date->ward_id;
         $this->openModalUpdate = $visit_scheduling_date->id;
     }
 
@@ -88,6 +96,7 @@ class VisitSchedulingDateLivewire extends Component
             'end_date'          => 'required|max:10|min:10',
             'user_update'       => 'required|max:10',
             'prison_unit_id'    => 'required|max:10',
+            'ward_id'           => 'required|max:10',
         ]);
         $visit_scheduling_date->update($data);
         $this->closeModal();

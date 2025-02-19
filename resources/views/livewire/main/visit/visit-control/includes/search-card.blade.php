@@ -46,7 +46,7 @@
         </td>
       </tr>
       @empty
-      <td class="p-2"> Não existe agendamentos feitos. </td>
+      <td colspan="6" class="p-2 text-center text-red-600"> Não existe agendamentos feitos. </td>
       @endforelse
     </tbody>
   </table>

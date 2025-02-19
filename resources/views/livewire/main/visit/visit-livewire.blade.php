@@ -3,7 +3,7 @@
    @include('livewire.main.visit.includes.card-visit')
    @endif
 
-   @if ($this->date >= $this->start_date AND $this->date <= $this->end_date)
+   @if ($date >= $visit_scheduling_start_date->start_date AND $date <= $visit_scheduling_end_date->end_date)
       @if ($visibleForm)
       @include('livewire.main.visit.includes.form-login')
       @endif

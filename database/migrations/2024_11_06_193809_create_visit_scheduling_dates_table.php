@@ -20,6 +20,9 @@ return new class extends Migration
             $table->string('user_update', 100)->nullable();//usuário que modificou o documento
             $table->string('prison_unit_id', 100);//unidade prisional
 
+            /* chaves estrangeiras */
+            $table->foreignId('ward_id')->constrained('wards')->onDelete('cascade');
+
             $table->timestamps();
         });
     }
