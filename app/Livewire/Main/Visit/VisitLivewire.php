@@ -28,8 +28,8 @@ class VisitLivewire extends Component
   public $visitant_id;
   public $user_create; 
   public $prison_unit_id;
-  public $visit_scheduling_start_date;
-  public $visit_scheduling_end_date;
+  public $visit_scheduling_start_date = null;
+  public $visit_scheduling_end_date = null;
   public $identification_card = [];
   public $visit_scheduling_date;
   public $visit_controls;
@@ -119,7 +119,7 @@ class VisitLivewire extends Component
         ->where('start_date', '>=', $this->date)
         ->orderBy('start_date', 'asc')->first();
 
-    if ($visit_date->start_date != $this->date) {
+    if (empty($visit_date) OR $visit_date->start_date != $this->date) {
       return redirect('/visita')
       ->with('error', 'Fora da data de agendamento para o seu pavilhão');
     }

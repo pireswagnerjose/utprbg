@@ -3,9 +3,13 @@
    @include('livewire.main.visit.includes.card-visit')
    @endif
 
+   @if(!empty($visit_scheduling_start_date))
    @if ($date >= $visit_scheduling_start_date->start_date AND $date <= $visit_scheduling_end_date->end_date)
-      @if ($visibleForm)
-      @include('livewire.main.visit.includes.form-login')
+      <p>
+         @if ($visibleForm)
+         @include('livewire.main.visit.includes.form-login')
+         @endif
+      </p>
       @endif
       @else
       <div class="flex flex-col gap-6 px-12">
