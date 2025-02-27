@@ -105,11 +105,11 @@ class VisitLivewire extends Component
     // busca os dados do preso conforme a carteirinha
     $prisoner = Prisoner::where('id', $this->identification_card['prisoner_id'])
       ->with('unit_address')
-      ->get()->first();
+      ->first();
     
     // busca os dados da unidade prisional conforme os dados da carteirinha
     $unid_address = UnitAddress::orderBy('id', 'desc')->where('prisoner_id', $prisoner['id'])
-      ->get()->first();
+      ->first();
     
     // busca os dados do pavilhão conforme os dados da carteirinha
     $ward = Ward::where('id', $unid_address->ward_id)->get()->first();
@@ -142,6 +142,7 @@ class VisitLivewire extends Component
         }
       }
     }
+
     // verifica se já foi realizado o agendamento da visita íntima
     if($this->type == 'ÍNTIMA'){
       // verifica se o visitante pode receber a visita íntima
@@ -157,8 +158,10 @@ class VisitLivewire extends Component
     }
 
     $this->visit_controls = VisitControl::where('created_at', '>', $this->date )
+      ->where('visit_type', $this->type)
       ->where('ward_id', $ward->id)
       ->get();
+      
     if ($this->visit_controls->count() > 0) {
       // primeiro dia de agendamento
       $date1 = $this->visit_controls[0];
