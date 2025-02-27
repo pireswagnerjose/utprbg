@@ -9,9 +9,11 @@ use App\Models\Main\Prison;
 use App\Models\Main\Prisoner;
 use App\Models\Main\UnitAddress;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class PrisonerListReport extends Component
 {
+    use WithPagination;
     public $c_s_photo;
     public $ward_id;
     public $list_type;
@@ -37,7 +39,7 @@ class PrisonerListReport extends Component
                     ->where('status', 'ATIVO')
                     ->where('prisoners.status_prison_id', 1)
                     ->orderBy('prisoners.name','asc')
-                    ->get();
+                    ->paginate(50);
                 return $data;
             } else {
                 $data = UnitAddress::select('unit_addresses.*', 'prisoners.*')
@@ -45,7 +47,7 @@ class PrisonerListReport extends Component
                     ->where('status', 'ATIVO')
                     ->where('prisoners.status_prison_id', 1)
                     ->orderBy('prisoners.name','asc')
-                    ->get();
+                    ->paginate(50);
                 return $data;
             }
         }
@@ -56,13 +58,13 @@ class PrisonerListReport extends Component
                     ->with('unit_addresses')
                     ->whereHas('unit_addresses', function ($querey){
                         $querey->where('status', 'ATIVO');
-                    })->get();
+                    })->paginate(5);
                     return $data;
             }else {
                 $data = Cell::with('unit_addresses')
                     ->whereHas('unit_addresses', function ($querey){
                         $querey->where('status', 'ATIVO');
-                    })->get();
+                    })->paginate(5);
                 return $data;
             }
         }

@@ -20,10 +20,21 @@
             </div>
         </form>
         @if($this->list_type == 'list' )
-            @include('livewire.report.prisoner-list.include.table')
+        @include('livewire.report.prisoner-list.include.table')
+        <!-- Paginação -->
+        <div class="pl-2 py-4 mt-4 text-zinc-50 dark:text-zinc-400 border-t border-blue-300 dark:border-blue-500 pb-3">
+            {{ $unit_adds->onEachSide(1)->links() }}
+        </div>
+        <!-- end Paginação -->
         @endif
+
         @if($this->list_type == 'conference' )
-            @include('livewire.report.prisoner-list.include.table-conference')
+        @include('livewire.report.prisoner-list.include.table-conference')
+        <!-- Paginação -->
+        <div class="pl-2 py-4 mt-4 text-zinc-50 dark:text-zinc-400 border-t border-blue-300 dark:border-blue-500 pb-3">
+            {{ $unit_adds->onEachSide(1)->links() }}
+        </div>
+        <!-- end Paginação -->
         @endif
     </div>
 </div>
