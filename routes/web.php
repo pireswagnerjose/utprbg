@@ -18,6 +18,7 @@ use App\Http\Controllers\Report\TypePrisonPdfController;
 use App\Http\Controllers\Report\VisitantReportController;
 use App\Http\Controllers\Report\VisitReportPdfController;
 use App\Http\Controllers\VcamController;
+use App\Http\Controllers\VisitScheduling\VisitSchedulingController;
 use App\Livewire\Admin\Cell\CellLivewire;
 use App\Livewire\Admin\CivilStatus\CivilStatusLivewire;
 use App\Livewire\Admin\Country\CountryLivewire;
@@ -59,9 +60,7 @@ use App\Livewire\Main\IdentificationCard\IdentificationCardLivewire;
 use App\Livewire\Main\IdentificationCard\IdentificationCardShowLivewire;
 use App\Livewire\Pages\Prisoner\PrisonerLivewire;
 use App\Livewire\Pages\Prisoner\PrisonerShowLivewire;
-use App\Livewire\Main\Visit\VisitCompleted\VisitCompletedLivewire;
 use App\Livewire\Main\Visit\VisitControl\VisitControlLivewire;
-use App\Livewire\Main\Visit\VisitLivewire;
 use App\Livewire\Main\Visit\VisitSchedulingDate\VisitSchedulingDateLivewire;
 use App\Livewire\Main\Visitant\VisitantLivewire;
 use App\Livewire\Main\Visitant\VisitantShowLivewire;
@@ -119,7 +118,7 @@ Route::middleware([
     Route::get('/wards', WardLivewire::class)->name('wards.index');
     // Cell - Cela
     Route::get('/cells', CellLivewire::class)->name('cells.index');
-    
+
     // PRISON
     // Prison Origins - Origem da Prisão
     Route::get('/prison-origins', PrisonOriginLivewire::class)->name('prison-origins.index');
@@ -137,7 +136,7 @@ Route::middleware([
     Route::get('/origin-processes', OriginProcessLivewire::class)->name('origin-processes.index');
     // Process Regimes - Regime do Processo
     Route::get('/process-regimes', ProcessRegimeLivewire::class)->name('process-regimes.index');
-    
+
     // INTERNAL SERVICE
     // Type Services - Tipos de Atendimento
     Route::get('/type-services', TypeServiceLivewire::class)->name('type-services.index');
@@ -177,7 +176,7 @@ Route::middleware([
     Route::get('/pad-locals', PadLocalLivewire::class)->name('pad-locals.index');
     // Event Type - Local da Ocorrência
     Route::get('/pad-event-types', PadEventTypeLivewire::class)->name('pad-event-types.index');
-    
+
     // MAIN
     // Prisoner - Preso
     Route::get('/prisoners-search', PrisonerLivewire::class)->name('prisoners.search');
@@ -194,7 +193,7 @@ Route::middleware([
     // Internal Service
     Route::get('/internal-service', InternalServiceReport::class)->name('internal-services.index');
     Route::any('/internal-service-pdf', [InternalServiceReportController::class, 'pdf'])->name('internal-services.pdf');
-    
+
     // Legal Assistance
     Route::get('/legal-assistances', LegalAssistanceReport::class)->name('legal-assistances.index');
     Route::any('/legal-assistances-pdf', [LegalAssistanceReportController::class, 'pdf'])->name('legal-assistances.pdf');
@@ -237,14 +236,14 @@ Route::middleware([
     Route::get('/identification-card-pdf/{identification_card_id}', [IdentificationCardPdfController::class, 'pdf'])->name('identification-card.pdf');
 
     // Periodo de Agendamento das visitas
-    Route::get('/visit-scheduling-date', VisitSchedulingDateLivewire::class)->name('visit-scheduling-date.index');    
+    Route::get('/visit-scheduling-date', VisitSchedulingDateLivewire::class)->name('visit-scheduling-date.index');
     Route::get('/visit-control', VisitControlLivewire::class)->name('visit-control.index');
-    
+
     // Visitas agendadas
-    Route::get('/visit-report', [VisitReportPdfController::class, 'index'])->name('visit-report.index');    
-    Route::get('/visit-pdf', [VisitReportPdfController::class, 'pdf'])->name('visit.pdf');    
+    Route::get('/visit-report', [VisitReportPdfController::class, 'index'])->name('visit-report.index');
+    Route::get('/visit-pdf', [VisitReportPdfController::class, 'pdf'])->name('visit.pdf');
     Route::delete('/visit/destroy/{id}', [VisitReportPdfController::class, 'destroy'])->name('visit.destroy');
-    
+
     // ACL
     /* rotas referente a tablela de Abilidades */
     Route::get('/ability', [AbilityController::class, 'index'])->name('ability.index');
@@ -276,6 +275,7 @@ Route::middleware([
     Route::delete('/permission/destroy/{id}', [PermissionController::class, 'destroy'])->name('permission.destroy');
 });
 
-// VISIT
-Route::get('/visita', VisitLivewire::class)->name('visit.index');
-Route::get('/visita-concluida/{visit_completed_id}', VisitCompletedLivewire::class)->name('visit-completed.index');
+// agendamento de visitas
+Route::get('/visita', [VisitSchedulingController::class, 'index'])->name('visit-scheduling.index');
+Route::post('/visita/create', [VisitSchedulingController::class, 'create'])->name('visit-scheduling.create');
+Route::post('/visit/store', [VisitSchedulingController::class, 'store'])->name('visit-scheduling.store');
