@@ -14,6 +14,7 @@ use App\Http\Controllers\Report\LegalAssistanceReportController;
 use App\Http\Controllers\Report\PrisonerReportController;
 use App\Http\Controllers\Report\PrisonReportPdfController;
 use App\Http\Controllers\Report\ProcessReportPdfController;
+use App\Http\Controllers\Report\ScheduledVisit\ScheduledVisitOfTheDayController;
 use App\Http\Controllers\Report\TypePrisonPdfController;
 use App\Http\Controllers\Report\VisitantReportController;
 use App\Http\Controllers\Report\VisitReportPdfController;
@@ -243,6 +244,10 @@ Route::middleware([
     Route::get('/visit-report', [VisitReportPdfController::class, 'index'])->name('visit-report.index');
     Route::get('/visit-pdf', [VisitReportPdfController::class, 'pdf'])->name('visit.pdf');
     Route::delete('/visit/destroy/{id}', [VisitReportPdfController::class, 'destroy'])->name('visit.destroy');
+
+    //Visitas agendadas do dia
+    Route::get('/visita-agendada-do-dia', [ScheduledVisitOfTheDayController::class, 'index'])->name('scheduled-visit-of-the-day.index');
+    Route::get('/visita-agendada-do-dia-pdf', [ScheduledVisitOfTheDayController::class, 'pdf'])->name('scheduled-visit-of-the-day.pdf');
 
     // ACL
     /* rotas referente a tablela de Abilidades */
