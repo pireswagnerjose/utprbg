@@ -14,47 +14,50 @@ class PrisonerListController extends Controller
 {
     public function pdf(Request $request)
     {
-        $c_s_photo  = $request->c_s_photo;
+        $c_s_photo = $request->c_s_photo;
         $prisons = Prison::where('prison_unit_id', Auth::user()->prison_unit_id)
-                    ->where('exit_date', NULL)->get();
-        
+            ->where('exit_date', NULL)->get();
+
         // retorna os presos ativos
         foreach ($prisons as $prison) {
             $prisoner_id_arr[] = $prison->prisoner_id;
         }
 
         $unit_addresses = UnitAddress::with('cell')
-                                        ->where('prison_unit_id', Auth::user()->prison_unit_id)
-                                        ->whereIn('prisoner_id', $prisoner_id_arr)
-                                        ->get();
+            ->where('prison_unit_id', Auth::user()->prison_unit_id)
+            ->whereIn('prisoner_id', $prisoner_id_arr)
+            ->get();
 
         // retorna a listagem geral de presos
         if ($request->list_type == 'list') {
             // por ala
-            if($request->ward_id){
+            if ($request->ward_id) {
                 $unit_adds = UnitAddress::with('cell', 'prisoner')
-                                        ->join('prisoners', 'prisoners.id','=', 'unit_addresses.prisoner_id')
-                                        ->where('ward_id', $request->ward_id)
-                                        ->where('status', 'ATIVO')
-                                        ->whereIn('prisoner_id', $prisoner_id_arr)
-                                        ->orderBy('prisoners.name')
-                                        ->get();
-            }else{
-            // todas as alas
+                    ->join('prisoners', 'prisoners.id', '=', 'unit_addresses.prisoner_id')
+                    ->where('ward_id', $request->ward_id)
+                    ->where('status', 'ATIVO')
+                    ->whereIn('prisoner_id', $prisoner_id_arr)
+                    ->orderBy('prisoners.name')
+                    ->get();
+            } else {
+                // todas as alas
                 $unit_adds = UnitAddress::with('cell', 'prisoner')
-                                        ->join('prisoners', 'prisoners.id','=', 'unit_addresses.prisoner_id')
-                                        ->where('status', 'ATIVO')
-                                        ->whereIn('prisoner_id', $prisoner_id_arr)
-                                        ->orderBy('prisoners.name')
-                                        ->get();
+                    ->join('prisoners', 'prisoners.id', '=', 'unit_addresses.prisoner_id')
+                    ->where('status', 'ATIVO')
+                    ->whereIn('prisoner_id', $prisoner_id_arr)
+                    ->orderBy('prisoners.name')
+                    ->get();
             }
 
-            $pdf = Pdf::loadView('reports.prisoner-list.prisoner-list',
+            $pdf = Pdf::loadView(
+                'reports.prisoner-list.prisoner-list',
                 compact(
-                    'unit_adds', 'c_s_photo', 'prisons'
+                    'unit_adds',
+                    'c_s_photo',
+                    'prisons'
                 )
             );
-            return $pdf->stream('Lista de Presos'.'.pdf');
+            return $pdf->stream('Lista de Presos' . '.pdf');
         }
 
         // retorna os presos divididos por cela
@@ -62,25 +65,45 @@ class PrisonerListController extends Controller
             // por ala
             if ($request->ward_id) {
                 $cells = Cell::where('ward_id', $request->ward_id)
-                    ->with('unit_addresses')
-                    ->whereHas('unit_addresses', function ($querey){
-                        $querey->where('status', 'ATIVO');
-                    });
-            }else {
-                $cells = Cell::with('unit_addresses')
-                    ->whereHas('unit_addresses', function ($querey){
-                        $querey->where('status', 'ATIVO');
-                    });
-            }
-            
-            $cells = $cells->get();
+                    ->orderBy('cell', 'asc')
+                    ->where('prison_unit_id', Auth::user()->prison_unit_id)
+                    ->get();
 
-            $pdf = Pdf::loadView('reports.prisoner-list.prisoner-conference',
+                foreach ($cells as $key => $cell) {
+                    $data[$key] = $cell;
+                    $data[$key]['unit_addresses'] = UnitAddress::where('cell_id', $cell->id)
+                        ->where('status', 'ATIVO')
+                        ->where('prison_unit_id', Auth::user()->prison_unit_id)
+                        ->whereRelation('prisoner', 'status_prison_id', 1)
+                        ->get();
+                }
+            } else {
+                $cells = Cell::orderBy('cell', 'asc')
+                    ->where('prison_unit_id', Auth::user()->prison_unit_id)
+                    ->get();
+
+                foreach ($cells as $key => $cell) {
+                    $data[$key] = $cell;
+                    $data[$key]['unit_addresses'] = UnitAddress::where('cell_id', $cell->id)
+                        ->where('status', 'ATIVO')
+                        ->where('prison_unit_id', Auth::user()->prison_unit_id)
+                        ->whereRelation('prisoner', 'status_prison_id', 1)
+                        ->get();
+                }
+            }
+
+            $cells = $data;
+
+            $pdf = Pdf::loadView(
+                'reports.prisoner-list.prisoner-conference',
                 compact(
-                    'cells', 'unit_addresses', 'c_s_photo', 'prisons'
+                    'cells',
+                    'unit_addresses',
+                    'c_s_photo',
+                    'prisons'
                 )
             );
-            return $pdf->stream('Lista de Presos'.'.pdf');
+            return $pdf->stream('Lista de Presos' . '.pdf');
         }
     }
 }
