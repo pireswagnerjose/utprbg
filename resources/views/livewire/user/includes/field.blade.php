@@ -40,11 +40,11 @@
         <div class="relative z-0 w-full group">
             <select id="userPrisonUnitId" required wire:model="userPrisonUnitId"
                 class="block py-1 mt-1 px-0 w-full text-sm text-zinc-500 dark:text-zinc-400 bg-transparent border-0 border-b border-zinc-400 dark:border-zinc-600 dark:focus:border-blue-500 focus:border-blue-600 appearance-none focus:outline-none focus:ring-0 peer">
-                <option class="text-zinc-900 dark:text-zinc-600" selected value="{{ $prison_unit->id ?? '' }}">{{
-                    $prison_unit->id ?? 'Unidade Prisional' }}</option>
+                <option class="text-zinc-900 dark:text-zinc-600" selected value="{{ $prison_unit->id ?? '' }}">
+                    {{ $prison_unit->id ?? 'Unidade Prisional' }}</option>
                 @foreach ($prison_units as $prison_unit)
-                <option class="text-zinc-900 dark:text-zinc-600" value="{{ $prison_unit->id ?? '' }}"
-                    @selected(old('userPrisonUnitId')==$prison_unit->id)>{{$prison_unit->prison_unit }}</option>
+                    <option class="text-zinc-900 dark:text-zinc-600" value="{{ $prison_unit->id ?? '' }}"
+                        @selected(old('userPrisonUnitId') == $prison_unit->id)>{{ $prison_unit->prison_unit }}</option>
                 @endforeach
             </select>
             <x-input-error for="userPrisonUnitId" class="mt-2">{{ $message ?? '' }}</x-input-error>
@@ -53,11 +53,11 @@
         <div class="relative z-0 w-full group">
             <select id="roleId" required wire:model="roleId"
                 class="block py-1 mt-1 px-0 w-full text-sm text-zinc-500 dark:text-zinc-400 bg-transparent border-0 border-b border-zinc-400 dark:border-zinc-600 dark:focus:border-blue-500 focus:border-blue-600 appearance-none focus:outline-none focus:ring-0 peer">
-                <option class="text-zinc-900 dark:text-zinc-600" selected value="{{ $role->id ?? '' }}">{{ $role->name
-                    ?? 'Nível de Acesso' }}</option>
+                <option class="text-zinc-900 dark:text-zinc-600" selected value="{{ $role->id ?? '' }}">
+                    {{ $role->name ?? 'Nível de Acesso' }}</option>
                 @foreach ($roles as $role)
-                <option class="text-zinc-900 dark:text-zinc-600" value="{{ $role->id }}"
-                    @selected(old('roleId')==$role->id)>{{$role->name }}</option>
+                    <option class="text-zinc-900 dark:text-zinc-600" value="{{ $role->id }}"
+                        @selected(old('roleId') == $role->id)>{{ $role->name }}</option>
                 @endforeach
             </select>
             <x-input-error for="roleId" class="mt-2">{{ $message ?? '' }}</x-input-error>

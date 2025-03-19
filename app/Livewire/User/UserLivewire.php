@@ -46,11 +46,20 @@ class UserLivewire extends Component
     // CLEAR FIELDS - LIMPAR CAMPOS
     public function clearFields()
     {
-        $this->reset('userFirstName', 'userLastName', 'userRegistry', 'userPhone', 'userEmail',
-            'userPrisonUnitId', '$roleId', 'user_update', 'userPassword');
+        $this->reset(
+            'userFirstName',
+            'userLastName',
+            'userRegistry',
+            'userPhone',
+            'userEmail',
+            'userPrisonUnitId',
+            '$roleId',
+            'user_update',
+            'userPassword'
+        );
         $this->confirmingUserUpdate = false;
     }
-    
+
     // ITENS CREATE-UPDATE
     public $userFirstName;
     public $userLastName;
@@ -68,42 +77,48 @@ class UserLivewire extends Component
         $dataValidated = Validator::make(
             // Data to validate...
             [
-                'first_name'        => $this->userFirstName,
-                'last_name'         => $this->userLastName,
-                'registry'          => $this->userRegistry,
-                'phone'             => $this->userPhone,
-                'email'             => $this->userEmail,
-                'prison_unit_id'    => $this->userPrisonUnitId,
-                'level_access_id'   => $this->roleId,
-                'user_create'       => $this->userCreate,
-                'password'          => $this->userPassword
+                'first_name' => $this->userFirstName,
+                'last_name' => $this->userLastName,
+                'registry' => $this->userRegistry,
+                'phone' => $this->userPhone,
+                'email' => $this->userEmail,
+                'prison_unit_id' => $this->userPrisonUnitId,
+                'user_create' => $this->userCreate,
+                'password' => $this->userPassword
             ],
             // Validation rules to apply...
             [
-                'first_name'        => 'max:60|string',
-                'last_name'         => 'max:60|string',
-                'registry'          => 'max:60|string',
-                'phone'             => "required|string|max:15|unique:users,phone",//unico (usa o id da table pra validadar)
-                'email'             => "required|string|email|max:60|unique:users,email",//unico (usa o id da table pra validadar)
-                'prison_unit_id'    => 'max:10',
-                'level_access_id'   => 'max:10',
-                'user_create'       => 'max:10',
-                'password'          => 'min:8'
+                'first_name' => 'max:60|string',
+                'last_name' => 'max:60|string',
+                'registry' => 'max:60|string',
+                'phone' => "required|string|max:15|unique:users,phone",//unico (usa o id da table pra validadar)
+                'email' => "required|string|email|max:60|unique:users,email",//unico (usa o id da table pra validadar)
+                'prison_unit_id' => 'max:10',
+                'user_create' => 'max:10',
+                'password' => 'min:8'
             ],
             [
-                'phone.unique'=> 'Já exite um item com esse nome',
-                'email.unique'=> 'Já exite um item com esse nome',
+                'phone.unique' => 'Já exite um item com esse nome',
+                'email.unique' => 'Já exite um item com esse nome',
             ]
         )->validate();
         // Transforma os caracteres em maiusculos
-        $dataValidated['first_name'] = mb_strtoupper ($dataValidated['first_name'],'utf-8');
-        $dataValidated['last_name'] = mb_strtoupper ($dataValidated['last_name'],'utf-8');
-        $dataValidated ['password'] = Hash::make($dataValidated['password']);
-        
+        $dataValidated['first_name'] = mb_strtoupper($dataValidated['first_name'], 'utf-8');
+        $dataValidated['last_name'] = mb_strtoupper($dataValidated['last_name'], 'utf-8');
+        $dataValidated['password'] = Hash::make($dataValidated['password']);
+
         $user = User::create($dataValidated);
         $user->roles()->attach($this->roleId);
-        $this->reset('userFirstName', 'userLastName', 'userRegistry', 'userPhone', 'userEmail',
-            'userPrisonUnitId', 'roleId', 'userPassword');
+        $this->reset(
+            'userFirstName',
+            'userLastName',
+            'userRegistry',
+            'userPhone',
+            'userEmail',
+            'userPrisonUnitId',
+            'roleId',
+            'userPassword'
+        );
         session()->flash('success', 'Created.');
         $this->resetPage();
     }
@@ -111,13 +126,15 @@ class UserLivewire extends Component
     // MODAL UPDATE
     public $confirmingUserUpdate = false;
     public function confirmgUserUpdate(User $user)
-    {    
-        $this->userFirstName        = $user->first_name;
-        $this->userLastName         = $user->last_name;
-        $this->userRegistry         = $user->registry;
-        $this->userPhone            = $user->phone;
-        $this->userEmail            = $user->email;
-        $this->userPrisonUnitId     = $user->prison_unit_id;
+    {
+        $role_user = User::find($user->id)->roles()->first();
+        $this->userFirstName = $user->first_name;
+        $this->userLastName = $user->last_name;
+        $this->userRegistry = $user->registry;
+        $this->userPhone = $user->phone;
+        $this->userEmail = $user->email;
+        $this->userPrisonUnitId = $user->prison_unit_id;
+        $this->roleId = $role_user->id;
         $this->confirmingUserUpdate = $user->id;
     }
 
@@ -127,50 +144,58 @@ class UserLivewire extends Component
         $dataValidated = Validator::make(
             // Data to validate...
             [
-                'first_name'        => $this->userFirstName,
-                'last_name'         => $this->userLastName,
-                'registry'          => $this->userRegistry,
-                'phone'             => $this->userPhone,
-                'email'             => $this->userEmail,
-                'prison_unit_id'    => $this->userPrisonUnitId,
-                'user_update'       => $this->userUpdate
+                'first_name' => $this->userFirstName,
+                'last_name' => $this->userLastName,
+                'registry' => $this->userRegistry,
+                'phone' => $this->userPhone,
+                'email' => $this->userEmail,
+                'prison_unit_id' => $this->userPrisonUnitId,
+                'user_update' => $this->userUpdate
             ],
             // Validation rules to apply...
             [
-                'first_name'        => 'max:60|string',
-                'last_name'         => 'max:60|string',
-                'registry'          => 'max:60|string',
-                'phone'             => "required|string|max:15|unique:users,phone,{$user->id},id",//unico (usa o id da table pra validadar)
-                'email'             => "required|string|email|max:60|unique:users,email,{$user->id},id",//unico (usa o id da table pra validadar)
-                'prison_unit_id'    => 'max:10',
-                'level_access_id'   => 'max:10',
-                'user_update'       => 'max:10',
+                'first_name' => 'max:60|string',
+                'last_name' => 'max:60|string',
+                'registry' => 'max:60|string',
+                'phone' => "required|string|max:15|unique:users,phone,{$user->id},id",//unico (usa o id da table pra validadar)
+                'email' => "required|string|email|max:60|unique:users,email,{$user->id},id",//unico (usa o id da table pra validadar)
+                'prison_unit_id' => 'max:10',
+                'level_access_id' => 'max:10',
+                'user_update' => 'max:10',
             ],
             [
-                'phone.unique'=> 'Já exite um item com esse nome',
-                'email.unique'=> 'Já exite um item com esse nome',
+                'phone.unique' => 'Já exite um item com esse nome',
+                'email.unique' => 'Já exite um item com esse nome',
             ]
-         )->validate();
-         
+        )->validate();
+
         // Transforma os caracteres em maiusculos
-        $dataValidated['first_name'] = mb_strtoupper ($dataValidated['first_name'],'utf-8');
-        $dataValidated['last_name'] = mb_strtoupper ($dataValidated['last_name'],'utf-8');
-        
+        $dataValidated['first_name'] = mb_strtoupper($dataValidated['first_name'], 'utf-8');
+        $dataValidated['last_name'] = mb_strtoupper($dataValidated['last_name'], 'utf-8');
+
         $user->update($dataValidated);//atualiza os dados no banco
-        
+
         $user_update = User::with('roles')->find($user->id);
-        foreach ( $user_update->roles as $role) {
+        foreach ($user_update->roles as $role) {
             $user_id = $role;
         }
-        if(!empty($user_id) && $user_id != '') {
+        if (!empty($user_id) && $user_id != '') {
             $user->roles()->detach($user_id);
         }
         $user->roles()->attach($this->roleId);
-        $this->reset('userFirstName', 'userLastName', 'userRegistry', 'userPhone', 'userEmail',
-            'userPrisonUnitId', 'roleId', 'userPassword');
+        $this->reset(
+            'userFirstName',
+            'userLastName',
+            'userRegistry',
+            'userPhone',
+            'userEmail',
+            'userPrisonUnitId',
+            'roleId',
+            'userPassword'
+        );
         $this->confirmingUserUpdate = false;
     }
-    
+
     // MODAL DELETE
     public $confirmingUserDeletion = false;
     public function confirmUserDeletion($userID)
@@ -181,7 +206,7 @@ class UserLivewire extends Component
     public function deleteUser(User $user)
     {
         $user = User::with('roles')->find($user->id);
-        foreach ( $user->roles as $role) {
+        foreach ($user->roles as $role) {
             $user_id = $role;
         }
         $user->delete();
