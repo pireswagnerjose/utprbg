@@ -15,7 +15,7 @@ class HearingWithPoliceOfficerForm extends Form
     use WithFileUploads;
     public ?HearingWithPoliceOfficer $hearing_with_police_officer_model;
     use HearingWithPoliceOfficerTrait;//propriedades da tabela
-    
+
     public $prisoner_id;
     public $user_create;
     public $user_update;
@@ -40,17 +40,25 @@ class HearingWithPoliceOfficerForm extends Form
     public function clearFields()
     {
         $this->reset(
-            'delegate', 'police_station', 'date_of_service', 'time_of_service', 'status', 'remark', 'modality_care_id',
-            'pk_h_p_o_id', 'title', 'path',
+            'delegate',
+            'police_station',
+            'date_of_service',
+            'time_of_service',
+            'status',
+            'remark',
+            'modality_care_id',
+            'pk_h_p_o_id',
+            'title',
+            'path',
         );
     }
     // create 
     public function create()
     {
         $data = $this->validate();
-        $data['delegate']  = mb_strtoupper($data['delegate'], 'utf-8');
-        $data['police_station']  = mb_strtoupper($data['police_station'], 'utf-8');
-        $data['remark']  = mb_strtoupper($data['remark'], 'utf-8');
+        $data['delegate'] = mb_strtoupper($data['delegate'], 'utf-8');
+        $data['police_station'] = mb_strtoupper($data['police_station'], 'utf-8');
+        // $data['remark']  = mb_strtoupper($data['remark'], 'utf-8');
         HearingWithPoliceOfficer::create($data);
         $this->clearFields();
         session()->flash('success', 'Criado com sucesso.');
@@ -73,20 +81,19 @@ class HearingWithPoliceOfficerForm extends Form
     // update
     public function update($dataValidated)
     {
-        $dataValidated['delegate']  = mb_strtoupper($dataValidated['delegate'], 'utf-8');
-        $dataValidated['police_station']  = mb_strtoupper($dataValidated['police_station'], 'utf-8');
-        $dataValidated['remark']  = mb_strtoupper($dataValidated['remark'], 'utf-8');
+        $dataValidated['delegate'] = mb_strtoupper($dataValidated['delegate'], 'utf-8');
+        $dataValidated['police_station'] = mb_strtoupper($dataValidated['police_station'], 'utf-8');
+        // $dataValidated['remark']  = mb_strtoupper($dataValidated['remark'], 'utf-8');
         $this->hearing_with_police_officer_model->update($dataValidated);
         $this->clearFields();
     }
     // delete 
     public function delete($hearing_with_police_officer)
     {
-        $teste = HearingWithPoliceOfficerDocument::where('pk_h_p_o_id',$hearing_with_police_officer->id)->get()->first();
-        if(!empty($teste))
-        {
-            return redirect()->back()->with('danger', 'Existe(m) documento(s) relacionado(s), você tem que excluí-lo(s) primeiro');  
-        }else {
+        $teste = HearingWithPoliceOfficerDocument::where('pk_h_p_o_id', $hearing_with_police_officer->id)->get()->first();
+        if (!empty($teste)) {
+            return redirect()->back()->with('danger', 'Existe(m) documento(s) relacionado(s), você tem que excluí-lo(s) primeiro');
+        } else {
             $hearing_with_police_officer->delete();
             session()->flash('success', 'Excluído com sucesso.');
         }
@@ -95,18 +102,18 @@ class HearingWithPoliceOfficerForm extends Form
     public function createDocument()
     {
         $data = $this->validate([
-                'pk_h_p_o_id'       => 'required',
-                'title'             => 'required|max:255',
-                'path'              => 'required|mimetypes:application/pdf',
-                'user_create'       => 'required|max:10',
-                'prison_unit_id'    => 'required|max:10',
-            ]);
+            'pk_h_p_o_id' => 'required',
+            'title' => 'required|max:255',
+            'path' => 'required|mimetypes:application/pdf',
+            'user_create' => 'required|max:10',
+            'prison_unit_id' => 'required|max:10',
+        ]);
         /* cria o nome do documento */
-        $document_name = $data['title'].'-'.date('Y-m-d H:i:s');
+        $document_name = $data['title'] . '-' . date('Y-m-d H:i:s');
         /* faz o upload e retorna o endereco do arquivo */
-        $data['path'] = $this->path->storeAs('prisoner/'.$this->prisoner_id.'/documents'.'/legal_assistance', $document_name.'.'.$data['path']->getClientOriginalExtension());
+        $data['path'] = $this->path->storeAs('prisoner/' . $this->prisoner_id . '/documents' . '/legal_assistance', $document_name . '.' . $data['path']->getClientOriginalExtension());
 
-        $data['title']  = mb_strtoupper($data['title'], 'utf-8');
+        $data['title'] = mb_strtoupper($data['title'], 'utf-8');
         HearingWithPoliceOfficerDocument::create($data);
         $this->clearFields();
         session()->flash('success', 'Criado com sucesso.');

@@ -15,7 +15,7 @@ class VideoconferenceHearingForm extends Form
     use WithFileUploads;
     public ?VideoconferenceHearing $videoconference_hearing_model;
     use VideoconferenceHearingTrait;//propriedades da tabela
-    
+
     public $prisoner_id;
     public $user_create;
     public $user_update;
@@ -42,15 +42,23 @@ class VideoconferenceHearingForm extends Form
     public function clearFields()
     {
         $this->reset(
-            'criminal_court_id', 'district_id', 'date_of_service', 'time_of_service', 'status', 'remark', 'modality_care_id',
-            'pk_v_h_id', 'title', 'path',
+            'criminal_court_id',
+            'district_id',
+            'date_of_service',
+            'time_of_service',
+            'status',
+            'remark',
+            'modality_care_id',
+            'pk_v_h_id',
+            'title',
+            'path',
         );
     }
     // create 
     public function create()
     {
         $data = $this->validate();
-        $data['remark']  = mb_strtoupper($data['remark'], 'utf-8');
+        // $data['remark']  = mb_strtoupper($data['remark'], 'utf-8');
         VideoconferenceHearing::create($data);
         $this->clearFields();
         session()->flash('success', 'Criado com sucesso.');
@@ -74,18 +82,17 @@ class VideoconferenceHearingForm extends Form
     // update
     public function update($dataValidated)
     {
-        $dataValidated['remark']  = mb_strtoupper($dataValidated['remark'], 'utf-8');
+        // $dataValidated['remark']  = mb_strtoupper($dataValidated['remark'], 'utf-8');
         $this->videoconference_hearing_model->update($dataValidated);
         $this->clearFields();
     }
     // delete 
     public function delete($videoconference_hearing)
     {
-        $teste = VideoconferenceHearingDocument::where('pk_v_h_id',$videoconference_hearing->id)->get()->first();
-        if(!empty($teste))
-        {
-            return redirect()->back()->with('danger', 'Existe(m) documento(s) relacionado(s), você tem que excluí-lo(s) primeiro');  
-        }else {
+        $teste = VideoconferenceHearingDocument::where('pk_v_h_id', $videoconference_hearing->id)->get()->first();
+        if (!empty($teste)) {
+            return redirect()->back()->with('danger', 'Existe(m) documento(s) relacionado(s), você tem que excluí-lo(s) primeiro');
+        } else {
             $videoconference_hearing->delete();
             session()->flash('success', 'Excluído com sucesso.');
         }
@@ -94,19 +101,19 @@ class VideoconferenceHearingForm extends Form
     public function createDocument()
     {
         $data = $this->validate([
-                'pk_v_h_id'         => 'required',
-                'title'             => 'required|max:255',
-                'path'              => 'required|mimetypes:application/pdf',
-                'user_create'       => 'required|max:10',
-                'prison_unit_id'    => 'required|max:10',
-            ]);
-        
-        /* cria o nome do documento */
-        $document_name = $data['title'].'-'.date('Y-m-d s');
-        /* faz o upload e retorna o endereco do arquivo */
-        $data['path'] = $this->path->storeAs('prisoner/'.$this->prisoner_id.'/documents'.'/legal_assistance', $document_name.'.'.$data['path']->getClientOriginalExtension());
+            'pk_v_h_id' => 'required',
+            'title' => 'required|max:255',
+            'path' => 'required|mimetypes:application/pdf',
+            'user_create' => 'required|max:10',
+            'prison_unit_id' => 'required|max:10',
+        ]);
 
-        $data['title']  = mb_strtoupper($data['title'], 'utf-8');
+        /* cria o nome do documento */
+        $document_name = $data['title'] . '-' . date('Y-m-d s');
+        /* faz o upload e retorna o endereco do arquivo */
+        $data['path'] = $this->path->storeAs('prisoner/' . $this->prisoner_id . '/documents' . '/legal_assistance', $document_name . '.' . $data['path']->getClientOriginalExtension());
+
+        $data['title'] = mb_strtoupper($data['title'], 'utf-8');
         VideoconferenceHearingDocument::create($data);
         $this->clearFields();
         session()->flash('success', 'Criado com sucesso.');

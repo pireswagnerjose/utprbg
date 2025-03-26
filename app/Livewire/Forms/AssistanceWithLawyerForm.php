@@ -15,7 +15,7 @@ class AssistanceWithLawyerForm extends Form
     use WithFileUploads;
     public ?AssistanceWithLawyer $assistance_with_lawyer_model;
     use AssistanceWithLawyerTrait;//propriedades da tabela atendimento com advogado
-    
+
     public $prisoner_id;
     public $user_create;
     public $user_update;
@@ -40,15 +40,22 @@ class AssistanceWithLawyerForm extends Form
     public function clearFields()
     {
         $this->reset(
-            'date_of_service', 'time_of_service', 'status', 'remark', 'lawyer_id', 'modality_care_id',
-            'pk_a_w_l_id', 'title', 'path',
+            'date_of_service',
+            'time_of_service',
+            'status',
+            'remark',
+            'lawyer_id',
+            'modality_care_id',
+            'pk_a_w_l_id',
+            'title',
+            'path',
         );
     }
     // create 
     public function create()
     {
         $data = $this->validate();
-        $data['remark']  = mb_strtoupper($data['remark'], 'utf-8');
+        // $data['remark'] = mb_strtoupper($data['remark'], 'utf-8');
         AssistanceWithLawyer::create($data);
         $this->clearFields();
         session()->flash('success', 'Criado com sucesso.');
@@ -70,18 +77,17 @@ class AssistanceWithLawyerForm extends Form
     // update
     public function update($dataValidated)
     {
-        $dataValidated['remark']  = mb_strtoupper($dataValidated['remark'], 'utf-8');
+        // $dataValidated['remark']  = mb_strtoupper($dataValidated['remark'], 'utf-8');
         $this->assistance_with_lawyer_model->update($dataValidated);
         $this->clearFields();
     }
     // delete 
     public function delete($assistance_with_lawyer)
     {
-        $teste = AssistanceWithLawyerDocument::where('pk_a_w_l_id',$assistance_with_lawyer->id)->get()->first();
-        if(!empty($teste))
-        {
-            return redirect()->back()->with('danger', 'Existe(m) documento(s) relacionado(s), você tem que excluí-lo(s) primeiro');  
-        }else {
+        $teste = AssistanceWithLawyerDocument::where('pk_a_w_l_id', $assistance_with_lawyer->id)->get()->first();
+        if (!empty($teste)) {
+            return redirect()->back()->with('danger', 'Existe(m) documento(s) relacionado(s), você tem que excluí-lo(s) primeiro');
+        } else {
             $assistance_with_lawyer->delete();
             session()->flash('success', 'Excluído com sucesso.');
         }
@@ -90,19 +96,19 @@ class AssistanceWithLawyerForm extends Form
     public function createDocument()
     {
         $data = $this->validate([
-                'pk_a_w_l_id'       => 'required',
-                'title'             => 'required|max:255',
-                'path'              => 'required|mimetypes:application/pdf',
-                'user_create'       => 'required|max:10',
-                'prison_unit_id'    => 'required|max:10',
-            ]);
-        
-        /* cria o nome do documento */
-        $document_name = $data['title'].'-'.date('Y-m-d H:i:s');
-        /* faz o upload e retorna o endereco do arquivo */
-        $data['path'] = $this->path->storeAs('prisoner/'.$this->prisoner_id.'/documents'.'/legal_assistance', $document_name.'.'.$data['path']->getClientOriginalExtension());
+            'pk_a_w_l_id' => 'required',
+            'title' => 'required|max:255',
+            'path' => 'required|mimetypes:application/pdf',
+            'user_create' => 'required|max:10',
+            'prison_unit_id' => 'required|max:10',
+        ]);
 
-        $data['title']  = mb_strtoupper($data['title'], 'utf-8');
+        /* cria o nome do documento */
+        $document_name = $data['title'] . '-' . date('Y-m-d H:i:s');
+        /* faz o upload e retorna o endereco do arquivo */
+        $data['path'] = $this->path->storeAs('prisoner/' . $this->prisoner_id . '/documents' . '/legal_assistance', $document_name . '.' . $data['path']->getClientOriginalExtension());
+
+        $data['title'] = mb_strtoupper($data['title'], 'utf-8');
         AssistanceWithLawyerDocument::create($data);
         $this->clearFields();
         session()->flash('success', 'Criado com sucesso.');
