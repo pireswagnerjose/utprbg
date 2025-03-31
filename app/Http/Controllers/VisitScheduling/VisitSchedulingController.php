@@ -65,6 +65,7 @@ class VisitSchedulingController extends Controller
                 ->with('error', 'Sua carteirinha está VENCIDA, para continuar realizando as visitas você deve regularizá-la!');
         }
 
+
         // busca os dados do preso conforme a carteirinha
         $prisoner = Prisoner::where('id', $identification_card['prisoner_id'])
             ->with('unit_address')
@@ -177,6 +178,17 @@ class VisitSchedulingController extends Controller
 
     public function store(Request $request)
     {
+        // se já exisitir um registro de visita duplicado com os mesmos dados
+        $visit_scheduling = VisitScheduling::where('visitant_id', $request->visitant_id)
+            ->where('date_visit', $request->date_visit)
+            ->where('prisoner_id', $request->prisoner_id)
+            ->where('identification_card_id', $request->identification_card_id)
+            ->where('type', $request->type)
+            ->get();
+        if ($visit_scheduling->count() > 0) {
+            return view("visit-scheduling.visit-completed", ["visit_completed" => $visit_scheduling]);
+        }
+
         $data = $request->validate([
             'date_visit' => 'required|max:10|min:10',
             'type' => 'required|max:255',
