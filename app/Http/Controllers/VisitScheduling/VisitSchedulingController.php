@@ -184,7 +184,7 @@ class VisitSchedulingController extends Controller
             ->where('prisoner_id', $request->prisoner_id)
             ->where('identification_card_id', $request->identification_card_id)
             ->where('type', $request->type)
-            ->get();
+            ->first();
         if ($visit_scheduling->count() > 0) {
             return view("visit-scheduling.visit-completed", ["visit_completed" => $visit_scheduling]);
         }
