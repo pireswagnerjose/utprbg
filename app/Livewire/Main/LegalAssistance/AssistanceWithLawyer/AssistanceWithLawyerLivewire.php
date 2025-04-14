@@ -27,10 +27,10 @@ class AssistanceWithLawyerLivewire extends Component
     public $openModalDelete = false;
     public $openModalRelatedDocumentCreate = false;
     public $openModalRelatedDocumentDelete = false;
-    
+
     public function mount()
     {
-        $this->lawyers = Lawyer::all();
+        $this->lawyers = Lawyer::orderBy('lawyer', 'asc')->get();
         $this->modality_cares = ModalityCare::all();
     }
     // close modal
@@ -114,14 +114,15 @@ class AssistanceWithLawyerLivewire extends Component
         $this->assistance_with_lawyer_form->clearFields();
         session()->flash('success', 'Excluído com sucesso.');
     }
-    
+
     public function render()
     {
         $assistance_with_lawyers = AssistanceWithLawyer::where('prisoner_id', $this->prisoner_id)
             ->with('assistance_with_lawyer_documents')
             ->orderBy('date_of_service', 'desc')
             ->paginate(5);
-        return view('livewire.main.legal-assistance.assistance-with-lawyer.assistance-with-lawyer-livewire',
+        return view(
+            'livewire.main.legal-assistance.assistance-with-lawyer.assistance-with-lawyer-livewire',
             compact('assistance_with_lawyers')
         );
     }

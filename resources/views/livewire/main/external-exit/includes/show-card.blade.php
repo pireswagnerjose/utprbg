@@ -1,59 +1,53 @@
 @forelse ($external_exits as $external_exit)
     <div class="mx-auto border-b border-blue-400 dark:border-blue-600">
-        <div class="flex z-10 w-full justify-between mt-2">
+        <div class="flex z-10 w-full justify-between m-2">
             @php
                 $user_create = App\Models\User::where('id', $external_exit->user_create)->first();
                 $user_update = App\Models\User::where('id', $external_exit->user_update)->first();
             @endphp
 
-            <div class="flex gap-4 w-[70%]">
+            <div class="flex gap-8 w-[70%]">
                 <div class="flex text-xs">
                     <p class=" text-zinc-400 dark:text-zinc-600">Cadastrado por: </p>
-                    <p class="text-blue-600 dark:text-blue-400">{{ $user_create->first_name }}
+                    <p class="text-zinc-800 dark:text-zinc-200 italic">{{ $user_create->first_name }}
                         {{ $user_create->last_name }}</p>
                 </div>
                 <div class="flex text-xs">
                     @if (!empty($user_update))
                         <p class=" text-zinc-400 dark:text-zinc-600">Editador por: </p>
-                        <p class="text-blue-600 dark:text-blue-400">{{ $user_update->first_name }}
+                        <p class="text-zinc-800 dark:text-zinc-200 italic">{{ $user_update->first_name }}
                             {{ $user_update->last_name }}</p>
                     @endif
                 </div>
             </div>
 
             {{-- botões --}}
-            <div class="flex items-center justify-end w-[30%]">
+            <div class="flex items-center justify-end w-[30%] gap-2 sm:gap-4">
 
                 {{-- Editar --}}
                 @can('update_external_exit')
-                    <div class="group grid justify-items-center w-16">
-                        <button wire:click="modalExternalExitUpdate({{ $external_exit->id }})"
-                            class="p-2 bg-yellow-400 dark:bg-yellow-300/50 hover:opacity-50 transition duration-500 rounded-full">
-                            <x-lucide-pencil class="w-3 h-3 text-zinc-100 dark:text-zinc-200"></x-lucide-pencil>
-                        </button>
-                    </div>
+                    <button wire:click="modalExternalExitUpdate({{ $external_exit->id }})"
+                        class="p-2 bg-yellow-400 dark:bg-yellow-300/50 hover:opacity-50 transition duration-500 rounded-full">
+                        <x-lucide-pencil class="w-3 h-3 text-zinc-100 dark:text-zinc-200"></x-lucide-pencil>
+                    </button>
                 @endcan
 
                 {{-- chama o modal para exclusão do item --}}
                 @can('delete_external_exit')
-                    <div class="group grid justify-items-center w-16">
-                        <button wire:click="modalExternalExitDelete({{ $external_exit->id }})"
-                            class="p-2 bg-red-700 dark:bg-red-600/50 hover:opacity-50 transition duration-500 rounded-full">
-                            <x-lucide-x class="w-3 h-3 text-zinc-100 dark:text-zinc-200"></x-lucide-x>
-                        </button>
-                    </div>
+                    <button wire:click="modalExternalExitDelete({{ $external_exit->id }})"
+                        class="p-2 bg-red-700 dark:bg-red-600/50 hover:opacity-50 transition duration-500 rounded-full">
+                        <x-lucide-x class="w-3 h-3 text-zinc-100 dark:text-zinc-200"></x-lucide-x>
+                    </button>
                 @endcan
 
                 {{-- Relatório PDF --}}
                 <form action="{{ route('external-exit.report', ['external_exit_id' => $external_exit->id]) }}"
                     method="POST" target="_blank">
                     @csrf
-                    <div class="group grid justify-items-center w-16">
-                        <button
-                            class="p-2 bg-green-500 dark:bg-green-400/50 hover:opacity-50 transition duration-500 rounded-full">
-                            <x-lucide-file-text class="w-3 h-3 text-zinc-100 dark:text-zinc-200"></x-lucide-file-text>
-                        </button>
-                    </div>
+                    <button
+                        class="p-2 bg-green-500 dark:bg-green-400/50 hover:opacity-50 transition duration-500 rounded-full">
+                        <x-lucide-file-text class="w-3 h-3 text-zinc-100 dark:text-zinc-200"></x-lucide-file-text>
+                    </button>
                 </form>
             </div>
         </div>
@@ -153,12 +147,14 @@
         </a>
 
         {{-- exclui o documento --}}
-        <div class="group grid justify-items-center w-16">
-            <button wire:click="modalDocumentDelete({{ $external_exit->id }})"
-                class="p-1 bg-red-700 dark:bg-red-600/50 hover:opacity-50 transition duration-500 rounded-full">
-                <x-lucide-x class="w-3 h-3 text-zinc-100 dark:text-zinc-200"></x-lucide-x>
-            </button>
-        </div>
+        @can('update_external_exit')
+            <div class="group grid justify-items-center w-16">
+                <button wire:click="modalDocumentDelete({{ $external_exit->id }})"
+                    class="p-1 bg-red-700 dark:bg-red-600/50 hover:opacity-50 transition duration-500 rounded-full">
+                    <x-lucide-x class="w-3 h-3 text-zinc-100 dark:text-zinc-200"></x-lucide-x>
+                </button>
+            </div>
+        @endcan
 
     </div>
 @endif
