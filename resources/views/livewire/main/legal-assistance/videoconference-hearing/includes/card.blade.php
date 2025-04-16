@@ -7,9 +7,11 @@
 
         <div class="flex gap-8 w-[70%]">
             <div class="flex text-xs">
-                <p class=" text-zinc-400 dark:text-zinc-600">Cadastrado por: </p>
-                <p class="text-zinc-800 dark:text-zinc-200 italic">{{ $user_create->first_name }}
-                    {{ $user_create->last_name }}</p>
+                @if (!empty($user_create))
+                    <p class=" text-zinc-400 dark:text-zinc-600">Cadastrado por: </p>
+                    <p class="text-zinc-800 dark:text-zinc-200 italic">{{ $user_create->first_name }}
+                        {{ $user_create->last_name }}</p>
+                @endif
             </div>
             <div class="flex text-xs">
                 @if (!empty($user_update))
