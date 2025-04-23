@@ -19,20 +19,43 @@ class IdentificationCardLivewire extends Component
 
     public function mount()
     {
-        $this->identificationCardForm->prison_unit_id       = Auth::user()->prison_unit_id;
-        $this->identificationCardForm->user_create          = Auth::user()->id;
-        $this->identificationCardForm->user_update          = Auth::user()->id;
-        $this->identificationCardForm->prisoners            = Prisoner::orderBy('name', 'asc')->get();
-        $this->identificationCardForm->visitants            = Visitant::orderBy('name', 'asc')->get();
-        $this->identificationCardForm->degree_of_kinships   = DegreeOfKinship::all();
+        $this->identificationCardForm->prison_unit_id = Auth::user()->prison_unit_id;
+        $this->identificationCardForm->user_create = Auth::user()->id;
+        $this->identificationCardForm->user_update = Auth::user()->id;
+        $this->identificationCardForm->prisoners = Prisoner::orderBy('name', 'asc')->get();
+        $this->identificationCardForm->visitants = Visitant::orderBy('name', 'asc')->get();
+        $this->identificationCardForm->degree_of_kinships = DegreeOfKinship::all();
     }
     public function render()
     {
+        $visitants_id_arr = [];
+        if ($this->identificationCardForm->visitant_name != '') {
+            $visitants = Visitant::where('name', 'like', "%{$this->identificationCardForm->visitant_name}%")
+                ->orderBy('name', 'asc')->get('id');
+            foreach ($visitants as $visitant) {
+                $visitants_id_arr[] = $visitant->id;
+            }
+        }
+
+        $prisoner_id_arr = [];
+        if ($this->identificationCardForm->prisoner_name != '') {
+            $prisoners = Prisoner::where('name', 'like', "%{$this->identificationCardForm->prisoner_name}%")
+                ->orderBy('name', 'asc')->get('id');
+            foreach ($prisoners as $prisoner) {
+                $prisoner_id_arr[] = $prisoner->id;
+            }
+        }
+
         $identification_cards = IdentificationCard::orderBy('created_at', 'asc')
-        ->with('visitant', 'prisoner')
-        ->where('visitant_id', 'like', "%{$this->identificationCardForm->visitant_id}%")
-        ->where('prisoner_id', 'like', "%{$this->identificationCardForm->prisoner_id}%")
-        ->paginate(9);
+            ->with('visitant', 'prisoner');
+        if (isset($visitants)) {
+            $identification_cards = $identification_cards->whereIn('visitant_id', $visitants_id_arr);
+        }
+        if (isset($prisoners)) {
+            $identification_cards = $identification_cards->whereIn('prisoner_id', $prisoner_id_arr);
+        }
+
+        $identification_cards = $identification_cards->paginate(9);
 
         return view('livewire.main.identification-card.identification-card-livewire', compact('identification_cards'));
     }

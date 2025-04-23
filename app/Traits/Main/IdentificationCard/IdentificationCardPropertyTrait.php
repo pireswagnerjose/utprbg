@@ -8,10 +8,12 @@ trait IdentificationCardPropertyTrait
     public $visitants = [];
     public $degree_of_kinships = [];
     public $user_create = '';
-    public $user_update= '';
+    public $user_update = '';
     public $prison_unit_id = '';
     public $visitant_id = '';
+    public $visitant_name = '';
     public $prisoner_id = '';
+    public $prisoner_name = '';
     public $date_of_creation = '';
     public $expiration_date = '';
     public $type = '';
@@ -22,7 +24,15 @@ trait IdentificationCardPropertyTrait
     // CLEAR FIELDS - LIMPAR CAMPOS
     public function clearFields()
     {
-        $this->reset('date_of_creation','expiration_date','type','status','remark',
-            'prisoner_id','visitant_id','degree_of_kinship_id');
+        $this->reset(
+            'date_of_creation',
+            'expiration_date',
+            'type',
+            'status',
+            'remark',
+            'prisoner_id',
+            'visitant_id',
+            'degree_of_kinship_id'
+        );
     }
 }
