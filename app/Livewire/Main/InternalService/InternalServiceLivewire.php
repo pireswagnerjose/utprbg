@@ -25,10 +25,10 @@ class InternalServiceLivewire extends Component
 
     public function mount()
     {
-        $this->user_create      = Auth::user()->id;
-        $this->user_update      = Auth::user()->id;
-        $this->prison_unit_id   = Auth::user()->prison_unit_id;
-        $this->type_services    = TypeService::all();
+        $this->user_create = Auth::user()->id;
+        $this->user_update = Auth::user()->id;
+        $this->prison_unit_id = Auth::user()->prison_unit_id;
+        $this->type_services = TypeService::all();
     }
 
     // CLEAR FIELDS - LIMPAR CAMPOS
@@ -48,8 +48,8 @@ class InternalServiceLivewire extends Component
     // Transforma os caracteres em maiusculos
     public function convertUppercase($dataValidated)
     {
-        $dataValidated['status'] = mb_strtoupper ($dataValidated['status'],'utf-8');
-        $dataValidated['remark'] = mb_strtoupper ($dataValidated['remark'],'utf-8');
+        $dataValidated['status'] = mb_strtoupper($dataValidated['status'], 'utf-8');
+        $dataValidated['remark'] = mb_strtoupper($dataValidated['remark'], 'utf-8');
         return $dataValidated;
     }
 
@@ -64,14 +64,14 @@ class InternalServiceLivewire extends Component
     {
         $dataValidated = $this->validate(
             [
-                'date'           =>'required|min:10|max:10',
-                'time'           =>'nullable|max:255',
-                'status'         =>'nullable|max:255',
-                'remark'         =>'nullable|max:100',
-                'user_create'    =>'required|max:10',
-                'prison_unit_id' =>'required|max:10',
-                'prisoner_id'    =>'required|max:10',
-                'type_service_id'=>'required|max:10',
+                'date' => 'required|min:10|max:10',
+                'time' => 'nullable|max:255',
+                'status' => 'nullable|max:255',
+                'remark' => 'nullable',
+                'user_create' => 'required|max:10',
+                'prison_unit_id' => 'required|max:10',
+                'prisoner_id' => 'required|max:10',
+                'type_service_id' => 'required|max:10',
             ]
         );
         // Transforma os caracteres em maiusculos
@@ -99,12 +99,12 @@ class InternalServiceLivewire extends Component
     {
         $dataValidated = $this->validate(
             [
-                'date'           =>'required|min:10|max:10',
-                'time'           =>'nullable|max:255',
-                'status'         =>'nullable|max:255',
-                'remark'         =>'nullable',
-                'user_update'    =>'required|max:10',
-                'type_service_id'=>'required|max:10',
+                'date' => 'required|min:10|max:10',
+                'time' => 'nullable|max:255',
+                'status' => 'nullable|max:255',
+                'remark' => 'nullable',
+                'user_update' => 'required|max:10',
+                'type_service_id' => 'required|max:10',
             ]
         );
         // Transforma os caracteres em maiusculos
