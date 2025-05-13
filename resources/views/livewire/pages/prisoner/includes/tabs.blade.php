@@ -209,6 +209,8 @@
                                         <th scope="col" class="p-2"> Data Visita </th>
                                         <th scope="col" class="p-2"> Data Agendamento </th>
                                         <th scope="col" class="p-2"> Tipo Visita </th>
+                                        <th scope="col" class="p-2"> Status </th>
+                                        <th scope="col" class="p-2"> Observações </th>
                                     </tr>
                                 @endif
                             </thead>
@@ -228,6 +230,9 @@
                                             {{ \Carbon\Carbon::parse($visit_scheduling->created_at)->format('d/m/Y - H:i:s') }}
                                         </td>
                                         <td class="p-2"> {{ $visit_scheduling->type }} </td>
+                                        <td class="p-2"> {{ $visit_scheduling->status ? 'MANTIDA' : 'CANCELADA' }}
+                                        </td>
+                                        <td class="p-2"> {{ $visit_scheduling->remark }} </td>
                                     </tr>
                                 @empty
                                     <td class="p-2"> Não existe resultado para essa consulta. </td>
