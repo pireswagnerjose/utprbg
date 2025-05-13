@@ -15,13 +15,14 @@ class ScheduledVisitOfTheDayController extends Controller
         $prisoners = Prisoner::all();
         $visit_types = ['SOCIAL', 'ÍNTIMA'];
         $type = $request->type;
+        $status = $request->status;
         $start_date = $request->start_date;
         $end_date = $request->end_date;
         $visit_schedulings = $this->search($request);
         $visit_schedulings = $visit_schedulings->paginate(12);
         return view(
             'reports.scheduled-visit.index',
-            compact('visit_schedulings', 'visit_types', 'type', 'start_date', 'end_date', 'prisoners')
+            compact('visit_schedulings', 'visit_types', 'type', "status", 'start_date', 'end_date', 'prisoners')
         );
     }
 
@@ -41,6 +42,10 @@ class ScheduledVisitOfTheDayController extends Controller
 
         if ($request->type) {
             $data = $data->whereLike('type', $request->type);
+        }
+
+        if ($request->status) {
+            $data = $data->whereLike('status', $request->status === "MANTIDA" ? true : false);
         }
 
         if ($request->start_date != null && $request->end_date != null) {

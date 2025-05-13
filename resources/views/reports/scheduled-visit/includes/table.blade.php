@@ -9,6 +9,8 @@
             <th scope="col" class="p-2"> Cela </th>
             <th scope="col" class="p-2"> Data Visita </th>
             <th scope="col" class="p-2"> Tipo Visita </th>
+            <th scope="col" class="p-2"> Status </th>
+            <th scope="col" class="p-2"> Observações </th>
         </tr>
     </thead>
     <tbody>
@@ -33,6 +35,8 @@
                 </td>
                 <td class="p-2"> {{ \Carbon\Carbon::parse($visit->date_visit)->format('d/m/Y') }}</td>
                 <td class="p-2"> {{ $visit->type }} </td>
+                <td class="p-2"> {{ $visit->status ? 'MANTIDA' : 'CANCELADA' }} </td>
+                <td class="p-2"> {{ $visit->remark }} </td>
             </tr>
         @empty
             <td class="p-2"> Não existe resultado para essa consulta. </td>

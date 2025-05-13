@@ -17,6 +17,10 @@
             border: 0;
         }
 
+        @page {
+            size: A4 landscape;
+        }
+
         body {
             margin: 1cm;
             font-size: 100%;
@@ -29,7 +33,7 @@
         }
 
         header img {
-            width: 96%;
+            width: 50%;
             align-items: center;
         }
 
@@ -84,6 +88,8 @@
                     <th scope="col"> Cela </th>
                     <th scope="col"> Data Visita </th>
                     <th scope="col"> Tipo Visita </th>
+                    <th scope="col"> Status </th>
+                    <th scope="col"> Observações </th>
                 </tr>
             </thead>
             <tbody>
@@ -106,6 +112,8 @@
                         <td> {{ \Carbon\Carbon::parse($visit->date_visit)->format('d/m/Y') }}</td>
                         </td>
                         <td> {{ $visit->type }} </td>
+                        <td> {{ $visit->status ? 'MANTIDA' : 'CANCELADA' }} </td>
+                        <td> {{ $visit->remark }} </td>
                     </tr>
                 @empty
                     <td> Não existe resultado para essa consulta. </td>

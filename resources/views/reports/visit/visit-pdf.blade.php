@@ -17,6 +17,10 @@
             border: 0;
         }
 
+        @page {
+            size: A4 landscape;
+        }
+
         body {
             margin: 1cm;
             font-size: 100%;
@@ -29,7 +33,7 @@
         }
 
         header img {
-            width: 96%;
+            width: 50%;
             align-items: center;
         }
 
@@ -84,30 +88,35 @@
                     <th scope="col"> Data Visita </th>
                     <th scope="col"> Data Agendamento </th>
                     <th scope="col"> Tipo Visita </th>
+                    <th scope="col"> Status </th>
+                    <th scope="col"> Observações </th>
                 </tr>
             </thead>
             <tbody>
                 @forelse ( $visit_schedulings as $key=>$visit )
-                <tr>
-                    <td> {{ $key+1 }} </td>
-                    <td> {{ $visit->visit_scheduling_id }} </td>
-                    <td> {{ $visit->visitant->name }} </td>
-                    <td> {{ $visit->prisoner->name }} </td>
-                    <td>
-                        @if (!empty( $visit->prisoner->unit_address))
-                        @foreach ( $visit->prisoner->unit_address as $unit_address)
-                        @if ($unit_address->status == "ATIVO")
-                        {{ $unit_address->cell->cell }}
-                        @endif
-                        @endforeach
-                        @endif
-                    </td>
-                    <td> {{ \Carbon\Carbon::parse($visit->date_visit)->format('d/m/Y') }}</td>
-                    <td> {{ \Carbon\Carbon::parse($visit->visit_scheduling_created_at )->format('d/m/Y - H:i:s') }}</td>
-                    <td> {{ $visit->type }} </td>
-                </tr>
+                    <tr>
+                        <td> {{ $key + 1 }} </td>
+                        <td> {{ $visit->visit_scheduling_id }} </td>
+                        <td> {{ $visit->visitant->name }} </td>
+                        <td> {{ $visit->prisoner->name }} </td>
+                        <td>
+                            @if (!empty($visit->prisoner->unit_address))
+                                @foreach ($visit->prisoner->unit_address as $unit_address)
+                                    @if ($unit_address->status == 'ATIVO')
+                                        {{ $unit_address->cell->cell }}
+                                    @endif
+                                @endforeach
+                            @endif
+                        </td>
+                        <td> {{ \Carbon\Carbon::parse($visit->date_visit)->format('d/m/Y') }}</td>
+                        <td> {{ \Carbon\Carbon::parse($visit->visit_scheduling_created_at)->format('d/m/Y - H:i:s') }}
+                        </td>
+                        <td> {{ $visit->type }} </td>
+                        <td> {{ $visit->status ? 'MANTIDA' : 'CANCELADA' }} </td>
+                        <td> {{ $visit->remark }} </td>
+                    </tr>
                 @empty
-                <td> Não existe resultado para essa consulta. </td>
+                    <td> Não existe resultado para essa consulta. </td>
                 @endforelse
             </tbody>
         </table>

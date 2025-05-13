@@ -24,6 +24,7 @@
         <form action="{{ route('scheduled-visit-of-the-day.pdf') }}" method="any" target="_blank">
             @csrf
             <input type="hidden" name="type" value="{{ $type }}">
+            <input type="hidden" name="status" value="{{ $status }}">
             <input type="hidden" name="start_date" value="{{ $start_date }}">
             <input type="hidden" name="end_date" value="{{ $end_date }}">
             {{-- Gerar PDF --}}

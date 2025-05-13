@@ -1,10 +1,10 @@
 <x-app-layout>
     <div class="w-full text-center">
         @if (session('success'))
-        <span class="text-green-500 text-sm">{{ session('success') }}</span>
+            <span class="text-green-500 text-sm">{{ session('success') }}</span>
         @endif
         @if (session('error'))
-        <span class="text-red-500 text-sm">{{ session('error') }}</span>
+            <span class="text-red-500 text-sm">{{ session('error') }}</span>
         @endif
     </div>
     <div class="mb-12">
@@ -24,6 +24,7 @@
         <form action="{{ route('visit.pdf') }}" method="any" target="_blank">
             @csrf
             <input type="hidden" name="type" value="{{ $type }}">
+            <input type="hidden" name="status" value="{{ $status }}">
             <input type="hidden" name="start_date" value="{{ $start_date }}">
             <input type="hidden" name="end_date" value="{{ $end_date }}">
             {{-- Gerar PDF --}}
@@ -36,13 +37,10 @@
 
     {{-- paginação --}}
     <div class="pl-2 py-4 mt-4 text-zinc-50 dark:text-zinc-400 border-t border-blue-300 dark:border-blue-500 pb-3">
-        {{ $visit_schedulings
-        ->appends([
-        'start_date'=>request()->get('start_date'),
-        'end_date'=>request()->get('end_date'),
-        'type'=>request()->get('type')
-        ])
-        ->links(data: ['scrollTo' => false])
-        }}
+        {{ $visit_schedulings->appends([
+                'start_date' => request()->get('start_date'),
+                'end_date' => request()->get('end_date'),
+                'type' => request()->get('type'),
+            ])->links(data: ['scrollTo' => false]) }}
     </div>
 </x-app-layout>
