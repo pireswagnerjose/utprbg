@@ -28,7 +28,6 @@ class VisitantShowLivewire extends Component
     public $openModalDelete = false;
 
     public $identification_cards = [];
-    public $visit_schedulings = [];
 
     public $prisonerMul; //id do preso a ser exibido na view
     public $municipalityEdit = []; //quando for editar o município
@@ -44,7 +43,6 @@ class VisitantShowLivewire extends Component
         $this->visitantForm->states = State::all();
 
         $this->identification_cards = IdentificationCard::where('visitant_id', $this->visitant_id)->get();
-        $this->visit_schedulings = VisitScheduling::where('visitant_id', $this->visitant_id)->get();
     }
 
     // Seleciona o município conforme o estado escolhido
