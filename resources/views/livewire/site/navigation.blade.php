@@ -135,6 +135,54 @@
                 </li>
             @endcan
 
+            {{-- presos --}}
+            @can('show_menu_lawyer')
+                <li>
+                    <div x-data="{
+                        open: false,
+                        toggle() {
+                            if (this.open) {
+                                return this.close()
+                            }
+                            this.$refs.button.focus()
+                            this.open = true
+                        },
+                        close(focusAfter) {
+                            if (!this.open) return
+                            this.open = false
+                            focusAfter && focusAfter.focus()
+                        }
+                    }" x-on:keydown.escape.prevent.stop="close($refs.button)"
+                        x-on:focusin.window="! $refs.panel.contains($event.target) && close()" x-id="['dropdown-button']">
+
+                        <button x-ref="button" x-on:click="toggle()" :aria-expanded="open"
+                            :aria-controls="$id('dropdown-button')" type="button"
+                            class="flex items-center gap-1 text-sm font-medium text-zinc-100 dark:text-zinc-200 hover:text-blue-500 dark:hover:text-blue-500">
+                            <div class="hidden sm:flex">
+                                <x-lucide-scale
+                                    class="w-4 h-4 hidden sm:flex text-zinc-100 dark:text-zinc-400"></x-lucide-scale>
+                            </div>
+                            <span class="py-2">Adogados</span>
+                        </button>
+                        <div
+                            class="absolute z-10 w-auto mt-1 text-sm bg-white border border-zinc-100 rounded-lg shadow-md dark:border-zinc-700 md:grid-cols-3 dark:bg-zinc-700">
+                            <div x-ref="panel" x-show="open" x-transition.origin.top.left
+                                x-on:click.outside="close($refs.button)" :id="$id('dropdown-button')" style="display: none;"
+                                class="p-4 pb-0 space-y-2 text-zinc-900 md:pb-4 dark:text-white">
+
+                                {{-- pesquisa de preso --}}
+                                @can('search_lawyer')
+                                    <a href="{{ route('lawyers.index') }}" wire:navigate
+                                        class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
+                                        Pesquisar
+                                    </a>
+                                @endcan
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            @endcan
+
             {{-- tabelas acessórias --}}
             @can('show_menu_acessories')
                 <li>

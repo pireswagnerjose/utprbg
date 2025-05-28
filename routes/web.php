@@ -10,6 +10,7 @@ use App\Http\Controllers\Report\EducationLevelReportController;
 use App\Http\Controllers\Report\ExternalExitReportController;
 use App\Http\Controllers\Report\IdentificationCardPdfController;
 use App\Http\Controllers\Report\InternalServiceReportController;
+use App\Http\Controllers\Report\LawyerPdfController;
 use App\Http\Controllers\Report\LegalAssistanceReportController;
 use App\Http\Controllers\Report\PrisonerReportController;
 use App\Http\Controllers\Report\PrisonReportPdfController;
@@ -32,6 +33,7 @@ use App\Livewire\Admin\InternalService\TypeService\TypeServiceLivewire;
 use App\Livewire\Admin\LegalAssistance\CriminalCourt\CriminalCourtLivewire;
 use App\Livewire\Admin\LegalAssistance\District\DistrictLivewire;
 use App\Livewire\Admin\LegalAssistance\Lawyers\LawyersLivewire;
+use App\Livewire\Admin\LegalAssistance\Lawyers\LawyersShowLivewire;
 use App\Livewire\Admin\LegalAssistance\ModalityCare\ModalityCareLivewire;
 use App\Livewire\Admin\LegalAssistance\TypeCare\TypeCareLivewire;
 use App\Livewire\Admin\LevelAccess\LevelAccessLivewire;
@@ -151,6 +153,9 @@ Route::middleware([
     // LEGAL ASSISTANCE
     // lawyers - Advogados
     Route::get('/lawyers', LawyersLivewire::class)->name('lawyers.index');
+    Route::get('/lawyers/{lawyer_id}', LawyersShowLivewire::class)->name('lawyers.show');
+    Route::any('/lawyer-report/{lawyer_id}', [LawyerPdfController::class, 'pdf'])->name('lawyer.report');
+
     // Public Defender - Defensor Público
     Route::get('/public-defender', PublicDefenderLivewire::class)->name('public-defender.index');
     // Type Cares - Tipo de Atendimento

@@ -22,8 +22,8 @@ class LawyersLivewire extends Component
 
     public function mount()
     {
-        $this->lawyer_form->prison_unit_id   = Auth::user()->prison_unit_id;
-        $this->lawyer_form->user_create      = Auth::user()->id;
+        $this->lawyer_form->prison_unit_id = Auth::user()->prison_unit_id;
+        $this->lawyer_form->user_create = Auth::user()->id;
     }
     // search
     #[Url]
@@ -43,8 +43,6 @@ class LawyersLivewire extends Component
     public function closeModal()
     {
         $this->add_new = false;
-        $this->openModalDelete = false;
-        $this->openModalUpdate = false;
         $this->lawyer_form->clearFields();
     }
     // crete
@@ -55,40 +53,12 @@ class LawyersLivewire extends Component
         session()->flash('success', 'Criado com sucesso.');
         $this->add_new = false;
     }
-    // modal update
-    public $openModalUpdate = false;
-    public function modalUpdate(Lawyer $lawyer)
-    {
-        $this->lawyer_form->setPost($lawyer);
-        $this->openModalUpdate = true;
-    }
-    // update
-    public function update()
-    {
-        $dataValidated = $this->validate();
-        $this->lawyer_form->update($dataValidated);
-        $this->openModalUpdate = false;
-        $this->lawyer_form->clearFields();
-        session()->flash('success', 'Atualizado com sucesso.');
-    }
-    // modal delete
-    public $openModalDelete = false;
-    public function modalDelete($lawyer)
-    {
-        $this->openModalDelete = $lawyer;
-    }
-    // delete
-    public function delete(Lawyer $lawyer)
-    {
-        $this->lawyer_form->delete($lawyer);
-        $this->openModalDelete = false;
-        $this->lawyer_form->clearFields();
-        session()->flash('success', 'Excluído com sucesso.');
-    }
+
+
     public function render()
     {
         return view('livewire.admin.legal-assistance.lawyers.lawyers-livewire', [
-            'lawyers' => Lawyer::orderBy('lawyer', 'asc')->where('lawyer', 'like', "%{$this->search}%")->paginate(10)
+            'lawyers' => Lawyer::orderBy('lawyer', 'asc')->where('lawyer', 'like', "%{$this->search}%")->paginate(12)
         ]);
     }
 }

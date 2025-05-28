@@ -29,11 +29,11 @@
         @include('livewire.admin.legal-assistance.lawyers.includes.search')
 
         {{-- card --}}
-        @foreach ($lawyers as $lawyer)
-            @include('livewire.admin.legal-assistance.lawyers.includes.card')
-        @endforeach
-        @include('livewire.admin.legal-assistance.lawyers.includes.modal-update')
-        @include('livewire.admin.legal-assistance.lawyers.includes.modal-delete')
+        <div class="grid md:grid-cols-2 lg:grid-cols-4">
+            @foreach ($lawyers as $lawyer)
+                @include('livewire.admin.legal-assistance.lawyers.includes.card')
+            @endforeach
+        </div>
 
         {{-- paginação --}}
         <div class="pl-2 py-4 mt-4 text-zinc-50 dark:text-zinc-400 border-t border-blue-300 dark:border-blue-500 pb-3">
