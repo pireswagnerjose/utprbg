@@ -135,7 +135,7 @@
                 </li>
             @endcan
 
-            {{-- presos --}}
+            {{-- advogados --}}
             @can('show_menu_lawyer')
                 <li>
                     <div x-data="{
@@ -162,7 +162,7 @@
                                 <x-lucide-scale
                                     class="w-4 h-4 hidden sm:flex text-zinc-100 dark:text-zinc-400"></x-lucide-scale>
                             </div>
-                            <span class="py-2">Adogados</span>
+                            <span class="py-2">Advogados</span>
                         </button>
                         <div
                             class="absolute z-10 w-auto mt-1 text-sm bg-white border border-zinc-100 rounded-lg shadow-md dark:border-zinc-700 md:grid-cols-3 dark:bg-zinc-700">
@@ -170,7 +170,7 @@
                                 x-on:click.outside="close($refs.button)" :id="$id('dropdown-button')" style="display: none;"
                                 class="p-4 pb-0 space-y-2 text-zinc-900 md:pb-4 dark:text-white">
 
-                                {{-- pesquisa de preso --}}
+                                {{-- pesquisa de advogado --}}
                                 @can('search_lawyer')
                                     <a href="{{ route('lawyers.index') }}" wire:navigate
                                         class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
