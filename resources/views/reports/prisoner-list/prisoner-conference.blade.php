@@ -34,10 +34,19 @@
                 @forelse ($cell['unit_addresses'] as $key=>$data)
                     <tr style="border: 1px solid #ccc; font-size: 13px;">
                         @if ($c_s_photo == 1)
-                            <td style="text-align: center; height: 78px; padding: 2px">
-                                <img src="{{ storage_path('app/public/' . $data->prisoner->photo) }}" width="78"
-                                    alt="Neil image">
-                            </td>
+                            @if (!empty($data->prisoner->photo))
+                                <td style="text-align: center; height: 78px; padding: 2px">
+                                    <img src="{{ storage_path('app/public/' . $data->prisoner->photo) }}" width="78"
+                                        alt="{{ $data->prisoner->name }}">
+                                </td>
+                            @endif
+
+                            @if (empty($data->prisoner->photo))
+                                <td style="text-align: center; height: 78px; padding: 2px">
+                                    <img src="{{ storage_path('app/public/site/no-image.jpg') }}" width="78"
+                                        alt="Sem Imagem">
+                                </td>
+                            @endif
                         @else
                             <td style="text-align: center; padding: 0 2px">
                                 <p> {{ $key + 1 }} </p>

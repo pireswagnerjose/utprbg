@@ -21,9 +21,18 @@
                     class="odd:bg-white odd:dark:bg-zinc-900 even:bg-zinc-50 even:dark:bg-zinc-800 border-b dark:border-zinc-700">
                     <td class="p-2 text-center"> {{ $key + 1 }} </td>
                     @if ($this->c_s_photo == 1)
-                        <td style="text-align: center; height: 78px; padding: 2px">
-                            <img src='{{ asset('storage/' . $data->prisoner->photo) }}' width="78" alt="Neil image">
-                        </td>
+                        @if (!empty($data->prisoner->photo))
+                            <td style="text-align: center; height: 78px; padding: 2px">
+                                <img src="{{ asset('storage/' . $data->prisoner->photo) }}" width="78"
+                                    alt="{{ $data->prisoner->name }}">
+                            </td>
+                        @endif
+
+                        @if (empty($data->prisoner->photo))
+                            <td style="text-align: center; height: 78px; padding: 2px">
+                                <img src="{{ asset('storage/site/no-image.jpg') }}" width="78" alt="Sem Imagem">
+                            </td>
+                        @endif
                     @endif
                     <td class="p-2"> <a class="text-blue-700"
                             href="{{ route('prisoners.show', $data->prisoner->id) }}"> {{ $data->prisoner->name }} </a>
