@@ -42,6 +42,13 @@
                                         {{ \Carbon\Carbon::parse($visit_date2->date)->format('d/m/Y') }}
                                     </option>
                                 @endif
+                                @if (!empty($visit_date3))
+                                    <option
+                                        class="bg-zinc-100 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 text-base"
+                                        value="{{ $visit_date3->date }}">
+                                        {{ \Carbon\Carbon::parse($visit_date3->date)->format('d/m/Y') }}
+                                    </option>
+                                @endif
                             </select>
                             <x-input-error for="date_visit" class="mt-2">{{ $message ?? '' }}</x-input-error>
                         </div>
