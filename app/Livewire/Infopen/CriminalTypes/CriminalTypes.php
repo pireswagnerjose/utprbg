@@ -15,29 +15,30 @@ use Livewire\WithPagination;
 #[Title("Tipos Penais")]
 class CriminalTypes extends Component
 {
-    use WithPagination;
-    public $penal_types = [];
-    public $penal_type_processes = [];
-    public $penal_type_id = '';
+  use WithPagination;
+  public $penal_types = [];
+  public $penal_type_processes = [];
+  public $penal_type_id = '';
 
-    public function mount()
-    {
-        $this->penal_types = PenalType::orderBy('created_at', 'asc')->get();
-    }
+  public function mount()
+  {
+    $this->penal_types = PenalType::orderBy('created_at', 'asc')->get();
+  }
 
-    public function penal_type_fun()
-    {
-        $this->penal_type_processes = PenalTypeProcess::where('penal_type_id', $this->penal_type_id)->get();
+  public function penal_type_fun()
+  {
+    $this->penal_type_processes = PenalTypeProcess::where('penal_type_id', $this->penal_type_id)->get();
+  }
+  public function render()
+  {
+    $penal_type_processes = [];
+    foreach ($this->penal_type_processes as $key) {
+      $penal_type_processes[] = $key->prisoner_id;
     }
-    public function render()
-    {
-        $penal_type_processes = [];
-        foreach ( $this->penal_type_processes as $key) {
-            $penal_type_processes[] = $key->prisoner_id;
-        }
-        $prisoners = Prisoner::orderBy('name', 'asc');
-        $prisoners = Prisoner::whereIn('id', $penal_type_processes);
-        $prisoners = $prisoners->paginate(9);
-        return view('livewire.infopen.criminal-types.criminal-types', compact('prisoners'));
-    }
+    $prisoners = Prisoner::orderBy('name', 'asc')
+      ->where('status_prison_id', 1);
+    $prisoners = $prisoners->whereIn('id', $penal_type_processes);
+    $prisoners = $prisoners->paginate(12);
+    return view('livewire.infopen.criminal-types.criminal-types', compact('prisoners'));
+  }
 }
