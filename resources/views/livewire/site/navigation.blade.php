@@ -678,6 +678,14 @@
                                         <span class="">Presos</span>
                                     </a>
                                 @endcan
+
+                                {{-- Quantidade de presos que receberam visitas no período --}}
+                                @can('infopen_number_prisoners_received_visits_period')
+                                    <a href="{{ route('infopen-number-prisoners-received-visits-period') }}"
+                                        class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
+                                        <span class="">Quantidade de Presos que Receberam Visitas no Período</span>
+                                    </a>
+                                @endcan
                             </div>
                         </div>
                     </div>
