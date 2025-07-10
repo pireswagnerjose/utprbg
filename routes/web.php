@@ -58,6 +58,7 @@ use App\Livewire\Admin\State\StateLivewire;
 use App\Livewire\Admin\Ward\WardLivewire;
 use App\Livewire\Infopen\CertificateOfSentence\CertificateOfSentence;
 use App\Livewire\Infopen\CriminalTypes\CriminalTypes;
+use App\Livewire\Infopen\NumberOfPrisonersWhoHaveRegisteredVisitors\NumberOfPrisonersWhoHaveRegisteredVisitorLivewire;
 use App\Livewire\Infopen\NumberPrisonersReceivedVisitsPeriod\NumberPrisonersReceivedVisitsPeriodLivewire;
 use App\Livewire\Infopen\Sentence\Sentence;
 use App\Livewire\Main\IdentificationCard\IdentificationCardLivewire;
@@ -231,6 +232,7 @@ Route::middleware([
   Route::get('/infopen-processes', ProcessReportLivewire::class)->name('infopen.processes');
   Route::post('/infopen-processes-pdf', [ProcessReportPdfController::class, 'pdf'])->name('infopen.processes.pdf');
   Route::get('/infopen-number-prisoners-received-visits-period', NumberPrisonersReceivedVisitsPeriodLivewire::class)->name('infopen-number-prisoners-received-visits-period');
+  Route::get('/infopen-number-of-prisoners-who-have-registered-visitor', NumberOfPrisonersWhoHaveRegisteredVisitorLivewire::class)->name('infopen-number-of-prisoners-who-have-registered-visitor');
 
   // VISITANT
   Route::get('/visitant', VisitantLivewire::class)->name('visitant.index');

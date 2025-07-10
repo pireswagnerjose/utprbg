@@ -686,6 +686,14 @@
                                         <span class="">Quantidade de Presos que Receberam Visitas no Período</span>
                                     </a>
                                 @endcan
+
+                                {{-- Número de pessoas privadas de liberdade que possuem visitantes cadastradas --}}
+                                @can('infopen_number_of_prisoners_who_have_registered_visitors')
+                                    <a href="{{ route('infopen-number-of-prisoners-who-have-registered-visitor') }}"
+                                        class="flex items-center text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-500 group">
+                                        <span class="">Número de Presos que Possuem Visitantes Cadastradas</span>
+                                    </a>
+                                @endcan
                             </div>
                         </div>
                     </div>
