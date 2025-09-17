@@ -22,7 +22,8 @@
 
                 <div class="text-base uppercase text-zinc-500 dark:text-zinc-400 text-center">
                     <span>Código do Agendamento: {{ $visit_completed->id }}</span>
-                    <span>Data da Visita: {{ \Carbon\Carbon::parse($visit_completed->date)->format('d/m/Y') }}</span>
+                    <span>Data da Visita:
+                        {{ \Carbon\Carbon::parse($visit_completed->date_visit)->format('d/m/Y') }}</span>
                     <span>Tipo da Visita: {{ $visit_completed->type }}</span>
                 </div>
 
