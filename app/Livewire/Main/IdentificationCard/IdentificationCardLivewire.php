@@ -10,12 +10,16 @@ use App\Models\Main\Visitant;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 use Illuminate\Support\Facades\Auth;
+use Livewire\WithPagination;
 
 class IdentificationCardLivewire extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, WithPagination;
     public IdentificationCardForm $identificationCardForm;
     public $openModalCreate = false;
+    
+    public $degreeOfKinship;
+    public $degrees_of_kinship_id = '';
 
     public function mount()
     {
@@ -25,6 +29,7 @@ class IdentificationCardLivewire extends Component
         $this->identificationCardForm->prisoners = Prisoner::orderBy('name', 'asc')->get();
         $this->identificationCardForm->visitants = Visitant::orderBy('name', 'asc')->get();
         $this->identificationCardForm->degree_of_kinships = DegreeOfKinship::all();
+        $this->degreeOfKinship = DegreeOfKinship::all();
     }
     public function render()
     {
@@ -53,6 +58,10 @@ class IdentificationCardLivewire extends Component
         }
         if (isset($prisoners)) {
             $identification_cards = $identification_cards->whereIn('prisoner_id', $prisoner_id_arr);
+        }
+        
+        if (!empty($this->degrees_of_kinship_id)) {
+            $identification_cards = $identification_cards->where('degree_of_kinship_id', $this->degrees_of_kinship_id);
         }
 
         $identification_cards = $identification_cards->paginate(9);

@@ -113,7 +113,7 @@
             <span style="font-size: 16px;">CÓD.: <strong style="font-size: 20px; color: #c81e1e;">{{
                   $identification_card->id }}
                </strong></span>
-            <span style="margin-left: 64px; font-size: 16px;">VALIDADE: <strong
+            <span style="margin-left: 52px; font-size: 16px;">VALIDADE: <strong
                   style="font-size: 20px; color: #c81e1e;">{{
                   \Carbon\Carbon::parse($identification_card->expiration_date)->format('d/m/Y') }}</strong></span>
          </div>
